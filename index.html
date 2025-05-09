@@ -1,661 +1,963 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>All Saints Institute of Nursing and Allied Sciences</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Lora:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e6f0fa 0%, #fef7f5 100%);
-            color: #1e3a8a;
-            overflow-x: hidden;
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #e6f0fa 0%, #fef7f5 100%);
+        color: #1e3a8a;
+        overflow-x: hidden;
+      }
+
+      .hero-bg {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: white;
+        overflow: hidden;
+      }
+
+      .hero-bg video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
+
+      .hero-overlay {
+        background: linear-gradient(
+          rgba(30, 58, 138, 0.7),
+          rgba(255, 94, 98, 0.7)
+        );
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
+
+      .hero-bg h1 {
+        font-family: "Lora", serif;
+        font-weight: 700;
+        text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+        animation: textGlow 2s ease-in-out infinite alternate;
+      }
+
+      .hero-bg .btn-gradient {
+        background: linear-gradient(45deg, #1e3a8a, #ff5e62);
+        border: none;
+        padding: 1rem 2.5rem;
+        font-weight: 600;
+        border-radius: 50px;
+        box-shadow: 0 5px 15px rgba(255, 94, 98, 0.4);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .hero-bg .btn-gradient:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 25px rgba(255, 94, 98, 0.6);
+      }
+
+      .section-spacing {
+        padding: 6rem 2rem;
+        position: relative;
+      }
+
+      .section-divider {
+        height: 5px;
+        background: linear-gradient(90deg, #1e3a8a, #facc15);
+        margin: 2.5rem auto;
+        width: 120px;
+        border-radius: 3px;
+      }
+
+      .card {
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #ffffff, #e6f0fa);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+      }
+
+      .card img {
+        transition: transform 0.5s ease;
+      }
+
+      .card:hover img {
+        transform: scale(1.1);
+      }
+
+      .navbar {
+        background: linear-gradient(
+          90deg,
+          rgba(30, 58, 138, 0.9),
+          rgba(255, 94, 98, 0.9)
+        );
+        backdrop-filter: blur(15px);
+        border-bottom: 2px solid #facc15;
+      }
+
+      .navbar-dark .nav-link {
+        font-size: 1.2rem;
+        color: #ffffff !important;
+        font-weight: 500;
+        padding: 0.75rem 1.5rem;
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .navbar-dark .nav-link:hover,
+      .navbar-dark .nav-link.active {
+        color: #facc15 !important;
+        transform: scale(1.05);
+      }
+
+      .navbar-dark .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 3px;
+        bottom: -5px;
+        left: 0;
+        background: #facc15;
+        transition: width 0.3s ease;
+      }
+
+      .navbar-dark .nav-link:hover::after,
+      .navbar-dark .nav-link.active::after {
+        width: 100%;
+      }
+
+      .form-control {
+        border-radius: 12px;
+        border: 2px solid #1e3a8a;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .form-control:focus {
+        border-color: #ff5e62;
+        box-shadow: 0 0 12px rgba(255, 94, 98, 0.4);
+      }
+
+      .form-label {
+        transition: all 0.3s ease;
+        color: #1e3a8a;
+      }
+
+      .form-control:valid + .form-label,
+      .form-control:focus + .form-label {
+        transform: translateY(-1.5rem);
+        font-size: 0.85rem;
+        color: #ff5e62;
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #1e3a8a, #ff5e62);
+        border: none;
+        border-radius: 12px;
+        padding: 1rem 2rem;
+        font-weight: 600;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.6s ease, height 0.6s ease;
+      }
+
+      .btn-primary:hover::before {
+        width: 300px;
+        height: 300px;
+      }
+
+      .btn-primary:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(255, 94, 98, 0.4);
+      }
+
+      .footer-bg {
+        background: linear-gradient(135deg, #1e3a8a, #ff5e62);
+        padding: 4rem 2rem;
+        color: white;
+        position: relative;
+      }
+
+      .text-muted-t {
+        color: #facc15 !important;
+      }
+
+      .hero-bg img {
+        max-width: 50em;
+        width: 100%;
+        /* border-radius: 50%; */
+        /* border: 5px solid #facc15; */
+        /* box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); */
+      }
+
+      .recognized-item {
+        background: linear-gradient(135deg, #ffffff, #e6f0fa);
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .affiliated-item {
+        background: linear-gradient(135deg, #ffffff, #fef7f5);
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .recognized-item img,
+      .affiliated-item img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        /* border: 3px solid #facc15; */
+        transition: transform 0.5s ease;
+      }
+
+      .recognized-item:hover img,
+      .affiliated-item:hover img {
+        transform: scale(1.1);
+      }
+
+      .social-icon {
+        font-size: 1.8rem;
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+
+      .social-icon:hover {
+        transform: rotate(360deg);
+        color: #facc15 !important;
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(45deg, #1e3a8a, #ff5e62);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .back-to-top:hover {
+        transform: scale(1.1);
+      }
+
+      @keyframes textGlow {
+        0% {
+          text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+        }
+        100% {
+          text-shadow: 3px 3px 15px rgba(255, 94, 98, 0.7);
+        }
+      }
+
+      /* Mobile View Optimizations */
+      @media (max-width: 768px) {
+        .hero-bg video {
+          display: none;
         }
 
         .hero-bg {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: white;
-            overflow: hidden;
+          background-image: linear-gradient(
+              rgba(30, 58, 138, 0.7),
+              rgba(255, 94, 98, 0.7)
+            ),
+            url("https://img.freepik.com/free-photo/medical-theme-portrait-female-doctor-with-clipboard-against-group-doctors-meeting-mri-office-diagnostic-center-hospital_627829-6528.jpg?ga=GA1.1.588228496.1745879376&semt=ais_hybrid&w=740");
+          background-size: cover;
+          background-position: center;
+          background-attachment: scroll;
+          min-height: 80vh;
         }
 
-        .hero-bg video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
-
-        .hero-overlay {
-            background: linear-gradient(rgba(30, 58, 138, 0.7), rgba(255, 94, 98, 0.7));
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        .hero-bg h1 {
-            font-family: 'Lora', serif;
-            font-weight: 700;
-            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
-            animation: textGlow 2s ease-in-out infinite alternate;
-        }
-
-        .hero-bg .btn-gradient {
-            background: linear-gradient(45deg, #1e3a8a, #ff5e62);
-            border: none;
-            padding: 1rem 2.5rem;
-            font-weight: 600;
-            border-radius: 50px;
-            box-shadow: 0 5px 15px rgba(255, 94, 98, 0.4);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .hero-bg .btn-gradient:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(255, 94, 98, 0.6);
-        }
-
-        .section-spacing {
-            padding: 6rem 2rem;
-            position: relative;
-        }
-
-        .section-divider {
-            height: 5px;
-            background: linear-gradient(90deg, #1e3a8a, #facc15);
-            margin: 2.5rem auto;
-            width: 120px;
-            border-radius: 3px;
-        }
-
-        .card {
-            border: none;
-            border-radius: 20px;
-            overflow: hidden;
-            background: linear-gradient(135deg, #ffffff, #e6f0fa);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-        }
-
-        .card img {
-            transition: transform 0.5s ease;
-        }
-
-        .card:hover img {
-            transform: scale(1.1);
-        }
-
-        .navbar {
-            background: linear-gradient(90deg, rgba(30, 58, 138, 0.9), rgba(255, 94, 98, 0.9));
-            backdrop-filter: blur(15px);
-            border-bottom: 2px solid #facc15;
+        .navbar-nav {
+          text-align: center;
+          padding: 1rem 0;
         }
 
         .navbar-dark .nav-link {
-            font-size: 1.2rem;
-            color: #ffffff !important;
-            font-weight: 500;
-            padding: 0.75rem 1.5rem;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .navbar-dark .nav-link:hover,
-        .navbar-dark .nav-link.active {
-            color: #facc15 !important;
-            transform: scale(1.05);
-        }
-
-        .navbar-dark .nav-link::after {
-            content: "";
-            position: absolute;
-            width: 0;
-            height: 3px;
-            bottom: -5px;
-            left: 0;
-            background: #facc15;
-            transition: width 0.3s ease;
-        }
-
-        .navbar-dark .nav-link:hover::after,
-        .navbar-dark .nav-link.active::after {
-            width: 100%;
-        }
-
-        .form-control {
-            border-radius: 12px;
-            border: 2px solid #1e3a8a;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        .form-control:focus {
-            border-color: #ff5e62;
-            box-shadow: 0 0 12px rgba(255, 94, 98, 0.4);
-        }
-
-        .form-label {
-            transition: all 0.3s ease;
-            color: #1e3a8a;
-        }
-
-        .form-control:valid + .form-label,
-        .form-control:focus + .form-label {
-            transform: translateY(-1.5rem);
-            font-size: 0.85rem;
-            color: #ff5e62;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, #1e3a8a, #ff5e62);
-            border: none;
-            border-radius: 12px;
-            padding: 1rem 2rem;
-            font-weight: 600;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
-        .btn-primary:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 94, 98, 0.4);
-        }
-
-        .footer-bg {
-            background: linear-gradient(135deg, #1e3a8a, #ff5e62);
-            padding: 4rem 2rem;
-            color: white;
-            position: relative;
-        }
-
-        .text-muted-t {
-            color: #facc15 !important;
+          font-size: 1.1rem;
+          margin: 0.5rem 0;
         }
 
         .hero-bg img {
-            max-width: 50em;
-            width: 100%;
-            /* border-radius: 50%; */
-            /* border: 5px solid #facc15; */
-            /* box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); */
+          max-width: 35em;
         }
 
-        .recognized-item {
-            background: linear-gradient(135deg, #ffffff, #e6f0fa);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            position: relative;
-            overflow: hidden;
+        .section-spacing {
+          padding: 4rem 1rem;
         }
 
+        .card {
+          margin-bottom: 1.5rem;
+        }
+
+        .card img {
+          max-width: 200px;
+        }
+
+        .btn-primary {
+          padding: 0.75rem 1.5rem;
+          font-size: 0.9rem;
+        }
+
+        .footer-bg {
+          padding: 3rem 1rem;
+        }
+
+        .recognized-item,
         .affiliated-item {
-            background: linear-gradient(135deg, #ffffff, #fef7f5);
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          padding: 1rem;
         }
 
         .recognized-item img,
         .affiliated-item img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-            /* border: 3px solid #facc15; */
-            transition: transform 0.5s ease;
+          max-width: 150px;
         }
 
-        .recognized-item:hover img,
-        .affiliated-item:hover img {
-            transform: scale(1.1);
+        .animate__animated {
+          animation-duration: 0.5s;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .navbar-dark .nav-link {
+          font-size: 1rem;
         }
 
-        .social-icon {
-            font-size: 1.8rem;
-            transition: transform 0.3s ease, color 0.3s ease;
+        .hero-bg {
+          min-height: 60vh;
         }
 
-        .social-icon:hover {
-            transform: rotate(360deg);
-            color: #facc15 !important;
+        .hero-bg img {
+          max-width: 25em;
         }
 
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: linear-gradient(45deg, #1e3a8a, #ff5e62);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+        .section-spacing {
+          padding: 3rem 0.75rem;
         }
 
-        .back-to-top.visible {
-            opacity: 1;
-            transform: scale(1);
+        .card {
+          margin-bottom: 1rem;
         }
 
-        .back-to-top:hover {
-            transform: scale(1.1);
+        .card img {
+          max-width: 150px;
         }
 
-        @keyframes textGlow {
-            0% { text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5); }
-            100% { text-shadow: 3px 3px 15px rgba(255, 94, 98, 0.7); }
+        .btn-primary {
+          padding: 0.6rem 1.25rem;
+          font-size: 0.85rem;
         }
 
-        /* Mobile View Optimizations */
-        @media (max-width: 768px) {
-            .hero-bg video {
-                display: none;
-            }
-
-            .hero-bg {
-                background-image: linear-gradient(rgba(30, 58, 138, 0.7), rgba(255, 94, 98, 0.7)),
-                    url("https://img.freepik.com/free-photo/medical-theme-portrait-female-doctor-with-clipboard-against-group-doctors-meeting-mri-office-diagnostic-center-hospital_627829-6528.jpg?ga=GA1.1.588228496.1745879376&semt=ais_hybrid&w=740");
-                background-size: cover;
-                background-position: center;
-                background-attachment: scroll;
-                min-height: 80vh;
-            }
-
-            .navbar-nav {
-                text-align: center;
-                padding: 1rem 0;
-            }
-
-            .navbar-dark .nav-link {
-                font-size: 1.1rem;
-                margin: 0.5rem 0;
-            }
-
-            .hero-bg img {
-                max-width: 35em;
-            }
-
-            .section-spacing {
-                padding: 4rem 1rem;
-            }
-
-            .card {
-                margin-bottom: 1.5rem;
-            }
-
-            .card img {
-                max-width: 200px;
-            }
-
-            .btn-primary {
-                padding: 0.75rem 1.5rem;
-                font-size: 0.9rem;
-            }
-
-            .footer-bg {
-                padding: 3rem 1rem;
-            }
-
-            .recognized-item,
-            .affiliated-item {
-                padding: 1rem;
-            }
-
-            .recognized-item img,
-            .affiliated-item img {
-                max-width: 150px;
-            }
-
-            .animate__animated {
-                animation-duration: 0.5s;
-            }
+        h1,
+        h2,
+        h3 {
+          font-size: calc(1rem + 2vw);
         }
 
-        @media (max-width: 576px) {
-            .navbar-dark .nav-link {
-                font-size: 1rem;
-            }
-
-            .hero-bg {
-                min-height: 60vh;
-            }
-
-            .hero-bg img {
-                max-width: 25em;
-            }
-
-            .section-spacing {
-                padding: 3rem 0.75rem;
-            }
-
-            .card {
-                margin-bottom: 1rem;
-            }
-
-            .card img {
-                max-width: 150px;
-            }
-
-            .btn-primary {
-                padding: 0.6rem 1.25rem;
-                font-size: 0.85rem;
-            }
-
-            h1, h2, h3 {
-                font-size: calc(1rem + 2vw);
-            }
-
-            .display-3 {
-                font-size: calc(1.5rem + 3vw);
-            }
-
-            .display-5 {
-                font-size: calc(1.2rem + 2.5vw);
-            }
-
-            .recognized-item,
-            .affiliated-item {
-                padding: 0.75rem;
-            }
-
-            .recognized-item img,
-            .affiliated-item img {
-                max-width: 120px;
-            }
+        .display-3 {
+          font-size: calc(1.5rem + 3vw);
         }
+
+        .display-5 {
+          font-size: calc(1.2rem + 2.5vw);
+        }
+
+        .recognized-item,
+        .affiliated-item {
+          padding: 0.75rem;
+        }
+
+        .recognized-item img,
+        .affiliated-item img {
+          max-width: 120px;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header class="hero-bg">
-        <video autoplay muted loop playsinline>
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-nurse-checking-a-patient-39886-large.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="container text-center py-5" data-aos="fade-up">
-            <img src="/images/nurses-logo.png" alt="Institute Logo" class="mb-4">
-            <h1 class="display-3 fw-bold mb-3">All Saints Institute of Nursing and Allied Sciences</h1>
-            <p class="lead mb-4">Empowering nurses with knowledge, compassion, and clinical expertise.</p>
-            <a href="#admissions" class="btn btn-gradient btn-lg">Explore Programs</a>
-        </div>
+      <video autoplay muted loop playsinline>
+        <source
+          src="https://assets.mixkit.co/videos/preview/mixkit-nurse-checking-a-patient-39886-large.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div class="hero-overlay"></div>
+      <div class="container text-center py-5" data-aos="fade-up">
+        <img src="/images/nurses-logo.png" alt="Institute Logo" class="mb-4" />
+        <h1 class="display-3 fw-bold mb-3">
+          All Saints Institute of Nursing and Allied Sciences
+        </h1>
+        <p class="lead mb-4">
+          Empowering nurses with knowledge, compassion, and clinical expertise.
+        </p>
+        <a href="#admissions" class="btn btn-gradient btn-lg"
+          >Explore Programs</a
+        >
+      </div>
     </header>
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top" data-aos="fade-down">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#about" aria-current="page">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#admissions">Admissions</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#recognized">Recognized</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#affiliated">Affiliated</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
+    <nav
+      class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top"
+      data-aos="fade-down"
+    >
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-center"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" href="#about" aria-current="page"
+                >About Us</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#admissions">Admissions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#recognized">Recognized</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#affiliated">Affiliated</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
     <section id="about" class="section-spacing bg-light" data-aos="fade-up">
-        <div class="container">
-            <h2 class="display-5 fw-semibold text-dark mb-4 text-center">Welcome</h2>
-            <div class="section-divider"></div>
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <p class="lead mb-4">Welcome to All Saints Institute of Nursing and Allied Sciences, a premier institution dedicated to shaping the future of healthcare through unparalleled nursing education.</p>
-                    <p class="lead mb-4">Our globally recognized curriculum blends cutting-edge academic instruction with immersive clinical experience, tailored to meet both international standards and local healthcare needs.</p>
-                    <p class="lead">At All Saints, nursing is a calling. Join our vibrant community and make a lasting impact in healthcare.</p>
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="display-5 fw-semibold text-dark mb-4 text-center">
+          Welcome
+        </h2>
+        <div class="section-divider"></div>
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <p class="lead mb-4">
+              Welcome to All Saints Institute of Nursing and Allied Sciences, a
+              premier institution dedicated to shaping the future of healthcare
+              through unparalleled nursing education.
+            </p>
+            <p class="lead mb-4">
+              Our globally recognized curriculum blends cutting-edge academic
+              instruction with immersive clinical experience, tailored to meet
+              both international standards and local healthcare needs.
+            </p>
+            <p class="lead">
+              At All Saints, nursing is a calling. Join our vibrant community
+              and make a lasting impact in healthcare.
+            </p>
+          </div>
         </div>
+      </div>
     </section>
-    <section id="admissions" class="section-spacing bg-white" data-aos="fade-up">
-        <div class="container">
-            <h2 class="display-5 fw-semibold text-dark mb-5 text-center">Admissions</h2>
-            <div class="section-divider"></div>
-            <p class="lead text-muted mb-5 text-center mx-auto" style="max-width: 800px;">We seek passionate candidates with academic excellence and a commitment to nursing, ready to contribute to the healthcare community.</p>
-            <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
-                <div class="col" data-tilt data-tilt-max="10">
-                    <div class="card h-100">
-                        <div class="card-body p-4">
-                            <h3 class="card-title h4 fw-semibold text-primary mb-3">Generic BSN (4 years) Degree Program</h3>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item border-0 text-muted">Matric Science (Physics, Chemistry & Biology)</li>
-                                <li class="list-group-item border-0 text-muted">FSC (Pre-Medical) with 50% marks minimum</li>
-                                <li class="list-group-item border-0 text-muted">Age Limit: 14-35 years</li>
-                                <li class="list-group-item border-0 text-muted">Gender Ratio: Open merit</li>
-                            </ul>
-                            <img src="/images/Covers - 02 (1).jpg" alt="Generic BSN Program" class="img-fluid mt-3 lazy" loading="lazy">
-                        </div>
-                    </div>
-                </div>
-                <div class="col" data-tilt data-tilt-max="10">
-                    <div class="card h-100">
-                        <div class="card-body p-4">
-                            <h3 class="card-title h4 fw-semibold text-primary mb-3">POST RN-BSN (2 Years) Degree Program</h3>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item border-0 text-muted">Matric with Science or Arts (per HEC)</li>
-                                <li class="list-group-item border-0 text-muted">03-Year Diploma in General Nursing</li>
-                                <li class="list-group-item border-0 text-muted">01-Year Diploma in Midwifery</li>
-                                <li class="list-group-item border-0 text-muted">01 Year as a Registered Nurse</li>
-                                <li class="list-group-item border-0 text-muted">Gender: Both</li>
-                            </ul>
-                            <img src="/images/Covers - 03 (1).jpg" alt="Post RN-BSN Program" class="img-fluid mt-3 lazy" loading="lazy">
-                        </div>
-                    </div>
-                </div>
+    <section
+      id="admissions"
+      class="section-spacing bg-white"
+      data-aos="fade-up"
+    >
+      <div class="container">
+        <h2 class="display-5 fw-semibold text-dark mb-5 text-center">
+          Admissions
+        </h2>
+        <div class="section-divider"></div>
+        <p
+          class="lead text-muted mb-5 text-center mx-auto"
+          style="max-width: 800px"
+        >
+          We seek passionate candidates with academic excellence and a
+          commitment to nursing, ready to contribute to the healthcare
+          community.
+        </p>
+        <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+          <div class="col" data-tilt data-tilt-max="10">
+            <div class="card h-100">
+              <div class="card-body p-4">
+                <h3 class="card-title h4 fw-semibold text-primary mb-3">
+                  Generic BSN (4 years) Degree Program
+                </h3>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item border-0 text-muted">
+                    Matric Science (Physics, Chemistry & Biology)
+                  </li>
+                  <li class="list-group-item border-0 text-muted">
+                    FSC (Pre-Medical) with 50% marks minimum
+                  </li>
+                  <li class="list-group-item border-0 text-muted">
+                    Age Limit: 14-35 years
+                  </li>
+                  <li class="list-group-item border-0 text-muted">
+                    Gender Ratio: Open merit
+                  </li>
+                </ul>
+                <img
+                  src="/images/Covers - 02 (1).jpg"
+                  alt="Generic BSN Program"
+                  class="img-fluid mt-3 lazy"
+                  loading="lazy"
+                />
+              </div>
             </div>
+          </div>
+          <div class="col" data-tilt data-tilt-max="10">
+            <div class="card h-100">
+              <div class="card-body p-4">
+                <h3 class="card-title h4 fw-semibold text-primary mb-3">
+                  POST RN-BSN (2 Years) Degree Program
+                </h3>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item border-0 text-muted">
+                    Matric with Science or Arts (per HEC)
+                  </li>
+                  <li class="list-group-item border-0 text-muted">
+                    03-Year Diploma in General Nursing
+                  </li>
+                  <li class="list-group-item border-0 text-muted">
+                    01-Year Diploma in Midwifery
+                  </li>
+                  <li class="list-group-item border-0 text-muted">
+                    01 Year as a Registered Nurse
+                  </li>
+                  <li class="list-group-item border-0 text-muted">
+                    Gender: Both
+                  </li>
+                </ul>
+                <img
+                  src="/images/Covers - 03 (1).jpg"
+                  alt="Post RN-BSN Program"
+                  class="img-fluid mt-3 lazy"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
-    <section id="recognized" class="section-spacing bg-light" data-aos="fade-up">
-        <div class="container">
-            <h2 class="display-5 fw-semibold text-dark mb-5 text-center">Recognized</h2>
-            <div class="section-divider"></div>
-            <p class="lead text-muted mb-5 text-center mx-auto" style="max-width: 800px;">Our institute is celebrated for its unwavering commitment to excellence in nursing education and healthcare training.</p>
-            <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
-                <div class="col" data-tilt data-tilt-max="10">
-                    <div class="recognized-item">
-                        <img src="/images/org-1__1_-removebg-preview.png" alt="PNC Accreditation" class="mb-3 lazy" loading="lazy">
-                        <h3 class="h5 fw-semibold text-primary mb-3">Pakistan Nursing Council Accreditation</h3>
-                        <p class="text-muted">Accredited by the Pakistan Nursing Council, ensuring compliance with national standards.</p>
-                    </div>
-                </div>
-                <div class="col" data-tilt data-tilt-max="10">
-                    <div class="recognized-item">
-                        <img src="/images/org-3__1_-removebg-preview.png" alt="Excellence Award" class="mb-3 lazy" loading="lazy">
-                        <h3 class="h5 fw-semibold text-primary mb-3">Healthcare Education Excellence Award</h3>
-                        <p class="text-muted">Awarded in 2024 for outstanding contributions to nursing education in Karachi.</p>
-                    </div>
-                </div>
+    <section
+      id="recognized"
+      class="section-spacing bg-light"
+      data-aos="fade-up"
+    >
+      <div class="container">
+        <h2 class="display-5 fw-semibold text-dark mb-5 text-center">
+          Recognized
+        </h2>
+        <div class="section-divider"></div>
+        <p
+          class="lead text-muted mb-5 text-center mx-auto"
+          style="max-width: 800px"
+        >
+          Our institute is celebrated for its unwavering commitment to
+          excellence in nursing education and healthcare training.
+        </p>
+        <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+          <div class="col" data-tilt data-tilt-max="10">
+            <div class="recognized-item">
+              <img
+                src="images/org-1__1_-removebg-preview.png"
+                alt="PNC Accreditation"
+                class="mb-3 lazy"
+                loading="lazy"
+              />
+              <h3 class="h5 fw-semibold text-primary mb-3">
+                Pakistan Nursing Council Accreditation
+              </h3>
+              <p class="text-muted">
+                Accredited by the Pakistan Nursing Council, ensuring compliance
+                with national standards.
+              </p>
             </div>
+          </div>
+          <div class="col" data-tilt data-tilt-max="10">
+            <div class="recognized-item">
+              <img
+                src="images/org-3__1_-removebg-preview.png"
+                alt="Excellence Award"
+                class="mb-3 lazy"
+                loading="lazy"
+              />
+              <h3 class="h5 fw-semibold text-primary mb-3">
+                Healthcare Education Excellence Award
+              </h3>
+              <p class="text-muted">
+                Awarded in 2024 for outstanding contributions to nursing
+                education in Karachi.
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
-    <section id="affiliated" class="section-spacing bg-white" data-aos="fade-up">
-        <div class="container">
-            <h2 class="display-5 fw-semibold text-dark mb-5 text-center">Affiliated</h2>
-            <div class="section-divider"></div>
-            <p class="lead text-muted mb-5 text-center mx-auto" style="max-width: 800px;">Our partnerships with top healthcare institutions ensure exceptional clinical training and career opportunities.</p>
-            <div class="text-center mb-4">
-                <img src="data:image/jpeg;base64,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" alt="Affiliated Institutions" class="lazy" loading="lazy">
-            </div>
-            <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
-                <!-- <div class="col" data-tilt data-tilt-max="10">
+    <section
+      id="affiliated"
+      class="section-spacing bg-white"
+      data-aos="fade-up"
+    >
+      <div class="container">
+        <h2 class="display-5 fw-semibold text-dark mb-5 text-center">
+          Affiliated
+        </h2>
+        <div class="section-divider"></div>
+        <p
+          class="lead text-muted mb-5 text-center mx-auto"
+          style="max-width: 800px"
+        >
+          Our partnerships with top healthcare institutions ensure exceptional
+          clinical training and career opportunities.
+        </p>
+        <div class="text-center mb-4">
+          <img
+            src="data:image/jpeg;base64,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"
+            alt="Affiliated Institutions"
+            class="lazy"
+            loading="lazy"
+          />
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+          <!-- <div class="col" data-tilt data-tilt-max="10">
                     <div class="affiliated-item text-center">
                         <h3 class="h6 fw-semibold text-primary mb-2">Aga Khan University Hospital</h3>
                         <p class="text-muted small">Premier clinical placements for students.</p>
                     </div>
                 </div> -->
-                <div class="col" data-tilt data-tilt-max="10">
-                    <div class="affiliated-item text-center">
-                        <h3 class="h6 fw-semibold text-primary mb-2">Liaquat National Hospital</h3>
-                        <p class="text-muted small">Hands-on training in medical specialties.</p>
-                    </div>
-                </div>
-                <!-- <div class="col" data-tilt data-tilt-max="10">
+          <div class="col" data-tilt data-tilt-max="10">
+            <div class="affiliated-item text-center">
+              <h3 class="h6 fw-semibold text-primary mb-2">
+                Liaquat National Hospital
+              </h3>
+              <p class="text-muted small">
+                Hands-on training in medical specialties.
+              </p>
+            </div>
+          </div>
+          <!-- <div class="col" data-tilt data-tilt-max="10">
                     <div class="affiliated-item text-center">
                         <h3 class="h6 fw-semibold text-primary mb-2">Jinnah Postgraduate Medical Centre</h3>
                         <p class="text-muted small">Real-world experience in a public hospital.</p>
                     </div>
                 </div> -->
-            </div>
         </div>
+      </div>
     </section>
     <section id="contact" class="section-spacing bg-light" data-aos="fade-up">
-        <div class="container">
-            <h2 class="display-5 fw-semibold text-dark mb-5 text-center">Contact Us</h2>
-            <div class="section-divider"></div>
-            <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
-                <div class="col-md-5">
-                    <div class="text-muted">
-                        <p class="mb-3">Our team is here to support your journey to becoming a healthcare leader. Contact us for program details, admissions, or campus visits.</p>
-                        <p class="mb-3"><strong>Address:</strong> P.R.E.C.H.S, Project 5-A, Commissioner Society, Karachi. 75300</p>
-                        <p class="mb-3"><strong>Email:</strong> <a href="mailto:info@asinas.edu.pk" class="text-primary text-decoration-none">info@asinas.edu.pk</a>, <a href="mailto:studentaffairs@asinas.edu.pk" class="text-primary text-decoration-none">studentaffairs@asinas.edu.pk</a></p>
-                        <p class="mb-3"><strong>Phone:</strong> <a href="tel:03132187825" class="text-primary text-decoration-none">0313-2187825</a> / <a href="tel:03002187825" class="text-primary text-decoration-none">0300-2187825</a></p>
-                        <p class="mb-3"><strong>WhatsApp:</strong> <a href="https://wa.me/03132187825" class="text-primary text-decoration-none">0313-2187825</a>, <a href="https://wa.me/03002187825" class="text-primary text-decoration-none">0300-2187825</a></p>
-                        <p class="mb-3"><strong>Office Hours:</strong> Monday to Friday, 9:00 AM - 5:00 PM</p>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="card border-0 p-4 bg-white">
-                        <h3 class="h4 fw-semibold text-dark mb-4">Send Us a Message</h3>
-                        <div>
-                            <div class="mb-3 position-relative">
-                                <input type="text" class="form-control" id="name" placeholder=" " required>
-                                <label for="name" class="form-label position-absolute">Your Name</label>
-                            </div>
-                            <div class="mb-3 position-relative">
-                                <input type="email" class="form-control" id="email" placeholder=" " required>
-                                <label for="email" class="form-label position-absolute">Your Email</label>
-                            </div>
-                            <div class="mb-3 position-relative">
-                                <textarea class="form-control" id="message" rows="4" placeholder=" " required></textarea>
-                                <label for="message" class="form-label position-absolute">Your Message</label>
-                            </div>
-                            <button type="button" class="btn btn-primary w-100">Submit</button>
-                        </div>
-                    </div>
-                </div>
+      <div class="container">
+        <h2 class="display-5 fw-semibold text-dark mb-5 text-center">
+          Contact Us
+        </h2>
+        <div class="section-divider"></div>
+        <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+          <div class="col-md-5">
+            <div class="text-muted">
+              <p class="mb-3">
+                Our team is here to support your journey to becoming a
+                healthcare leader. Contact us for program details, admissions,
+                or campus visits.
+              </p>
+              <p class="mb-3">
+                <strong>Address:</strong> P.E.C.H.S, Project 5-A, Commissioner
+                Society, Karachi. 75300
+              </p>
+              <p class="mb-3">
+                <strong>Email:</strong>
+                <a
+                  href="mailto:info@asinas.edu.pk"
+                  class="text-primary text-decoration-none"
+                  >info@asinas.edu.pk</a
+                >,
+                <a
+                  href="mailto:studentaffairs@asinas.edu.pk"
+                  class="text-primary text-decoration-none"
+                  >studentaffairs@asinas.edu.pk</a
+                >
+              </p>
+              <p class="mb-3">
+                <strong>Phone:</strong>
+                <a
+                  href="tel:03132187825"
+                  class="text-primary text-decoration-none"
+                  >0313-2187825</a
+                >
+                /
+                <a
+                  href="tel:03002187825"
+                  class="text-primary text-decoration-none"
+                  >0300-2187825</a
+                >
+              </p>
+              <p class="mb-3">
+                <strong>WhatsApp:</strong>
+                <a
+                  href="https://wa.me/03132187825"
+                  class="text-primary text-decoration-none"
+                  >0313-2187825</a
+                >,
+                <a
+                  href="https://wa.me/03002187825"
+                  class="text-primary text-decoration-none"
+                  >0300-2187825</a
+                >
+              </p>
+              <p class="mb-3">
+                <strong>Office Hours:</strong> Monday to Friday, 9:00 AM - 5:00
+                PM
+              </p>
             </div>
+          </div>
+          <div class="col-md-5">
+            <div class="card border-0 p-4 bg-white">
+              <h3 class="h4 fw-semibold text-dark mb-4">Send Us a Message</h3>
+              <div>
+                <div class="mb-3 position-relative">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    placeholder=" "
+                    required
+                  />
+                  <label for="name" class="form-label position-absolute"
+                    >Your Name</label
+                  >
+                </div>
+                <div class="mb-3 position-relative">
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder=" "
+                    required
+                  />
+                  <label for="email" class="form-label position-absolute"
+                    >Your Email</label
+                  >
+                </div>
+                <div class="mb-3 position-relative">
+                  <textarea
+                    class="form-control"
+                    id="message"
+                    rows="4"
+                    placeholder=" "
+                    required
+                  ></textarea>
+                  <label for="message" class="form-label position-absolute"
+                    >Your Message</label
+                  >
+                </div>
+                <button type="button" class="btn btn-primary w-100">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
     <footer class="footer-bg py-5 text-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4" data-aos="fade-up">
-                    <h3 class="h5 fw-semibold mb-3">All Saints Institute</h3>
-                    <p class="text-muted-t">Shaping the future of healthcare through excellence in nursing education.</p>
-                </div>
-                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="h5 fw-semibold mb-3">Quick Links</h3>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#about" class="text-muted-t text-decoration-none">About Us</a></li>
-                        <li class="mb-2"><a href="#admissions" class="text-muted-t text-decoration-none">Admissions</a></li>
-                        <li class="mb-2"><a href="#recognized" class="text-muted-t text-decoration-none">Recognized</a></li>
-                        <li class="mb-2"><a href="#affiliated" class="text-muted-t text-decoration-none">Affiliated</a></li>
-                        <li class="mb-2"><a href="#contact" class="text-muted-t text-decoration-none">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="h5 fw-semibold mb-3">Contact Info</h3>
-                    <p class="text-muted-t">P.R.E.C.H.S, Karachi. 75300</p>
-                    <p class="text-muted-t">Phone: 0313-2187825 / 0300-2187825</p>
-                    <p class="text-muted-t">Email: <a href="mailto:info@asinas.edu.pk" class="text-muted-t text-decoration-none">info@asinas.edu.pk</a></p>
-                    <div class="mt-2">
-                        <a href="https://facebook.com" class="text-muted-t me-3 social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="https://twitter.com" class="text-muted-t me-3 social-icon" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
-                        <a href="https://linkedin.com" class="text-muted-t social-icon" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4" data-aos="fade-up">
+            <h3 class="h5 fw-semibold mb-3">All Saints Institute</h3>
+            <p class="text-muted-t">
+              Shaping the future of healthcare through excellence in nursing
+              education.
+            </p>
+          </div>
+          <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="h5 fw-semibold mb-3">Quick Links</h3>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="#about" class="text-muted-t text-decoration-none"
+                  >About Us</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#admissions" class="text-muted-t text-decoration-none"
+                  >Admissions</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#recognized" class="text-muted-t text-decoration-none"
+                  >Recognized</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#affiliated" class="text-muted-t text-decoration-none"
+                  >Affiliated</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#contact" class="text-muted-t text-decoration-none"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="h5 fw-semibold mb-3">Contact Info</h3>
+            <p class="text-muted-t">P.R.E.C.H.S, Karachi. 75300</p>
+            <p class="text-muted-t">Phone: 0313-2187825 / 0300-2187825</p>
+            <p class="text-muted-t">
+              Email:
+              <a
+                href="mailto:info@asinas.edu.pk"
+                class="text-muted-t text-decoration-none"
+                >info@asinas.edu.pk</a
+              >
+            </p>
+            <div class="mt-2">
+              <a
+                href="https://facebook.com"
+                class="text-muted-t me-3 social-icon"
+                aria-label="Facebook"
+                ><i class="bi bi-facebook"></i
+              ></a>
+              <a
+                href="https://twitter.com"
+                class="text-muted-t me-3 social-icon"
+                aria-label="Twitter"
+                ><i class="bi bi-twitter"></i
+              ></a>
+              <a
+                href="https://linkedin.com"
+                class="text-muted-t social-icon"
+                aria-label="LinkedIn"
+                ><i class="bi bi-linkedin"></i
+              ></a>
             </div>
-            <div class="text-center text-muted-t mt-4" data-aos="fade-up" data-aos-delay="300">
-                <p>© 2025 All Saints Institute of Nursing and Allied Sciences. All rights reserved.</p>
-            </div>
+          </div>
         </div>
+        <div
+          class="text-center text-muted-t mt-4"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
+          <p>
+            © 2025 All Saints Institute of Nursing and Allied Sciences. All
+            rights reserved.
+          </p>
+        </div>
+      </div>
     </footer>
-    <button class="back-to-top" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <button class="back-to-top" aria-label="Back to top">
+      <i class="bi bi-arrow-up"></i>
+    </button>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script>
-        // Initialize AOS
-        AOS.init({ duration: 800, once: true });
+      // Initialize AOS
+      AOS.init({ duration: 800, once: true });
 
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+      // Smooth scrolling
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
         });
+      });
 
-        // Back to top button
-        const backToTop = document.querySelector('.back-to-top');
-        window.addEventListener('scroll', () => {
-            backToTop.classList.toggle('visible', window.scrollY > 300);
-        });
+      // Back to top button
+      const backToTop = document.querySelector(".back-to-top");
+      window.addEventListener("scroll", () => {
+        backToTop.classList.toggle("visible", window.scrollY > 300);
+      });
 
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
 
-        // Form input animation
-        document.querySelectorAll('.form-control').forEach(input => {
-            input.addEventListener('input', () => {
-                input.classList.toggle('filled', input.value !== '');
-            });
+      // Form input animation
+      document.querySelectorAll(".form-control").forEach((input) => {
+        input.addEventListener("input", () => {
+          input.classList.toggle("filled", input.value !== "");
         });
+      });
     </script>
-</body>
+  </body>
 </html>
