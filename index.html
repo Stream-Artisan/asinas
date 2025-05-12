@@ -234,9 +234,6 @@
       .hero-bg img {
         max-width: 50em;
         width: 100%;
-        /* border-radius: 50%; */
-        /* border: 5px solid #facc15; */
-        /* box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); */
       }
 
       .recognized-item {
@@ -260,7 +257,6 @@
         max-width: 100%;
         height: auto;
         border-radius: 12px;
-        /* border: 3px solid #facc15; */
         transition: transform 0.5s ease;
       }
 
@@ -305,6 +301,77 @@
 
       .back-to-top:hover {
         transform: scale(1.1);
+      }
+
+      /* Popup Styles */
+      .popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1050;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .popup-content {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        animation: popupFadeIn 0.3s ease;
+      }
+
+      .popup-content h3 {
+        color: #1e3a8a;
+        font-family: "Lora", serif;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+      }
+
+      .close-popup {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.5rem;
+        color: #1e3a8a;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .close-popup:hover {
+        color: #ff5e62;
+      }
+
+      @keyframes popupFadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .btn-admission {
+        background: linear-gradient(45deg, #1e3a8a, #ff5e62);
+        color: white;
+        border-radius: 50px;
+        padding: 0.5rem 1.5rem;
+        font-weight: 600;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .btn-admission:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(255, 94, 98, 0.4);
       }
 
       @keyframes textGlow {
@@ -382,6 +449,11 @@
         .animate__animated {
           animation-duration: 0.5s;
         }
+
+        .popup-content {
+          width: 95%;
+          padding: 1.5rem;
+        }
       }
 
       @media (max-width: 576px) {
@@ -436,6 +508,10 @@
         .recognized-item img,
         .affiliated-item img {
           max-width: 120px;
+        }
+
+        .popup-content {
+          padding: 1rem;
         }
       }
     </style>
@@ -500,10 +576,85 @@
             <li class="nav-item">
               <a class="nav-link" href="#contact">Contact</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link btn-admission" href="#" id="admissionFormBtn"
+                >Apply Now</a
+              >
+            </li>
           </ul>
         </div>
       </div>
     </nav>
+    <!-- Popup Admission Form -->
+    <div class="popup-overlay" id="admissionPopup">
+      <div class="popup-content">
+        <span class="close-popup" id="closePopup">&times;</span>
+        <h3>Admission Inquiry Form</h3>
+        <div>
+          <div class="mb-3 position-relative">
+            <input
+              type="text"
+              class="form-control"
+              id="popupName"
+              placeholder=" "
+              required
+            />
+            <label for="popupName" class="form-label position-absolute"
+              >Full Name</label
+            >
+          </div>
+          <div class="mb-3 position-relative">
+            <input
+              type="email"
+              class="form-control"
+              id="popupEmail"
+              placeholder=" "
+              required
+            />
+            <label for="popupEmail" class="form-label position-absolute"
+              >Email Address</label
+            >
+          </div>
+          <div class="mb-3 position-relative">
+            <input
+              type="tel"
+              class="form-control"
+              id="popupPhone"
+              placeholder=" "
+              required
+            />
+            <label for="popupPhone" class="form-label position-absolute"
+              >Phone Number</label
+            >
+          </div>
+          <div class="mb-3 position-relative">
+            <select class="form-control" id="popupProgram" required>
+              <option value="" disabled selected>Select a Program</option>
+              <option value="Generic BSN">Generic BSN (4 Years)</option>
+              <option value="Post RN-BSN">Post RN-BSN (2 Years)</option>
+            </select>
+            <label for="popupProgram" class="form-label position-absolute"
+              >Interested Program</label
+            >
+          </div>
+          <div class="mb-3 position-relative">
+            <textarea
+              class="form-control"
+              id="popupMessage"
+              rows="4"
+              placeholder=" "
+              required
+            ></textarea>
+            <label for="popupMessage" class="form-label position-absolute"
+              >Additional Information</label
+            >
+          </div>
+          <button type="button" class="btn btn-primary w-100" id="submitAdmission">
+            Submit Application
+          </button>
+        </div>
+      </div>
+    </div>
     <section id="about" class="section-spacing bg-light" data-aos="fade-up">
       <div class="container">
         <h2 class="display-5 fw-semibold text-dark mb-4 text-center">
@@ -633,12 +784,14 @@
         <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
           <div class="col" data-tilt data-tilt-max="10">
             <div class="recognized-item">
+              <a href="https://pnmc.gov.pk/recognized-institutes/">
               <img
                 src="images/nursing-counsel.png"
                 alt="PNC Accreditation"
                 class="mb-3 lazy"
                 loading="lazy"
               />
+              </a>
               <h3 class="h5 fw-semibold text-primary mb-3">
                 Pakistan Nursing Council Accreditation
               </h3>
@@ -657,7 +810,7 @@
                 loading="lazy"
               />
               <h3 class="h5 fw-semibold text-primary mb-3">
-                Healthcare Education Excellence Award
+                Health Department Government Of Sindh
               </h3>
               <p class="text-muted">
                 Awarded in 2024 for outstanding contributions to nursing
@@ -686,7 +839,7 @@
           clinical training and career opportunities.
         </p>
         <div class="text-center mb-4">
-          <a href="https://www.lnh.edu.pk/" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.lumhs.edu.pk/home/" target="_blank" rel="noopener noreferrer">
             <img
               src="https://upload.wikimedia.org/wikipedia/en/7/7c/Liaquat_University_of_Medical_and_Health_Sciences_%28crest%29.jpg"
               alt="Affiliated Institutions"
@@ -696,12 +849,6 @@
           </a>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
-          <!-- <div class="col" data-tilt data-tilt-max="10">
-                    <div class="affiliated-item text-center">
-                        <h3 class="h6 fw-semibold text-primary mb-2">Aga Khan University Hospital</h3>
-                        <p class="text-muted small">Premier clinical placements for students.</p>
-                    </div>
-                </div> -->
           <div class="col" data-tilt data-tilt-max="10">
             <div class="affiliated-item text-center">
               <h3 class="h6 fw-semibold text-primary mb-2">
@@ -712,12 +859,6 @@
               </p>
             </div>
           </div>
-          <!-- <div class="col" data-tilt data-tilt-max="10">
-                    <div class="affiliated-item text-center">
-                        <h3 class="h6 fw-semibold text-primary mb-2">Jinnah Postgraduate Medical Centre</h3>
-                        <p class="text-muted small">Real-world experience in a public hospital.</p>
-                    </div>
-                </div> -->
         </div>
       </div>
     </section>
@@ -938,9 +1079,12 @@
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           e.preventDefault();
-          document.querySelector(this.getAttribute("href")).scrollIntoView({
-            behavior: "smooth",
-          });
+          const href = this.getAttribute("href");
+          if (href !== "#") {
+            document.querySelector(href).scrollIntoView({
+              behavior: "smooth",
+            });
+          }
         });
       });
 
@@ -959,6 +1103,50 @@
         input.addEventListener("input", () => {
           input.classList.toggle("filled", input.value !== "");
         });
+      });
+
+      // Popup functionality
+      const admissionFormBtn = document.getElementById("admissionFormBtn");
+      const admissionPopup = document.getElementById("admissionPopup");
+      const closePopup = document.getElementById("closePopup");
+      const submitAdmission = document.getElementById("submitAdmission");
+
+      admissionFormBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        admissionPopup.style.display = "flex";
+      });
+
+      closePopup.addEventListener("click", () => {
+        admissionPopup.style.display = "none";
+      });
+
+      // Close popup when clicking outside
+      admissionPopup.addEventListener("click", (e) => {
+        if (e.target === admissionPopup) {
+          admissionPopup.style.display = "none";
+        }
+      });
+
+      // Handle form submission (placeholder for actual submission logic)
+      submitAdmission.addEventListener("click", () => {
+        const name = document.getElementById("popupName").value;
+        const email = document.getElementById("popupEmail").value;
+        const phone = document.getElementById("popupPhone").value;
+        const program = document.getElementById("popupProgram").value;
+        const message = document.getElementById("popupMessage").value;
+
+        if (name && email && phone && program && message) {
+          alert("Form submitted successfully! We'll get back to you soon.");
+          admissionPopup.style.display = "none";
+          // Clear form
+          document.getElementById("popupName").value = "";
+          document.getElementById("popupEmail").value = "";
+          document.getElementById("popupPhone").value = "";
+          document.getElementById("popupProgram").value = "";
+          document.getElementById("popupMessage").value = "";
+        } else {
+          alert("Please fill out all required fields.");
+        }
       });
     </script>
   </body>
