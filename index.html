@@ -184,7 +184,13 @@
       .form-control:focus + .form-label {
         transform: translateY(-1.5rem);
         font-size: 0.85rem;
-        color: #ff5e62;
+        color: transparent;
+      }
+
+      .form-control:not(:placeholder-shown) + .form-label {
+        transform: translateY(-1.5rem);
+        font-size: 0.85rem;
+        color: transparent;
       }
 
       .btn-primary {
@@ -218,6 +224,19 @@
       .btn-primary:hover {
         transform: scale(1.05);
         box-shadow: 0 8px 25px rgba(255, 94, 98, 0.4);
+      }
+
+      .btn-outline-primary {
+        border-color: #1e3a8a;
+        color: #1e3a8a;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-outline-primary:hover {
+        background: linear-gradient(45deg, #1e3a8a, #ff5e62);
+        color: white;
+        border-color: transparent;
       }
 
       .footer-bg {
@@ -321,8 +340,10 @@
         background: white;
         border-radius: 20px;
         padding: 2rem;
-        max-width: 500px;
+        max-width: 700px;
         width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
         position: relative;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         animation: popupFadeIn 0.3s ease;
@@ -381,6 +402,110 @@
         100% {
           text-shadow: 3px 3px 15px rgba(255, 94, 98, 0.7);
         }
+      }
+
+      /* New Form Styles */
+      .form-section {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #f9f9f9, #e6f0fa);
+        border-radius: 12px;
+        border: 1px solid rgba(30, 58, 138, 0.1);
+      }
+
+      .form-section h4 {
+        color: #1e3a8a;
+        font-family: "Lora", serif;
+        font-weight: 700;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      .form-section h4::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(45deg, #1e3a8a, #ff5e62);
+      }
+
+      .table-responsive {
+        margin-bottom: 1rem;
+      }
+
+      .table {
+        background: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .table th {
+        background: linear-gradient(45deg, #1e3a8a, #ff5e62);
+        color: white;
+        font-weight: 600;
+        padding: 0.75rem;
+        text-align: center;
+      }
+
+      .table td {
+        padding: 0.5rem;
+        vertical-align: middle;
+      }
+
+      .table .form-control {
+        margin: 0;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+        height: 38px;
+      }
+
+      .table tr:hover {
+        background: rgba(255, 94, 98, 0.05);
+      }
+
+      #addEducationRow {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        margin-top: 0.5rem;
+      }
+
+      .file-upload-label {
+        font-size: 0.85rem;
+        color: #1e3a8a;
+        margin-top: 0.25rem;
+        display: block;
+      }
+
+      .form-control[type="file"] {
+        padding: 0.5rem;
+        background: #ffffff;
+        border: 2px dashed #1e3a8a;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-control[type="file"]:hover {
+        border-color: #ff5e62;
+      }
+
+      .form-check-input {
+        border: 2px solid #1e3a8a;
+        transition: all 0.3s ease;
+      }
+
+      .form-check-input:checked {
+        background-color: #ff5e62;
+        border-color: #ff5e62;
+      }
+
+      .form-check-label {
+        color: #1e3a8a;
+        font-size: 0.9rem;
+        margin-left: 0.5rem;
       }
 
       /* Mobile View Optimizations */
@@ -453,6 +578,31 @@
         .popup-content {
           width: 95%;
           padding: 1.5rem;
+          max-height: 90vh;
+        }
+
+        .form-section {
+          padding: 1rem;
+        }
+
+        .form-section h4 {
+          font-size: 1.1rem;
+        }
+
+        .table th,
+        .table td {
+          font-size: 0.85rem;
+          padding: 0.4rem;
+        }
+
+        .table .form-control {
+          font-size: 0.85rem;
+          height: 34px;
+        }
+
+        #addEducationRow {
+          font-size: 0.85rem;
+          padding: 0.4rem 0.8rem;
         }
       }
 
@@ -513,6 +663,37 @@
         .popup-content {
           padding: 1rem;
         }
+
+        .form-section {
+          padding: 0.75rem;
+        }
+
+        .form-section h4 {
+          font-size: 1rem;
+        }
+
+        .table-responsive {
+          overflow-x: auto;
+        }
+
+        .table th,
+        .table td {
+          font-size: 0.8rem;
+          padding: 0.3rem;
+        }
+
+        .table .form-control {
+          font-size: 0.8rem;
+          height: 32px;
+        }
+
+        .form-check-label {
+          font-size: 0.85rem;
+        }
+      }
+
+      .section-spacing h3 {
+        color: #ff5e62; /* Updated color for h3 tags */
       }
     </style>
   </head>
@@ -588,71 +769,276 @@
     <!-- Popup Admission Form -->
     <div class="popup-overlay" id="admissionPopup">
       <div class="popup-content">
-        <span class="close-popup" id="closePopup">&times;</span>
-        <h3>Admission Inquiry Form</h3>
-        <div>
-          <div class="mb-3 position-relative">
-            <input
-              type="text"
-              class="form-control"
-              id="popupName"
-              placeholder=" "
-              required
-            />
-            <label for="popupName" class="form-label position-absolute"
-              >Full Name</label
-            >
+        <span class="close-popup" id="closePopup">×</span>
+        <h3>Admission Form</h3>
+        <form id="admissionForm" action="send_email.php" method="POST" enctype="multipart/form-data">
+          <input type="hidden" name="form_type" value="admission">
+
+          <!-- Personal Information -->
+          <div class="form-section">
+            <h4>Personal Information</h4>
+            <div class="mb-3 position-relative">
+              <label for="fullName" class="form-label position-absolute">Full Name (First, Middle, Last)</label>
+<br>
+              <input type="text" class="form-control" id="fullName" name="full_name" placeholder=" " required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="fatherName" class="form-label position-absolute">Father’s Name / Guardian’s Name</label>
+<br>
+              <input type="text" class="form-control" id="fatherName" name="father_name" placeholder=" " required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="motherName" class="form-label position-absolute">Mother’s Name</label>
+<br>
+              <input type="text" class="form-control" id="motherName" name="mother_name" placeholder=" " required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="gender" class="form-label position-absolute">Gender</label>
+<br>
+              <select class="form-control" id="gender" name="gender" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="dob" class="form-label position-absolute">Date of Birth</label>
+<br>
+              <input type="date" class="form-control" id="dob" name="dob" placeholder=" " required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="nationality" class="form-label position-absolute">Nationality</label>
+<br>
+              <input type="text" class="form-control" id="nationality" name="nationality" placeholder=" " required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="religion" class="form-label position-absolute">Religion (Optional)</label>
+<br>
+              <input type="text" class="form-control" id="religion" name="religion" placeholder=" " />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="maritalStatus" class="form-label position-absolute">Marital Status</label>
+<br>
+              <select class="form-control" id="maritalStatus" name="marital_status" required>
+                <option value="" disabled selected>Select Marital Status</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Divorced">Divorced</option>
+                <option value="Widowed">Widowed</option>
+              </select>
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="cnic" class="form-label position-absolute">CNIC / B-Form Number</label>
+<br>
+              <input type="text" class="form-control" id="cnic" name="cnic" placeholder=" " required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="domicile" class="form-label position-absolute">Domicile</label>
+<br>
+              <input type="text" class="form-control" id="domicile" name="domicile" placeholder=" " required />
+            </div>
           </div>
-          <div class="mb-3 position-relative">
-            <input
-              type="email"
-              class="form-control"
-              id="popupEmail"
-              placeholder=" "
-              required
-            />
-            <label for="popupEmail" class="form-label position-absolute"
-              >Email Address</label
-            >
+
+          <!-- Contact Information -->
+          <div class="form-section">
+            <h4>Contact Information</h4>
+            <div class="mb-3 position-relative">
+              <label for="permanentAddress" class="form-label position-absolute">Permanent Address</label>
+<br>
+              <textarea class="form-control" id="permanentAddress" name="permanent_address" rows="3" placeholder=" " required></textarea>
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="currentAddress" class="form-label position-absolute">Current Address (if different)</label>
+<br>
+              <textarea class="form-control" id="currentAddress" name="current_address" rows="3" placeholder=" "></textarea>
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="email" class="form-label position-absolute">Email Address</label>
+<br>
+              <input type="email" class="form-control" id="email" name="email" placeholder=" " required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="phone" class="form-label position-absolute">Phone Number</label>
+<br>
+              <input type="tel" class="form-control" id="phone" name="phone" placeholder=" " required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="emergencyContact" class="form-label position-absolute">Emergency Contact Name & Number</label>
+<br>
+              <input type="text" class="form-control" id="emergencyContact" name="emergency_contact" placeholder=" " required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="whatsapp" class="form-label position-absolute">WhatsApp Number (Optional)</label>
+<br>
+              <input type="tel" class="form-control" id="whatsapp" name="whatsapp" placeholder=" " />
+            </div>
           </div>
-          <div class="mb-3 position-relative">
-            <input
-              type="tel"
-              class="form-control"
-              id="popupPhone"
-              placeholder=" "
-              required
-            />
-            <label for="popupPhone" class="form-label position-absolute"
-              >Phone Number</label
-            >
+
+          <!-- Educational Background -->
+          <div class="form-section">
+            <h4>Educational Background</h4>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Exam Level</th>
+                    <th>Board / University</th>
+                    <th>Year of Passing</th>
+                    <th>Marks Obtained / Total</th>
+                    <th>Grade / Division</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" class="form-control" name="education[0][exam_level]" placeholder="e.g., Matric" required /></td>
+                    <td><input type="text" class="form-control" name="education[0][board]" placeholder="e.g., Karachi Board" required /></td>
+                    <td><input type="number" class="form-control" name="education[0][year]" placeholder="e.g., 2020" required /></td>
+                    <td><input type="text" class="form-control" name="education[0][marks]" placeholder="e.g., 850/1000" required /></td>
+                    <td><input type="text" class="form-control" name="education[0][grade]" placeholder="e.g., A+" required /></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" class="form-control" name="education[1][exam_level]" placeholder="e.g., FSC Pre-Medical" /></td>
+                    <td><input type="text" class="form-control" name="education[1][board]" placeholder="e.g., Karachi Board" /></td>
+                    <td><input type="number" class="form-control" name="education[1][year]" placeholder="e.g., 2022" /></td>
+                    <td><input type="text" class="form-control" name="education[1][marks]" placeholder="e.g., 900/1100" /></td>
+                    <td><input type="text" class="form-control" name="education[1][grade]" placeholder="e.g., A" /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button type="button" class="btn btn-outline-primary" id="addEducationRow">Add Another Row</button>
           </div>
-          <div class="mb-3 position-relative">
-            <select class="form-control" id="popupProgram" required>
-              <option value="" disabled selected>Select a Program</option>
-              <option value="Generic BSN">Generic BSN (4 Years)</option>
-              <option value="Post RN-BSN">Post RN-BSN (2 Years)</option>
-            </select>
-            <label for="popupProgram" class="form-label position-absolute"
-              >Interested Program</label
-            >
+
+          <!-- Program Details -->
+          <div class="form-section">
+            <h4>Program Details</h4>
+            <div class="mb-3 position-relative">
+              <select class="form-control" id="program" name="program" required>
+                <option value="" disabled selected>Select a Program</option>
+                <option value="BSc Nursing">BSc Nursing</option>
+                
+                <option value="Generic BSN (4 years) Degree Program">Generic BSN (4 years) Degree Program</option>
+                <option value="Post RN-BSN">Post RN-BSN</option>
+              </select>
+              <label for="program" class="form-label position-absolute">Program Applying For</label>
+            </div>
+            <div class="mb-3 position-relative">
+              <select class="form-control" id="shift" name="shift" required>
+                <option value="" disabled selected>Select Shift Preference</option>
+                <option value="Morning">Morning</option>
+                <option value="Evening">Evening</option>
+                <option value="Both">Both</option>
+              </select>
+              <label for="shift" class="form-label position-absolute">Shift Preference</label>
+            </div>
+            <div class="mb-3 position-relative">
+              <select class="form-control" id="medicalTraining" name="medical_training" required>
+                <option value="" disabled selected>Previous Medical Training?</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+              <label for="medicalTraining" class="form-label position-absolute">Previous Medical Training</label>
+            </div>
+            <div class="mb-3 position-relative" id="medicalTrainingDetails" style="display: none;">
+              <textarea class="form-control" id="trainingDetails" name="training_details" rows="3" placeholder=" "></textarea>
+              <label for="trainingDetails" class="form-label position-absolute">Medical Training Details</label>
+            </div>
+            <div class="mb-3 position-relative">
+              <input type="text" class="form-control" id="campus" name="campus" placeholder=" " required />
+              <label for="campus" class="form-label position-absolute">Preferred Campus</label>
+            </div>
           </div>
-          <div class="mb-3 position-relative">
-            <textarea
-              class="form-control"
-              id="popupMessage"
-              rows="4"
-              placeholder=" "
-              required
-            ></textarea>
-            <label for="popupMessage" class="form-label position-absolute"
-              >Additional Information</label
-            >
+
+          <!-- Health / Medical Information -->
+          <div class="form-section">
+            <h4>Health / Medical Information</h4>
+            <div class="mb-3 position-relative">
+              <label for="bloodGroup" class="form-label position-absolute">Blood Group</label>
+<br>
+              <input type="text" class="form-control" id="bloodGroup" name="blood_group" placeholder=" " required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="medicalConditions" class="form-label position-absolute">Medical Conditions or Allergies</label>
+<br>
+              <textarea class="form-control" id="medicalConditions" name="medical_conditions" rows="3" placeholder=" "></textarea>
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="disability" class="form-label position-absolute">Physical Disability</label>
+<br>
+              <select class="form-control" id="disability" name="disability" required>
+                <option value="" disabled selected>Physical Disability?</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="vaccination" class="form-label file-upload-label">Vaccination Record (Optional, PDF/JPG/PNG)</label>
+<br>
+              <input type="file" class="form-control" id="vaccination" name="vaccination" accept=".pdf,.jpg,.png" />
+            </div>
           </div>
-          <button type="button" class="btn btn-primary w-100" id="submitAdmission">
+
+          <!-- Document Uploads -->
+          <div class="form-section">
+            <h4>Document Uploads</h4>
+            <div class="mb-3 position-relative">
+              <label for="photo" class="form-label file-upload-label">Recent Photograph (JPG/PNG)</label>
+<br>
+              <input type="file" class="form-control" id="photo" name="photo" accept=".jpg,.png" required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="cnicDoc" class="form-label file-upload-label">CNIC / B-Form (PDF/JPG/PNG)</label>
+<br>
+              <input type="file" class="form-control" id="cnicDoc" name="cnic_doc" accept=".pdf,.jpg,.png" required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="academicDocs" class="form-label file-upload-label">Academic Certificates (PDF/JPG/PNG)</label>
+<br>
+              <input type="file" class="form-control" id="academicDocs" name="academic_docs[]" accept=".pdf,.jpg,.png" multiple required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="domicileDoc" class="form-label file-upload-label">Domicile Certificate (PDF/JPG/PNG)</label>
+<br>
+              <input type="file" class="form-control" id="domicileDoc" name="domicile_doc" accept=".pdf,.jpg,.png" required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="characterDoc" class="form-label file-upload-label">Character Certificate (PDF/JPG/PNG)</label>
+<br>
+              <input type="file" class="form-control" id="characterDoc" name="character_doc" accept=".pdf,.jpg,.png" required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="medicalDoc" class="form-label file-upload-label">Medical Fitness Certificate (PDF/JPG/PNG)</label>
+<br>
+              <input type="file" class="form-control" id="medicalDoc" name="medical_doc" accept=".pdf,.jpg,.png" required />
+            </div>
+          </div>
+
+          <!-- Declaration -->
+          <div class="form-section">
+            <h4>Declaration</h4>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="declaration" name="declaration" required />
+              <label class="form-check-label" for="declaration">
+                I hereby declare that the information provided is true and correct to the best of my knowledge.
+              </label>
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="signature" class="form-label position-absolute">Signature (Type your name)</label>
+<br>
+              <input type="text" class="form-control" id="signature" name="signature" placeholder=" " required />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="declarationDate" class="form-label position-absolute">Date</label>
+<br>
+              <input type="date" class="form-control" id="declarationDate" name="declaration_date" placeholder=" " required />
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100" id="submitAdmission">
             Submit Application
           </button>
-        </div>
+        </form>
       </div>
     </div>
     <section id="about" class="section-spacing bg-light" data-aos="fade-up">
@@ -703,7 +1089,7 @@
           <div class="col" data-tilt data-tilt-max="10">
             <div class="card h-100">
               <div class="card-body p-4">
-                <h3 class="card-title h4 fw-semibold text-primary mb-3">
+                <h3 class="card-title h4 fw-semibold mb-3">
                   Generic BSN (4 years) Degree Program
                 </h3>
                 <ul class="list-group list-group-flush">
@@ -732,7 +1118,7 @@
           <div class="col" data-tilt data-tilt-max="10">
             <div class="card h-100">
               <div class="card-body p-4">
-                <h3 class="card-title h4 fw-semibold text-primary mb-3">
+                <h3 class="card-title h4 fw-semibold mb-3">
                   POST RN-BSN (2 Years) Degree Program
                 </h3>
                 <ul class="list-group list-group-flush">
@@ -792,7 +1178,7 @@
                 loading="lazy"
               />
               </a>
-              <h3 class="h5 fw-semibold text-primary mb-3">
+              <h3 class="h5 fw-semibold mb-3">
                 Pakistan Nursing Council Accreditation
               </h3>
               <p class="text-muted">
@@ -809,11 +1195,11 @@
                 class="mb-3 lazy"
                 loading="lazy"
               />
-              <h3 class="h5 fw-semibold text-primary mb-3">
+              <h3 class="h5 fw-semibold mb-3">
                 Health Department Government Of Sindh
               </h3>
               <p class="text-muted">
-                Awarded in 2024 for outstanding contributions to nursing
+                Recognized by Health Department Government Of Sindh for outstanding contributions to nursing
                 education in Karachi.
               </p>
             </div>
@@ -877,8 +1263,7 @@
                 or campus visits.
               </p>
               <p class="mb-3">
-                <strong>Address:</strong> P.E.C.H.S, Project 5-A, Commissioner
-                Society, Karachi. 75300
+                <strong>Address:</strong> P.R.E.C.H.S, Pakistan Railways Employee Co-operative Housing Society Karachi. 75300
               </p>
               <p class="mb-3">
                 <strong>Email:</strong>
@@ -930,45 +1315,46 @@
             <div class="card border-0 p-4 bg-white">
               <h3 class="h4 fw-semibold text-dark mb-4">Send Us a Message</h3>
               <div>
-                <div class="mb-3 position-relative">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="name"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="name" class="form-label position-absolute"
-                    >Your Name</label
-                  >
-                </div>
-                <div class="mb-3 position-relative">
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="email" class="form-label position-absolute"
-                    >Your Email</label
-                  >
-                </div>
-                <div class="mb-3 position-relative">
-                  <textarea
-                    class="form-control"
-                    id="message"
-                    rows="4"
-                    placeholder=" "
-                    required
-                  ></textarea>
-                  <label for="message" class="form-label position-absolute"
-                    >Your Message</label
-                  >
-                </div>
-                <button type="button" class="btn btn-primary w-100">
-                  Submit
-                </button>
+                <form id="contactForm" action="send_email.php" method="POST">
+                  <input type="hidden" name="form_type" value="contact">
+                  <div class="mb-3 position-relative">
+                    <label for="name" class="form-label position-absolute">Your Name</label>
+                    <br>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      name="name"
+                      placeholder="Your Name"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3 position-relative">
+                    <label for="email" class="form-label position-absolute">Your Email</label>
+                    <br>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      placeholder=" "
+                      required
+                    />
+                  </div>
+                  <div class="mb-3 position-relative">
+                    <label for="message" class="form-label position-absolute">Your Message</label>
+                    <br>
+                    <textarea
+                      class="form-control"
+                      id="message"
+                      name="message"
+                      rows="4"
+                      placeholder=" "
+                      required
+                    ></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100">Submit</button>
+                </form>
               </div>
             </div>
           </div>
@@ -1016,8 +1402,8 @@
             </ul>
           </div>
           <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-            <h3 class="h5 fw-semibold mb-3">Contact Info</h3>
-            <p class="text-muted-t">P.E.C.H.S, Karachi. 75300</p>
+            <h4 class="h5 fw-semibold mb-3">Contact Info</h4>
+            <p class="text-muted-t">P.R.E.C.H.S, Pakistan Railways Employee Co-operative Housing Society Karachi. 75300</p>
             <p class="text-muted-t">Phone: 0313-2187825 / 0300-2187825</p>
             <p class="text-muted-t">
               Email:
@@ -1109,7 +1495,7 @@
       const admissionFormBtn = document.getElementById("admissionFormBtn");
       const admissionPopup = document.getElementById("admissionPopup");
       const closePopup = document.getElementById("closePopup");
-      const submitAdmission = document.getElementById("submitAdmission");
+      const admissionForm = document.getElementById("admissionForm");
 
       admissionFormBtn.addEventListener("click", (e) => {
         e.preventDefault();
@@ -1127,26 +1513,95 @@
         }
       });
 
-      // Handle form submission (placeholder for actual submission logic)
-      submitAdmission.addEventListener("click", () => {
-        const name = document.getElementById("popupName").value;
-        const email = document.getElementById("popupEmail").value;
-        const phone = document.getElementById("popupPhone").value;
-        const program = document.getElementById("popupProgram").value;
-        const message = document.getElementById("popupMessage").value;
+      // Add education row
+      document.getElementById("addEducationRow").addEventListener("click", () => {
+        const tbody = document.querySelector(".table tbody");
+        const rowCount = tbody.children.length;
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+          <td><input type="text" class="form-control" name="education[${rowCount}][exam_level]" placeholder="e.g., Graduation" /></td>
+          <td><input type="text" class="form-control" name="education[${rowCount}][board]" placeholder="e.g., University" /></td>
+          <td><input type="number" class="form-control" name="education[${rowCount}][year]" placeholder="e.g., 2023" /></td>
+          <td><input type="text" class="form-control" name="education[${rowCount}][marks]" placeholder="e.g., 3.5/4.0" /></td>
+          <td><input type="text" class="form-control" name="education[${rowCount}][grade]" placeholder="e.g., A" /></td>
+        `;
+        tbody.appendChild(newRow);
+      });
 
-        if (name && email && phone && program && message) {
-          alert("Form submitted successfully! We'll get back to you soon.");
-          admissionPopup.style.display = "none";
-          // Clear form
-          document.getElementById("popupName").value = "";
-          document.getElementById("popupEmail").value = "";
-          document.getElementById("popupPhone").value = "";
-          document.getElementById("popupProgram").value = "";
-          document.getElementById("popupMessage").value = "";
-        } else {
-          alert("Please fill out all required fields.");
+      // Show/hide medical training details
+      document.getElementById("medicalTraining").addEventListener("change", (e) => {
+        const details = document.getElementById("medicalTrainingDetails");
+        details.style.display = e.target.value === "Yes" ? "block" : "none";
+      });
+
+      // Handle form submissions
+      const handleFormSubmission = async (form) => {
+        const formData = new FormData(form);
+
+        try {
+          const response = await fetch("send_email.php", {
+            method: "POST",
+            body: formData,
+          });
+          const result = await response.json();
+
+          if (result.success) {
+            alert(result.message);
+            if (form.id === "admissionForm") {
+              admissionPopup.style.display = "none";
+              form.reset();
+              document.querySelector(".table tbody").innerHTML = `
+                <tr>
+                  <td><input type="text" class="form-control" name="education[0][exam_level]" placeholder="e.g., Matric" required /></td>
+                  <td><input type="text" class="form-control" name="education[0][board]" placeholder="e.g., Karachi Board" required /></td>
+                  <td><input type="number" class="form-control" name="education[0][year]" placeholder="e.g., 2020" required /></td>
+                  <td><input type="text" class="form-control" name="education[0][marks]" placeholder="e.g., 850/1000" required /></td>
+                  <td><input type="text" class="form-control" name="education[0][grade]" placeholder="e.g., A+" required /></td>
+                </tr>
+              `;
+              document.getElementById("medicalTrainingDetails").style.display = "none";
+            } else {
+              form.reset();
+            }
+          } else {
+            alert(result.message);
+          }
+        } catch (error) {
+          alert("An error occurred. Please try again.");
+          console.error(error);
         }
+      };
+
+      admissionForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        handleFormSubmission(admissionForm);
+      });
+
+      const contactForm = document.getElementById("contactForm");
+      contactForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        handleFormSubmission(contactForm);
+      });
+
+      // Highlight active nav link on scroll
+      const sections = document.querySelectorAll("section");
+      const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop - 100;
+          if (window.scrollY >= sectionTop) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href").includes(current)) {
+            link.classList.add("active");
+          }
+        });
       });
     </script>
   </body>
