@@ -132,36 +132,26 @@
         backdrop-filter: blur(15px);
         border-bottom: 2px solid #facc15;
       }
+.navbar-dark .nav-link {
+  position: relative;
+  color: white; /* adjust as needed */
+}
 
-      .navbar-dark .nav-link {
-        font-size: 1.2rem;
-        color: #ffffff !important;
-        font-weight: 500;
-        padding: 0.75rem 1.5rem;
-        transition: color 0.3s ease, transform 0.3s ease;
-      }
+.navbar-dark .nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: -5px;
+  left: 0;
+  background: #facc15;
+  transition: width 0.3s ease;
+}
 
-      .navbar-dark .nav-link:hover,
-      .navbar-dark .nav-link.active {
-        color: white !important;
-        transform: scale(1.05);
-      }
+.navbar-dark .nav-link.active::after {
+  width: 100%;
+}
 
-      .navbar-dark .nav-link::after {
-        content: "";
-        position: absolute;
-        width: 0;
-        height: 3px;
-        bottom: -5px;
-        left: 0;
-        background: #facc15;
-        transition: width 0.3s ease;
-      }
-
-      .navbar-dark .nav-link:hover::after,
-      .navbar-dark .nav-link.active::after {
-        width: 100%;
-      }
 
       .form-control {
         border-radius: 12px;
@@ -247,8 +237,7 @@
       }
 
       .text-muted-t {
-        color: transparent !important;
-
+        color: #facc15 !important;
       }
 
       .hero-bg img {
@@ -276,6 +265,14 @@
       .affiliated-item img {
         max-width: 100%;
         height: auto;
+        border-radius: 12px;
+        transition: transform 0.5s ease;
+      }
+
+      .recognized-item img {
+        width: 150px; /* Fixed width */
+        height: 150px; /* Fixed height */
+        object-fit: cover; /* Maintain aspect ratio */
         border-radius: 12px;
         transition: transform 0.5s ease;
       }
@@ -1151,95 +1148,58 @@
         </div>
       </div>
     </section>
-    <section
-      id="recognized"
-      class="section-spacing bg-light"
-      data-aos="fade-up"
-    >
+    <section id="recognized" class="section-spacing bg-light" data-aos="fade-up">
       <div class="container">
-        <h2 class="display-5 fw-semibold text-dark mb-5 text-center">
-          Recognized
-        </h2>
+        <h2 class="display-5 fw-semibold text-dark mb-5 text-center">Recognized</h2>
         <div class="section-divider"></div>
-        <p
-          class="lead text-muted mb-5 text-center mx-auto"
-          style="max-width: 800px"
-        >
-          Our institute is celebrated for its unwavering commitment to
-          excellence in nursing education and healthcare training.
+        <p class="lead text-muted mb-5 text-center mx-auto" style="max-width: 800px">
+          Our institute is celebrated for its unwavering commitment to excellence in nursing education and healthcare training.
         </p>
         <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
           <div class="col" data-tilt data-tilt-max="10">
             <div class="recognized-item">
               <a href="https://pnmc.gov.pk/recognized-institutes/">
-              <img
-                src="images/nursing-counsel.png"
-                alt="PNC Accreditation"
-                class="mb-3 lazy"
-                loading="lazy"
-              />
+                <img src="images/nursing-counsel.png" alt="PNC Accreditation" class="mb-3 lazy" loading="lazy" />
               </a>
-              <h3 class="h5 fw-semibold mb-3">
-                Pakistan Nursing Council Accreditation
-              </h3>
+              <h3 class="h5 fw-semibold mb-3">Pakistan Nursing Council Accreditation</h3>
               <p class="text-muted">
-                Accredited by the Pakistan Nursing Council, ensuring compliance
-                with national standards.
+                Accredited by the Pakistan Nursing Council, ensuring compliance with national standards.
               </p>
             </div>
           </div>
           <div class="col" data-tilt data-tilt-max="10">
             <div class="recognized-item">
-              <img
-                src="images/sindh.png"
-                alt="Excellence Award"
-                class="mb-3 lazy"
-                loading="lazy"
-              />
-              <h3 class="h5 fw-semibold mb-3">
-                Health Department Government Of Sindh
-              </h3>
+              <img src="images/sindh.png" alt="Excellence Award" class="mb-3 lazy" loading="lazy" />
+              <h3 class="h5 fw-semibold mb-3">Health Department Government Of Sindh</h3>
               <p class="text-muted">
-                Recognized by Health Department Government Of Sindh for outstanding contributions to nursing
-                education in Karachi.
+                Recognized by Health Department Government Of Sindh for outstanding contributions to nursing education in Karachi.
               </p>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <section
-      id="affiliated"
-      class="section-spacing bg-white"
-      data-aos="fade-up"
-    >
+    <section id="affiliated" class="section-spacing bg-white" data-aos="fade-up">
       <div class="container">
         <h2 class="display-5 fw-semibold text-dark mb-5 text-center">
-          Affiliated
+            Affiliated
         </h2>
         <div class="section-divider"></div>
-        <p
-          class="lead text-muted mb-5 text-center mx-auto"
-          style="max-width: 800px"
-        >
-          Our partnerships with top healthcare institutions ensure exceptional
-          clinical training and career opportunities.
+        <p class="lead text-muted mb-5 text-center mx-auto" style="max-width: 800px">
+          Our partnerships with top healthcare institutions ensure exceptional clinical training and career opportunities.
         </p>
         <div class="text-center mb-4">
           <a href="https://www.lumhs.edu.pk/home/" target="_blank" rel="noopener noreferrer">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/7/7c/Liaquat_University_of_Medical_and_Health_Sciences_%28crest%29.jpg"
-              alt="Affiliated Institutions"
-              class="lazy"
-              loading="lazy"
-            />
+            <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Liaquat_University_of_Medical_and_Health_Sciences_%28crest%29.jpg" alt="Affiliated Institutions" class="lazy" loading="lazy" />
           </a>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
           <div class="col" data-tilt data-tilt-max="10">
             <div class="affiliated-item text-center">
               <h3 class="h6 fw-semibold text-primary mb-2">
-                Liaquat National Hospital
+                <a href="https://www.lumhs.edu.pk/home/" target="_blank" rel="noopener noreferrer">
+                  Liaquat National Hospital
+                </a>
               </h3>
               <p class="text-muted small">
                 Hands-on training in medical specialties.
@@ -1588,7 +1548,7 @@
       const sections = document.querySelectorAll("section");
       const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
 
-      window.addEventListener("scroll", () => {
+      const updateActiveNavLink = () => {
         let current = "";
         sections.forEach((section) => {
           const sectionTop = section.offsetTop - 100;
@@ -1603,6 +1563,13 @@
             link.classList.add("active");
           }
         });
+      };
+
+      window.addEventListener("scroll", updateActiveNavLink);
+
+      // Remove active state on page load
+      window.addEventListener("load", () => {
+        navLinks.forEach((link) => link.classList.remove("active"));
       });
     </script>
   </body>
