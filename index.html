@@ -132,26 +132,25 @@
         backdrop-filter: blur(15px);
         border-bottom: 2px solid #facc15;
       }
-.navbar-dark .nav-link {
-  position: relative;
-  color: white; /* adjust as needed */
-}
+      .navbar-dark .nav-link {
+        position: relative;
+        color: white; /* adjust as needed */
+      }
 
-.navbar-dark .nav-link::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 3px;
-  bottom: -5px;
-  left: 0;
-  background: #facc15;
-  transition: width 0.3s ease;
-}
+      .navbar-dark .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 3px;
+        bottom: -5px;
+        left: 0;
+        background: #facc15;
+        transition: width 0.3s ease;
+      }
 
-.navbar-dark .nav-link.active::after {
-  width: 100%;
-}
-
+      .navbar-dark .nav-link.active::after {
+        width: 100%;
+      }
 
       .form-control {
         border-radius: 12px;
@@ -769,30 +768,64 @@
       <div class="popup-content">
         <span class="close-popup" id="closePopup">×</span>
         <h3>Admission Form</h3>
-        <form id="admissionForm" action="send_email.php" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="form_type" value="admission">
+        <form
+          id="admissionForm"
+          action="send_email.php"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <input type="hidden" name="form_type" value="admission" />
 
           <!-- Personal Information -->
           <div class="form-section">
             <h4>Personal Information</h4>
             <div class="mb-3 position-relative">
-              <label for="fullName" class="form-label position-absolute">Full Name (First, Middle, Last)</label>
-<br>
-              <input type="text" class="form-control" id="fullName" name="full_name" placeholder=" " required />
+              <label for="fullName" class="form-label position-absolute"
+                >Full Name (First, Middle, Last)</label
+              >
+              <br />
+              <input
+                type="text"
+                class="form-control"
+                id="fullName"
+                name="full_name"
+                placeholder=" "
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="fatherName" class="form-label position-absolute">Father’s Name / Guardian’s Name</label>
-<br>
-              <input type="text" class="form-control" id="fatherName" name="father_name" placeholder=" " required />
+              <label for="fatherName" class="form-label position-absolute"
+                >Father’s Name / Guardian’s Name</label
+              >
+              <br />
+              <input
+                type="text"
+                class="form-control"
+                id="fatherName"
+                name="father_name"
+                placeholder=" "
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="motherName" class="form-label position-absolute">Mother’s Name</label>
-<br>
-              <input type="text" class="form-control" id="motherName" name="mother_name" placeholder=" " required />
+              <label for="motherName" class="form-label position-absolute"
+                >Mother’s Name</label
+              >
+              <br />
+              <input
+                type="text"
+                class="form-control"
+                id="motherName"
+                name="mother_name"
+                placeholder=" "
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="gender" class="form-label position-absolute">Gender</label>
-<br>
+              <label for="gender" class="form-label position-absolute"
+                >Gender</label
+              >
+              <br />
               <select class="form-control" id="gender" name="gender" required>
                 <option value="" disabled selected>Select Gender</option>
                 <option value="Male">Male</option>
@@ -801,25 +834,60 @@
               </select>
             </div>
             <div class="mb-3 position-relative">
-              <label for="dob" class="form-label position-absolute">Date of Birth</label>
-<br>
-              <input type="date" class="form-control" id="dob" name="dob" placeholder=" " required />
+              <label for="dob" class="form-label position-absolute"
+                >Date of Birth</label
+              >
+              <br />
+              <input
+                type="date"
+                class="form-control"
+                id="dob"
+                name="dob"
+                placeholder=" "
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="nationality" class="form-label position-absolute">Nationality</label>
-<br>
-              <input type="text" class="form-control" id="nationality" name="nationality" placeholder=" " required />
+              <label for="nationality" class="form-label position-absolute"
+                >Nationality</label
+              >
+              <br />
+              <input
+                type="text"
+                class="form-control"
+                id="nationality"
+                name="nationality"
+                placeholder=" "
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="religion" class="form-label position-absolute">Religion (Optional)</label>
-<br>
-              <input type="text" class="form-control" id="religion" name="religion" placeholder=" " />
+              <label for="religion" class="form-label position-absolute"
+                >Religion (Optional)</label
+              >
+              <br />
+              <input
+                type="text"
+                class="form-control"
+                id="religion"
+                name="religion"
+                placeholder=" "
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="maritalStatus" class="form-label position-absolute">Marital Status</label>
-<br>
-              <select class="form-control" id="maritalStatus" name="marital_status" required>
-                <option value="" disabled selected>Select Marital Status</option>
+              <label for="maritalStatus" class="form-label position-absolute"
+                >Marital Status</label
+              >
+              <br />
+              <select
+                class="form-control"
+                id="maritalStatus"
+                name="marital_status"
+                required
+              >
+                <option value="" disabled selected>
+                  Select Marital Status
+                </option>
                 <option value="Single">Single</option>
                 <option value="Married">Married</option>
                 <option value="Divorced">Divorced</option>
@@ -827,14 +895,32 @@
               </select>
             </div>
             <div class="mb-3 position-relative">
-              <label for="cnic" class="form-label position-absolute">CNIC / B-Form Number</label>
-<br>
-              <input type="text" class="form-control" id="cnic" name="cnic" placeholder=" " required />
+              <label for="cnic" class="form-label position-absolute"
+                >CNIC / B-Form Number</label
+              >
+              <br />
+              <input
+                type="text"
+                class="form-control"
+                id="cnic"
+                name="cnic"
+                placeholder=" "
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="domicile" class="form-label position-absolute">Domicile</label>
-<br>
-              <input type="text" class="form-control" id="domicile" name="domicile" placeholder=" " required />
+              <label for="domicile" class="form-label position-absolute"
+                >Domicile</label
+              >
+              <br />
+              <input
+                type="text"
+                class="form-control"
+                id="domicile"
+                name="domicile"
+                placeholder=" "
+                required
+              />
             </div>
           </div>
 
@@ -842,34 +928,86 @@
           <div class="form-section">
             <h4>Contact Information</h4>
             <div class="mb-3 position-relative">
-              <label for="permanentAddress" class="form-label position-absolute">Permanent Address</label>
-<br>
-              <textarea class="form-control" id="permanentAddress" name="permanent_address" rows="3" placeholder=" " required></textarea>
+              <label for="permanentAddress" class="form-label position-absolute"
+                >Permanent Address</label
+              >
+              <br />
+              <textarea
+                class="form-control"
+                id="permanentAddress"
+                name="permanent_address"
+                rows="3"
+                placeholder=" "
+                required
+              ></textarea>
             </div>
             <div class="mb-3 position-relative">
-              <label for="currentAddress" class="form-label position-absolute">Current Address (if different)</label>
-<br>
-              <textarea class="form-control" id="currentAddress" name="current_address" rows="3" placeholder=" "></textarea>
+              <label for="currentAddress" class="form-label position-absolute"
+                >Current Address (if different)</label
+              >
+              <br />
+              <textarea
+                class="form-control"
+                id="currentAddress"
+                name="current_address"
+                rows="3"
+                placeholder=" "
+              ></textarea>
             </div>
             <div class="mb-3 position-relative">
-              <label for="email" class="form-label position-absolute">Email Address</label>
-<br>
-              <input type="email" class="form-control" id="email" name="email" placeholder=" " required />
+              <label for="email" class="form-label position-absolute"
+                >Email Address</label
+              >
+              <br />
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder=" "
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="phone" class="form-label position-absolute">Phone Number</label>
-<br>
-              <input type="tel" class="form-control" id="phone" name="phone" placeholder=" " required />
+              <label for="phone" class="form-label position-absolute"
+                >Phone Number</label
+              >
+              <br />
+              <input
+                type="tel"
+                class="form-control"
+                id="phone"
+                name="phone"
+                placeholder=" "
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="emergencyContact" class="form-label position-absolute">Emergency Contact Name & Number</label>
-<br>
-              <input type="text" class="form-control" id="emergencyContact" name="emergency_contact" placeholder=" " required />
+              <label for="emergencyContact" class="form-label position-absolute"
+                >Emergency Contact Name & Number</label
+              >
+              <br />
+              <input
+                type="text"
+                class="form-control"
+                id="emergencyContact"
+                name="emergency_contact"
+                placeholder=" "
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="whatsapp" class="form-label position-absolute">WhatsApp Number (Optional)</label>
-<br>
-              <input type="tel" class="form-control" id="whatsapp" name="whatsapp" placeholder=" " />
+              <label for="whatsapp" class="form-label position-absolute"
+                >WhatsApp Number (Optional)</label
+              >
+              <br />
+              <input
+                type="tel"
+                class="form-control"
+                id="whatsapp"
+                name="whatsapp"
+                placeholder=" "
+              />
             </div>
           </div>
 
@@ -889,23 +1027,104 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><input type="text" class="form-control" name="education[0][exam_level]" placeholder="e.g., Matric" required /></td>
-                    <td><input type="text" class="form-control" name="education[0][board]" placeholder="e.g., Karachi Board" required /></td>
-                    <td><input type="number" class="form-control" name="education[0][year]" placeholder="e.g., 2020" required /></td>
-                    <td><input type="text" class="form-control" name="education[0][marks]" placeholder="e.g., 850/1000" required /></td>
-                    <td><input type="text" class="form-control" name="education[0][grade]" placeholder="e.g., A+" required /></td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="education[0][exam_level]"
+                        placeholder="e.g., Matric"
+                        required
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="education[0][board]"
+                        placeholder="e.g., Karachi Board"
+                        required
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        class="form-control"
+                        name="education[0][year]"
+                        placeholder="e.g., 2020"
+                        required
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="education[0][marks]"
+                        placeholder="e.g., 850/1000"
+                        required
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="education[0][grade]"
+                        placeholder="e.g., A+"
+                        required
+                      />
+                    </td>
                   </tr>
                   <tr>
-                    <td><input type="text" class="form-control" name="education[1][exam_level]" placeholder="e.g., FSC Pre-Medical" /></td>
-                    <td><input type="text" class="form-control" name="education[1][board]" placeholder="e.g., Karachi Board" /></td>
-                    <td><input type="number" class="form-control" name="education[1][year]" placeholder="e.g., 2022" /></td>
-                    <td><input type="text" class="form-control" name="education[1][marks]" placeholder="e.g., 900/1100" /></td>
-                    <td><input type="text" class="form-control" name="education[1][grade]" placeholder="e.g., A" /></td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="education[1][exam_level]"
+                        placeholder="e.g., FSC Pre-Medical"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="education[1][board]"
+                        placeholder="e.g., Karachi Board"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        class="form-control"
+                        name="education[1][year]"
+                        placeholder="e.g., 2022"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="education[1][marks]"
+                        placeholder="e.g., 900/1100"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="education[1][grade]"
+                        placeholder="e.g., A"
+                      />
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <button type="button" class="btn btn-outline-primary" id="addEducationRow">Add Another Row</button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              id="addEducationRow"
+            >
+              Add Another Row
+            </button>
           </div>
 
           <!-- Program Details -->
@@ -915,36 +1134,74 @@
               <select class="form-control" id="program" name="program" required>
                 <option value="" disabled selected>Select a Program</option>
                 <option value="BSc Nursing">BSc Nursing</option>
-                
-                <option value="Generic BSN (4 years) Degree Program">Generic BSN (4 years) Degree Program</option>
+
+                <option value="Generic BSN (4 years) Degree Program">
+                  Generic BSN (4 years) Degree Program
+                </option>
                 <option value="Post RN-BSN">Post RN-BSN</option>
               </select>
-              <label for="program" class="form-label position-absolute">Program Applying For</label>
+              <label for="program" class="form-label position-absolute"
+                >Program Applying For</label
+              >
             </div>
             <div class="mb-3 position-relative">
               <select class="form-control" id="shift" name="shift" required>
-                <option value="" disabled selected>Select Shift Preference</option>
+                <option value="" disabled selected>
+                  Select Shift Preference
+                </option>
                 <option value="Morning">Morning</option>
                 <option value="Evening">Evening</option>
                 <option value="Both">Both</option>
               </select>
-              <label for="shift" class="form-label position-absolute">Shift Preference</label>
+              <label for="shift" class="form-label position-absolute"
+                >Shift Preference</label
+              >
             </div>
             <div class="mb-3 position-relative">
-              <select class="form-control" id="medicalTraining" name="medical_training" required>
-                <option value="" disabled selected>Previous Medical Training?</option>
+              <select
+                class="form-control"
+                id="medicalTraining"
+                name="medical_training"
+                required
+              >
+                <option value="" disabled selected>
+                  Previous Medical Training?
+                </option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </select>
-              <label for="medicalTraining" class="form-label position-absolute">Previous Medical Training</label>
+              <label for="medicalTraining" class="form-label position-absolute"
+                >Previous Medical Training</label
+              >
             </div>
-            <div class="mb-3 position-relative" id="medicalTrainingDetails" style="display: none;">
-              <textarea class="form-control" id="trainingDetails" name="training_details" rows="3" placeholder=" "></textarea>
-              <label for="trainingDetails" class="form-label position-absolute">Medical Training Details</label>
+            <div
+              class="mb-3 position-relative"
+              id="medicalTrainingDetails"
+              style="display: none"
+            >
+              <textarea
+                class="form-control"
+                id="trainingDetails"
+                name="training_details"
+                rows="3"
+                placeholder=" "
+              ></textarea>
+              <label for="trainingDetails" class="form-label position-absolute"
+                >Medical Training Details</label
+              >
             </div>
             <div class="mb-3 position-relative">
-              <input type="text" class="form-control" id="campus" name="campus" placeholder=" " required />
-              <label for="campus" class="form-label position-absolute">Preferred Campus</label>
+              <input
+                type="text"
+                class="form-control"
+                id="campus"
+                name="campus"
+                placeholder=" "
+                required
+              />
+              <label for="campus" class="form-label position-absolute"
+                >Preferred Campus</label
+              >
             </div>
           </div>
 
@@ -952,28 +1209,62 @@
           <div class="form-section">
             <h4>Health / Medical Information</h4>
             <div class="mb-3 position-relative">
-              <label for="bloodGroup" class="form-label position-absolute">Blood Group</label>
-<br>
-              <input type="text" class="form-control" id="bloodGroup" name="blood_group" placeholder=" " required />
+              <label for="bloodGroup" class="form-label position-absolute"
+                >Blood Group</label
+              >
+              <br />
+              <input
+                type="text"
+                class="form-control"
+                id="bloodGroup"
+                name="blood_group"
+                placeholder=" "
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="medicalConditions" class="form-label position-absolute">Medical Conditions or Allergies</label>
-<br>
-              <textarea class="form-control" id="medicalConditions" name="medical_conditions" rows="3" placeholder=" "></textarea>
+              <label
+                for="medicalConditions"
+                class="form-label position-absolute"
+                >Medical Conditions or Allergies</label
+              >
+              <br />
+              <textarea
+                class="form-control"
+                id="medicalConditions"
+                name="medical_conditions"
+                rows="3"
+                placeholder=" "
+              ></textarea>
             </div>
             <div class="mb-3 position-relative">
-              <label for="disability" class="form-label position-absolute">Physical Disability</label>
-<br>
-              <select class="form-control" id="disability" name="disability" required>
+              <label for="disability" class="form-label position-absolute"
+                >Physical Disability</label
+              >
+              <br />
+              <select
+                class="form-control"
+                id="disability"
+                name="disability"
+                required
+              >
                 <option value="" disabled selected>Physical Disability?</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </select>
             </div>
             <div class="mb-3 position-relative">
-              <label for="vaccination" class="form-label file-upload-label">Vaccination Record (Optional, PDF/JPG/PNG)</label>
-<br>
-              <input type="file" class="form-control" id="vaccination" name="vaccination" accept=".pdf,.jpg,.png" />
+              <label for="vaccination" class="form-label file-upload-label"
+                >Vaccination Record (Optional, PDF/JPG/PNG)</label
+              >
+              <br />
+              <input
+                type="file"
+                class="form-control"
+                id="vaccination"
+                name="vaccination"
+                accept=".pdf,.jpg,.png"
+              />
             </div>
           </div>
 
@@ -981,34 +1272,89 @@
           <div class="form-section">
             <h4>Document Uploads</h4>
             <div class="mb-3 position-relative">
-              <label for="photo" class="form-label file-upload-label">Recent Photograph (JPG/PNG)</label>
-<br>
-              <input type="file" class="form-control" id="photo" name="photo" accept=".jpg,.png" required />
+              <label for="photo" class="form-label file-upload-label"
+                >Recent Photograph (JPG/PNG)</label
+              >
+              <br />
+              <input
+                type="file"
+                class="form-control"
+                id="photo"
+                name="photo"
+                accept=".jpg,.png"
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="cnicDoc" class="form-label file-upload-label">CNIC / B-Form (PDF/JPG/PNG)</label>
-<br>
-              <input type="file" class="form-control" id="cnicDoc" name="cnic_doc" accept=".pdf,.jpg,.png" required />
+              <label for="cnicDoc" class="form-label file-upload-label"
+                >CNIC / B-Form (PDF/JPG/PNG)</label
+              >
+              <br />
+              <input
+                type="file"
+                class="form-control"
+                id="cnicDoc"
+                name="cnic_doc"
+                accept=".pdf,.jpg,.png"
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="academicDocs" class="form-label file-upload-label">Academic Certificates (PDF/JPG/PNG)</label>
-<br>
-              <input type="file" class="form-control" id="academicDocs" name="academic_docs[]" accept=".pdf,.jpg,.png" multiple required />
+              <label for="academicDocs" class="form-label file-upload-label"
+                >Academic Certificates (PDF/JPG/PNG)</label
+              >
+              <br />
+              <input
+                type="file"
+                class="form-control"
+                id="academicDocs"
+                name="academic_docs[]"
+                accept=".pdf,.jpg,.png"
+                multiple
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="domicileDoc" class="form-label file-upload-label">Domicile Certificate (PDF/JPG/PNG)</label>
-<br>
-              <input type="file" class="form-control" id="domicileDoc" name="domicile_doc" accept=".pdf,.jpg,.png" required />
+              <label for="domicileDoc" class="form-label file-upload-label"
+                >Domicile Certificate (PDF/JPG/PNG)</label
+              >
+              <br />
+              <input
+                type="file"
+                class="form-control"
+                id="domicileDoc"
+                name="domicile_doc"
+                accept=".pdf,.jpg,.png"
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="characterDoc" class="form-label file-upload-label">Character Certificate (PDF/JPG/PNG)</label>
-<br>
-              <input type="file" class="form-control" id="characterDoc" name="character_doc" accept=".pdf,.jpg,.png" required />
+              <label for="characterDoc" class="form-label file-upload-label"
+                >Character Certificate (PDF/JPG/PNG)</label
+              >
+              <br />
+              <input
+                type="file"
+                class="form-control"
+                id="characterDoc"
+                name="character_doc"
+                accept=".pdf,.jpg,.png"
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="medicalDoc" class="form-label file-upload-label">Medical Fitness Certificate (PDF/JPG/PNG)</label>
-<br>
-              <input type="file" class="form-control" id="medicalDoc" name="medical_doc" accept=".pdf,.jpg,.png" required />
+              <label for="medicalDoc" class="form-label file-upload-label"
+                >Medical Fitness Certificate (PDF/JPG/PNG)</label
+              >
+              <br />
+              <input
+                type="file"
+                class="form-control"
+                id="medicalDoc"
+                name="medical_doc"
+                accept=".pdf,.jpg,.png"
+                required
+              />
             </div>
           </div>
 
@@ -1016,24 +1362,53 @@
           <div class="form-section">
             <h4>Declaration</h4>
             <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="declaration" name="declaration" required />
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="declaration"
+                name="declaration"
+                required
+              />
               <label class="form-check-label" for="declaration">
-                I hereby declare that the information provided is true and correct to the best of my knowledge.
+                I hereby declare that the information provided is true and
+                correct to the best of my knowledge.
               </label>
             </div>
             <div class="mb-3 position-relative">
-              <label for="signature" class="form-label position-absolute">Signature (Type your name)</label>
-<br>
-              <input type="text" class="form-control" id="signature" name="signature" placeholder=" " required />
+              <label for="signature" class="form-label position-absolute"
+                >Signature (Type your name)</label
+              >
+              <br />
+              <input
+                type="text"
+                class="form-control"
+                id="signature"
+                name="signature"
+                placeholder=" "
+                required
+              />
             </div>
             <div class="mb-3 position-relative">
-              <label for="declarationDate" class="form-label position-absolute">Date</label>
-<br>
-              <input type="date" class="form-control" id="declarationDate" name="declaration_date" placeholder=" " required />
+              <label for="declarationDate" class="form-label position-absolute"
+                >Date</label
+              >
+              <br />
+              <input
+                type="date"
+                class="form-control"
+                id="declarationDate"
+                name="declaration_date"
+                placeholder=" "
+                required
+              />
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary w-100" id="submitAdmission">
+          <button
+            type="submit"
+            class="btn btn-primary w-100"
+            id="submitAdmission"
+          >
             Submit Application
           </button>
         </form>
@@ -1148,56 +1523,103 @@
         </div>
       </div>
     </section>
-    <section id="recognized" class="section-spacing bg-light" data-aos="fade-up">
+    <section
+      id="recognized"
+      class="section-spacing bg-light"
+      data-aos="fade-up"
+    >
       <div class="container">
-        <h2 class="display-5 fw-semibold text-dark mb-5 text-center">Recognized</h2>
+        <h2 class="display-5 fw-semibold text-dark mb-5 text-center">
+          Recognized
+        </h2>
         <div class="section-divider"></div>
-        <p class="lead text-muted mb-5 text-center mx-auto" style="max-width: 800px">
-          Our institute is celebrated for its unwavering commitment to excellence in nursing education and healthcare training.
+        <p
+          class="lead text-muted mb-5 text-center mx-auto"
+          style="max-width: 800px"
+        >
+          Our institute is celebrated for its unwavering commitment to
+          excellence in nursing education and healthcare training.
         </p>
         <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
           <div class="col" data-tilt data-tilt-max="10">
             <div class="recognized-item">
               <a href="https://pnmc.gov.pk/recognized-institutes/">
-                <img src="images/nursing-counsel.png" alt="PNC Accreditation" class="mb-3 lazy" loading="lazy" />
+                <img
+                  src="images/nursing-counsel.png"
+                  alt="PNC Accreditation"
+                  class="mb-3 lazy"
+                  loading="lazy"
+                />
               </a>
-              <h3 class="h5 fw-semibold mb-3">Pakistan Nursing Council Accreditation</h3>
+              <h3 class="h5 fw-semibold mb-3">
+                Pakistan Nursing Council Accreditation
+              </h3>
               <p class="text-muted">
-                Accredited by the Pakistan Nursing Council, ensuring compliance with national standards.
+                Accredited by the Pakistan Nursing Council, ensuring compliance
+                with national standards.
               </p>
             </div>
           </div>
           <div class="col" data-tilt data-tilt-max="10">
             <div class="recognized-item">
-              <img src="images/sindh.png" alt="Excellence Award" class="mb-3 lazy" loading="lazy" />
-              <h3 class="h5 fw-semibold mb-3">Health Department Government Of Sindh</h3>
+              <img
+                src="images/sindh.png"
+                alt="Excellence Award"
+                class="mb-3 lazy"
+                loading="lazy"
+              />
+              <h3 class="h5 fw-semibold mb-3">
+                Health Department Government Of Sindh
+              </h3>
               <p class="text-muted">
-                Recognized by Health Department Government Of Sindh for outstanding contributions to nursing education in Karachi.
+                Recognized by Health Department Government Of Sindh for
+                outstanding contributions to nursing education in Karachi.
               </p>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <section id="affiliated" class="section-spacing bg-white" data-aos="fade-up">
+    <section
+      id="affiliated"
+      class="section-spacing bg-white"
+      data-aos="fade-up"
+    >
       <div class="container">
         <h2 class="display-5 fw-semibold text-dark mb-5 text-center">
-            Affiliated
+          Affiliated
         </h2>
         <div class="section-divider"></div>
-        <p class="lead text-muted mb-5 text-center mx-auto" style="max-width: 800px">
-          Our partnerships with top healthcare institutions ensure exceptional clinical training and career opportunities.
+        <p
+          class="lead text-muted mb-5 text-center mx-auto"
+          style="max-width: 800px"
+        >
+          Our partnerships with top healthcare institutions ensure exceptional
+          clinical training and career opportunities.
         </p>
         <div class="text-center mb-4">
-          <a href="https://www.lumhs.edu.pk/home/" target="_blank" rel="noopener noreferrer">
-            <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Liaquat_University_of_Medical_and_Health_Sciences_%28crest%29.jpg" alt="Affiliated Institutions" class="lazy" loading="lazy" />
+          <a
+            href="https://www.lumhs.edu.pk/home/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/en/7/7c/Liaquat_University_of_Medical_and_Health_Sciences_%28crest%29.jpg"
+              alt="Affiliated Institutions"
+              class="lazy"
+              loading="lazy"
+            />
           </a>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
           <div class="col" data-tilt data-tilt-max="10">
             <div class="affiliated-item text-center">
               <h3 class="h6 fw-semibold text-primary mb-2">
-                <a href="https://www.lumhs.edu.pk/home/" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://www.lumhs.edu.pk/home/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Liaquat National Hospital
                 </a>
               </h3>
@@ -1224,7 +1646,8 @@
                 or campus visits.
               </p>
               <p class="mb-3">
-                <strong>Address:</strong> P.R.E.C.H.S, Pakistan Railways Employee Co-operative Housing Society Karachi. 75300
+                <strong>Address:</strong> P.R.E.C.H.S, Pakistan Railways
+                Employee Co-operative Housing Society Karachi. 75300
               </p>
               <p class="mb-3">
                 <strong>Email:</strong>
@@ -1277,10 +1700,12 @@
               <h3 class="h4 fw-semibold text-dark mb-4">Send Us a Message</h3>
               <div>
                 <form id="contactForm" action="send_email.php" method="POST">
-                  <input type="hidden" name="form_type" value="contact">
+                  <input type="hidden" name="form_type" value="contact" />
                   <div class="mb-3 position-relative">
-                    <label for="name" class="form-label position-absolute">Your Name</label>
-                    <br>
+                    <label for="name" class="form-label position-absolute"
+                      >Your Name</label
+                    >
+                    <br />
                     <input
                       type="text"
                       class="form-control"
@@ -1291,8 +1716,10 @@
                     />
                   </div>
                   <div class="mb-3 position-relative">
-                    <label for="email" class="form-label position-absolute">Your Email</label>
-                    <br>
+                    <label for="email" class="form-label position-absolute"
+                      >Your Email</label
+                    >
+                    <br />
                     <input
                       type="email"
                       class="form-control"
@@ -1303,8 +1730,10 @@
                     />
                   </div>
                   <div class="mb-3 position-relative">
-                    <label for="message" class="form-label position-absolute">Your Message</label>
-                    <br>
+                    <label for="message" class="form-label position-absolute"
+                      >Your Message</label
+                    >
+                    <br />
                     <textarea
                       class="form-control"
                       id="message"
@@ -1314,7 +1743,9 @@
                       required
                     ></textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary w-100">Submit</button>
+                  <button type="submit" class="btn btn-primary w-100">
+                    Submit
+                  </button>
                 </form>
               </div>
             </div>
@@ -1364,7 +1795,10 @@
           </div>
           <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
             <h4 class="h5 fw-semibold mb-3">Contact Info</h4>
-            <p class="text-muted-t">P.R.E.C.H.S, Pakistan Railways Employee Co-operative Housing Society Karachi. 75300</p>
+            <p class="text-muted-t">
+              P.R.E.C.H.S, Pakistan Railways Employee Co-operative Housing
+              Society Karachi. 75300
+            </p>
             <p class="text-muted-t">Phone: 0313-2187825 / 0300-2187825</p>
             <p class="text-muted-t">
               Email:
@@ -1382,11 +1816,12 @@
                 ><i class="bi bi-facebook"></i
               ></a>
               <a
-                href="https://twitter.com"
-                class="text-muted-t me-3 social-icon"
-                aria-label="Twitter"
-                ><i class="bi bi-twitter"></i
-              ></a>
+                href="https://instagram.com"
+                class="text-muted-t social-icon"
+                aria-label="Instagram"
+              >
+                <i class="bi bi-instagram"></i>
+              </a>
               <a
                 href="https://linkedin.com"
                 class="text-muted-t social-icon"
@@ -1475,25 +1910,29 @@
       });
 
       // Add education row
-      document.getElementById("addEducationRow").addEventListener("click", () => {
-        const tbody = document.querySelector(".table tbody");
-        const rowCount = tbody.children.length;
-        const newRow = document.createElement("tr");
-        newRow.innerHTML = `
+      document
+        .getElementById("addEducationRow")
+        .addEventListener("click", () => {
+          const tbody = document.querySelector(".table tbody");
+          const rowCount = tbody.children.length;
+          const newRow = document.createElement("tr");
+          newRow.innerHTML = `
           <td><input type="text" class="form-control" name="education[${rowCount}][exam_level]" placeholder="e.g., Graduation" /></td>
           <td><input type="text" class="form-control" name="education[${rowCount}][board]" placeholder="e.g., University" /></td>
           <td><input type="number" class="form-control" name="education[${rowCount}][year]" placeholder="e.g., 2023" /></td>
           <td><input type="text" class="form-control" name="education[${rowCount}][marks]" placeholder="e.g., 3.5/4.0" /></td>
           <td><input type="text" class="form-control" name="education[${rowCount}][grade]" placeholder="e.g., A" /></td>
         `;
-        tbody.appendChild(newRow);
-      });
+          tbody.appendChild(newRow);
+        });
 
       // Show/hide medical training details
-      document.getElementById("medicalTraining").addEventListener("change", (e) => {
-        const details = document.getElementById("medicalTrainingDetails");
-        details.style.display = e.target.value === "Yes" ? "block" : "none";
-      });
+      document
+        .getElementById("medicalTraining")
+        .addEventListener("change", (e) => {
+          const details = document.getElementById("medicalTrainingDetails");
+          details.style.display = e.target.value === "Yes" ? "block" : "none";
+        });
 
       // Handle form submissions
       const handleFormSubmission = async (form) => {
@@ -1520,7 +1959,8 @@
                   <td><input type="text" class="form-control" name="education[0][grade]" placeholder="e.g., A+" required /></td>
                 </tr>
               `;
-              document.getElementById("medicalTrainingDetails").style.display = "none";
+              document.getElementById("medicalTrainingDetails").style.display =
+                "none";
             } else {
               form.reset();
             }
