@@ -5,9 +5,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $formType = $_POST['form_type'] ?? '';
     $to = 'info@asinas.edu.pk';
     $subject = $formType === 'admission' ? 'Admission Form Submission' : 'Contact Form Submission';
-    $headers = "From: noreply@asinas.edu.pk\r\n";
-    $headers .= "Reply-To: " . ($_POST['email'] ?? 'noreply@asinas.edu.pk') . "\r\n";
-    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $headers = [
+        'From' => 'noreply@asinas.edu.pk',
+        'Reply-To' => $_POST['email'] ?? 'noreply@asinas.edu.pk',
+        'Content-Type' => 'text/html; charset=UTF-8',
+    ];
 
     $message = '<html><body>';
     $message .= '<h2>' . htmlspecialchars($subject) . '</h2>';
@@ -25,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message .= '</table>';
     $message .= '</body></html>';
 
-    if (mail($to, $subject, $message, $headers)) {
+    if (mail($to, $subject, $message, implode("\r\n", $headers))) {
         echo json_encode(['success' => true, 'message' => 'Form submitted successfully.']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Failed to send the email. Please try again later.']);
