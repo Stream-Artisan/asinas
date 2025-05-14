@@ -127,10 +127,45 @@
       <div class="section-divider"></div>
       <p>Graduates of the Generic BSN program can pursue careers in various healthcare settings, including hospitals, clinics, community health centers, and research institutions. They are also eligible to pursue advanced degrees in nursing and healthcare management.</p>
     </section>
-    <div class="text-center mt-5">
-      <a href="index.html#admissions" class="btn btn-secondary">Back to Admissions</a>
-    </div>
   </main>
+
+  <!-- Apply Now & Back to Admissions Buttons at Bottom -->
+  <div class="container my-5">
+    <div class="row justify-content-center mb-4">
+      <div class="col-auto">
+        <button class="btn btn-primary btn-lg" id="showApplyForm" type="button">Apply Now</button>
+      </div>
+      <div class="col-auto">
+        <a href="index.html#admissions" class="btn btn-secondary btn-lg">Back to Admissions</a>
+      </div>
+    </div>
+    <div id="applyFormContainer" style="display:none;max-width:600px;margin:2rem auto;">
+      <form id="applyForm" action="send_email.php" method="POST">
+        <input type="hidden" name="form_type" value="admission" />
+        <div class="mb-3">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="fullName" name="full_name" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone</label>
+          <input type="tel" class="form-control" id="phone" name="phone" required>
+        </div>
+        <div class="mb-3">
+          <label for="program" class="form-label">Program</label>
+          <input type="text" class="form-control" id="program" name="program" value="Generic BSN (4 years)" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Message (optional)</label>
+          <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Submit Application</button>
+      </form>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="footer-bg py-5 text-white" style="background: linear-gradient(135deg, #1e3a8a, #ff5e62);">
@@ -172,6 +207,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>
     AOS.init({ duration: 800, once: true });
+
+    document.getElementById('showApplyForm').onclick = function() {
+      var form = document.getElementById('applyFormContainer');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    };
+    document.getElementById('applyForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const response = await fetch('send_email.php', { method: 'POST', body: formData });
+      const result = await response.json();
+      alert(result.message);
+      if(result.success) this.reset();
+    };
   </script>
 </body>
 </html>
