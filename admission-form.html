@@ -24,7 +24,62 @@
   <link rel="stylesheet" href="css/home .css">
   <link rel="stylesheet" href="css/admission.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Lora:wght@400;700&display=swap" rel="stylesheet">
-
+  <style>
+    /* Mobile-friendly floating label fix for admission form */
+    @media (max-width: 576px) {
+      .form-floating > label {
+        font-size: 0.95rem;
+        padding: 0.6rem 0.75rem;
+        left: 0.75rem;
+      }
+      .form-floating > .form-control,
+      .form-floating > .form-select {
+        font-size: 1rem;
+        padding: 0.75rem 0.75rem;
+      }
+      .form-floating > textarea.form-control {
+        min-height: 60px;
+      }
+      .form-section h4 {
+        font-size: 1.1rem;
+      }
+      .form-label, .form-check-label {
+        font-size: 0.95rem;
+      }
+      .form-section {
+        padding: 1rem;
+      }
+    }
+    /* Fix label overlap for floating labels on mobile */
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label,
+    .form-floating > .form-select:focus ~ label,
+    .form-floating > .form-select:not([value=""]) ~ label,
+    .form-floating > textarea.form-control:focus ~ label,
+    .form-floating > textarea.form-control:not(:placeholder-shown) ~ label {
+      opacity: 0.85;
+      font-size: 0.85rem;
+      transform: scale(0.95) translateY(-1.2rem) translateX(0.15rem);
+      background: #fff;
+      padding: 0 0.25rem;
+      left: 0.5rem;
+      top: 0.2rem;
+      width: auto;
+      max-width: 90%;
+      z-index: 2;
+    }
+    .form-floating > label {
+      left: 0.75rem;
+      top: 0.7rem;
+      padding: 0 0.25rem;
+      pointer-events: none;
+      transition: all 0.2s;
+      background: transparent;
+      width: auto;
+      max-width: 90%;
+      z-index: 2;
+    }
+  </style>
 </head>
 <body>
   <!-- Navbar -->
