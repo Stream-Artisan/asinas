@@ -25,32 +25,32 @@
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top" data-aos="fade-down">
       <div class="container">
-        <a class="navbar-brand" href="index.html"
-          ><img src="images/logo.png" width="280" alt="ASINAS Logo"
-        /></a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <a class="navbar-brand" href="index.html">
+          <img src="images/logo.png" width="280" alt="ASINAS Logo" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarNav"
-        >
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" href="index.html#about">About Us</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="index.html#admissions">Admissions</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="coursesDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Courses
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="coursesDropdown">
+                <li><a class="dropdown-item" href="generic-bsn.html">Generic BSN</a></li>
+                <li><a class="dropdown-item" href="post-rn-bsn.html">Post RN BSN</a></li>
+              </ul>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="index.html#recognized">Recognized</a>
@@ -62,11 +62,7 @@
               <a class="nav-link" href="index.html#contact">Contact</a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link btn btn-primary ms-2 active"
-                href="admission-form.html"
-                >Apply Now</a
-              >
+              <a class="nav-link btn-admission" href="admission-form.html">Apply Now</a>
             </li>
           </ul>
         </div>
@@ -444,38 +440,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-      AOS.init({ duration: 1000, once: true });
-
-      const formContainer = document.getElementById("applyFormContainer");
-      const showFormBtn = document.getElementById("showApplyForm");
-
-      showFormBtn.addEventListener("click", () => {
-        formContainer.classList.toggle("hidden");
-        formContainer.classList.toggle("show");
-      });
-
-      document
-        .getElementById("applyForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const formData = new FormData(e.target);
-          try {
-            const response = await fetch("send_email.php", {
-              method: "POST",
-              body: formData,
-            });
-            const result = await response.json();
-            alert(result.message);
-            if (result.success) {
-              e.target.reset();
-              formContainer.classList.add("hidden");
-              formContainer.classList.remove("show");
-            }
-          } catch (error) {
-            alert("An error occurred. Please try again later.");
-          }
-        });
+    <script src="scripts/post.js">
+     
     </script>
   </body>
 </html>

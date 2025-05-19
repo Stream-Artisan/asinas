@@ -1,4 +1,4 @@
- :root {
+:root {
       --primary-blue: #1e3a8a;
       --accent-red: #ff5e62;
       /* --highlight-yellow: #facc15; */
@@ -364,6 +364,43 @@
     .form-check-input { border: 2px solid #1e3a8a; transition: all 0.3s ease; }
     .form-check-input:checked { background-color: #ff5e62; border-color: #ff5e62; }
     .form-check-label { color: #1e3a8a; font-size: 0.9rem; margin-left: 0.5rem; }
+
+    /* Add dropdown menu styles for navbar */
+    .navbar-nav .dropdown-menu {
+      background: linear-gradient(90deg, #1e3a8a 90%, #ff5e62 100%);
+      border-radius: 12px;
+      border: none;
+      margin-top: 0.5rem;
+      min-width: 180px;
+      box-shadow: 0 8px 24px rgba(30,58,138,0.12);
+      padding: 0.5rem 0;
+      z-index: 1001;
+    }
+
+    .navbar-nav .dropdown-item {
+      color: #fff;
+      font-weight: 500;
+      padding: 0.5rem 1.5rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .navbar-nav .dropdown-item:hover,
+    .navbar-nav .dropdown-item:focus {
+      background: #facc15;
+      color: #1e3a8a;
+    }
+
+    .navbar-nav .dropdown-toggle::after {
+      margin-left: 0.35em;
+      vertical-align: 0.15em;
+    }
+
+    /* Show dropdown on hover for desktop */
+    @media (min-width: 992px) {
+      .navbar-nav .dropdown:hover .dropdown-menu {
+        display: block;
+      }
+    }
 
     /* Mobile View Optimizations */
     @media (max-width: 768px) {
