@@ -28,14 +28,16 @@
     /* Mobile-friendly floating label fix for admission form */
     @media (max-width: 576px) {
       .form-floating > label {
-        font-size: 0.95rem;
-        padding: 0.6rem 0.75rem;
+        font-size: 1rem;
+        padding: 0.5rem 0.75rem;
         left: 0.75rem;
+        top: 0.6rem;
+        line-height: 1.2;
       }
       .form-floating > .form-control,
       .form-floating > .form-select {
         font-size: 1rem;
-        padding: 0.75rem 0.75rem;
+        padding: 0.7rem 0.75rem;
       }
       .form-floating > textarea.form-control {
         min-height: 60px;
@@ -44,28 +46,28 @@
         font-size: 1.1rem;
       }
       .form-label, .form-check-label {
-        font-size: 0.95rem;
+        font-size: 1rem;
       }
       .form-section {
-        padding: 1rem;
+        padding: 0.75rem;
       }
     }
-    /* Fix label overlap for floating labels on mobile */
+    /* Floating label transition and overlap fix */
     .form-floating > .form-control:focus ~ label,
     .form-floating > .form-control:not(:placeholder-shown) ~ label,
     .form-floating > .form-select:focus ~ label,
     .form-floating > .form-select:not([value=""]) ~ label,
     .form-floating > textarea.form-control:focus ~ label,
     .form-floating > textarea.form-control:not(:placeholder-shown) ~ label {
-      opacity: 0.85;
+      opacity: 0.9;
       font-size: 0.85rem;
-      transform: scale(0.95) translateY(-1.2rem) translateX(0.15rem);
+      transform: scale(0.95) translateY(-1.3rem) translateX(0.1rem);
       background: #fff;
       padding: 0 0.25rem;
       left: 0.5rem;
-      top: 0.2rem;
+      top: 0.1rem;
       width: auto;
-      max-width: 90%;
+      max-width: 95%;
       z-index: 2;
     }
     .form-floating > label {
@@ -76,8 +78,14 @@
       transition: all 0.2s;
       background: transparent;
       width: auto;
-      max-width: 90%;
+      max-width: 95%;
       z-index: 2;
+      color: #1e3a8a;
+    }
+    /* Accessibility: Ensure sufficient color contrast */
+    .form-floating > label,
+    .form-label, .form-check-label {
+      color: #1e3a8a;
     }
   </style>
 </head>
