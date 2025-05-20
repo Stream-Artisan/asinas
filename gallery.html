@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery | All Saints Institute of Nursing and Allied Sciences</title>
+  <meta name="description" content="Photo gallery of All Saints Institute of Nursing and Allied Sciences, Karachi. Explore campus, events, and student life."/>
+  <link rel="stylesheet" href="css/home .css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Lora:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .gallery-item {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(30,58,138,0.08);
+      background: #fff;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      position: relative;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s;
+      background: #f6f6f6;
+    }
+    .gallery-item:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(30,58,138,0.15);
+      z-index: 2;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(0deg,rgba(30,58,138,0.8) 60%,rgba(30,58,138,0.0));
+      color: #fff;
+      padding: 0.75rem 1rem 0.5rem 1rem;
+      font-size: 1rem;
+      font-family: 'Poppins',sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      opacity: 0.95;
+      pointer-events: none;
+      user-select: none;
+    }
+    @media (max-width: 576px) {
+      .gallery-item img { height: 140px; }
+      .gallery-caption { font-size: 0.9rem; }
+    }
+    /* Popup Modal for Gallery Images */
+    .gallery-popup {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(30,58,138,0.88);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      animation: fadeIn 0.3s;
+    }
+    .gallery-popup.active {
+      display: flex;
+    }
+    .gallery-popup-img {
+      max-width: 92vw;
+      max-height: 70vh;
+      border-radius: 18px;
+      box-shadow: 0 8px 40px 8px rgba(30,58,138,0.25), 0 0 0 8px #fff;
+      background: #fff;
+      animation: popupZoom 0.4s;
+      margin-bottom: 1.5rem;
+    }
+    .gallery-popup-caption {
+      color: #fff;
+      background: rgba(30,58,138,0.85);
+      padding: 0.75rem 2rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-family: 'Poppins',sans-serif;
+      font-weight: 500;
+      box-shadow: 0 2px 12px rgba(30,58,138,0.15);
+      text-align: center;
+      max-width: 80vw;
+      letter-spacing: 0.01em;
+      opacity: 0.97;
+    }
+    .gallery-popup-close {
+      position: absolute;
+      top: 32px;
+      right: 48px;
+      color: #fff;
+      font-size: 2.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 2100;
+      background: rgba(255,255,255,0.12);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(30,58,138,0.15);
+    }
+    .gallery-popup-close:hover {
+      background: #ff5e62;
+      color: #fff;
+      transform: scale(1.15) rotate(90deg);
+    }
+    .gallery-popup-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      font-size: 2.5rem;
+      background: rgba(30,58,138,0.5);
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 2100;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      user-select: none;
+    }
+    .gallery-popup-nav:hover {
+      background: #ff5e62;
+      color: #fff;
+      transform: scale(1.15);
+    }
+    .gallery-popup-prev { left: 32px; }
+    .gallery-popup-next { right: 32px; }
+    @media (max-width: 768px) {
+      .gallery-popup-img { max-width: 98vw; max-height: 50vh; }
+      .gallery-popup-caption { font-size: 1rem; padding: 0.5rem 1rem; }
+      .gallery-popup-close, .gallery-popup-nav { top: 16px; font-size: 2rem; width: 40px; height: 40px; }
+      .gallery-popup-prev { left: 8px; }
+      .gallery-popup-next { right: 8px; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes popupZoom {
+      from { transform: scale(0.85); }
+      to   { transform: scale(1); }
+    }
+    .whatsapp-float.left-float {
+      left: 20px;
+      right: auto;
+      position: fixed;
+      width: 48px;
+      height: 48px;
+      bottom: 20px;
+      z-index: 999;
+      cursor: pointer;
+      /* Ensure it's above the footer and always visible */
+    }
+    .whatsapp-float img {
+      width: 100%;
+      height: 100%;
+    }
+    .back-to-top {
+      right: 20px;
+      left: auto;
+      position: fixed;
+      bottom: 20px;
+      /* ...existing code... */
+    }
+    /* Floating Phone Icon */
+    .phone-float {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      z-index: 1100;
+      background: #1e3a8a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(30,58,138,0.15);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .phone-float img {
+      width: 70%;
+      height: 70%;
+      display: block;
+      margin: auto;
+      filter: invert(1);
+    }
+    .phone-float:hover {
+      background: #ff5e62;
+      transform: scale(1.08);
+    }
+  </style>
+</head>
+<body>
+  <!-- Phone icon floating top right -->
+  <a href="tel:03395205670" class="phone-float" title="Call us">
+    <img src="https://cdn-icons-png.flaticon.com/128/724/724664.png" alt="Phone" style="width:40px;height:40px;">
+  </a>
+  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top" data-aos="fade-down">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="images/logo.png" width="180" alt="ASINAS Logo"/>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="index.html#about">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#admissions">Admissions</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#recognized">Recognized</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#affiliated">Affiliation</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link active" href="gallery.html">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link btn-admission" href="admission-form.html">Apply Now</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <header class="hero-bg" style="min-height:40vh;">
+    <div class="hero-overlay"></div>
+    <div class="container text-center py-5" data-aos="fade-up">
+      <h1 class="display-4 fw-bold mb-3">Gallery</h1>
+      <p class="lead mb-4">Explore our campus, events, and student life.</p>
+    </div>
+  </header>
+  <main class="container">
+    <div class="gallery-grid" data-aos="fade-up">
+      <!-- Use random Unsplash images for demo -->
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" alt="Campus Front View"/>
+        <div class="gallery-caption">Campus Front View</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="Modern Classrooms"/>
+        <div class="gallery-caption">Modern Classrooms</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Simulation Lab"/>
+        <div class="gallery-caption">Simulation Lab</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80" alt="Student Activities"/>
+        <div class="gallery-caption">Student Activities</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80" alt="Graduation Ceremony"/>
+        <div class="gallery-caption">Graduation Ceremony</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=600&q=80" alt="Faculty Team"/>
+        <div class="gallery-caption">Faculty Team</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80" alt="Library Facilities"/>
+        <div class="gallery-caption">Library Facilities</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=80" alt="Nursing Lab"/>
+        <div class="gallery-caption">Nursing Lab</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=80" alt="Cultural Event"/>
+        <div class="gallery-caption">Cultural Event</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80" alt="Sports Day"/>
+        <div class="gallery-caption">Sports Day</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80" alt="Seminar Session"/>
+        <div class="gallery-caption">Seminar Session</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="Community Outreach"/>
+        <div class="gallery-caption">Community Outreach</div>
+      </div>
+    </div>
+  </main>
+  <!-- Popup Modal for Gallery Images -->
+  <div id="galleryPopup" class="gallery-popup" tabindex="-1" aria-modal="true" role="dialog">
+    <button class="gallery-popup-nav gallery-popup-prev" id="galleryPopupPrev" aria-label="Previous image" tabindex="0"><i class="bi bi-chevron-left"></i></button>
+    <span class="gallery-popup-close" id="galleryPopupClose" aria-label="Close">&times;</span>
+    <img class="gallery-popup-img" id="galleryPopupImg" src="" alt="">
+    <button class="gallery-popup-nav gallery-popup-next" id="galleryPopupNext" aria-label="Next image" tabindex="0"><i class="bi bi-chevron-right"></i></button>
+    <div class="gallery-popup-caption" id="galleryPopupCaption"></div>
+  </div>
+  <footer class="footer-bg py-5 text-white mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4" data-aos="fade-up">
+          <img src="images/logo.png" alt="" width="220"/>
+          <p class="text-muted-t">Shaping the future of healthcare through excellence in nursing education.</p>
+        </div>
+        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="h5 fw-semibold mb-3">Quick Links</h3>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="index.html#about" class="text-muted-t text-decoration-none">About Us</a></li>
+            <li class="mb-2"><a href="index.html#admissions" class="text-muted-t text-decoration-none">Admissions</a></li>
+            <li class="mb-2"><a href="index.html#recognized" class="text-muted-t text-decoration-none">Recognized</a></li>
+            <li class="mb-2"><a href="index.html#affiliated" class="text-muted-t text-decoration-none">Affiliated</a></li>
+            <li class="mb-2"><a href="contact.html" class="text-muted-t text-decoration-none">Contact</a></li>
+            <li class="mb-2"><a href="gallery.html" class="text-muted-t text-decoration-none">Gallery</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+          <h4 class="h5 fw-semibold mb-3">Contact Info</h4>
+          <p class="text-muted-t">P.R.E.C.H.S, Pakistan Railways Employee Co-operative Housing Society Karachi. 75300</p>
+          <p class="text-muted-t">Phone: 0339-5205670 / 0300-2187825</p>
+          <p class="text-muted-t">
+            Email:
+            <a href="mailto:info@asinas.edu.pk" class="text-muted-t text-decoration-none">info@asinas.edu.pk</a>
+          </p>
+          <div class="mt-2">
+            <a href="https://www.facebook.com/www.asinas.edu.pk/" class="text-muted-t me-3 social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="https://instagram.com" class="text-muted-t social-icon" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="https://linkedin.com" class="text-muted-t social-icon" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="text-center text-muted-t mt-4" data-aos="fade-up" data-aos-delay="300">
+        <p>© 2025 All Saints Institute of Nursing and Allied Sciences. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <!-- WhatsApp icon floating bottom left -->
+  <a href="https://wa.me/923395205670" class="whatsapp-float left-float" target="_blank" title="Chat with us on WhatsApp">
+    <img src="https://cdn-icons-png.flaticon.com/128/2504/2504957.png" alt="WhatsApp" style="width:48px;height:48px;">
+  </a>
+  <button class="back-to-top" aria-label="Back to top">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+    // Back to Top Button
+    const backToTop = document.querySelector('.back-to-top');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 300);
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Gallery Image Popup (Lightbox) with navigation
+    const galleryImages = Array.from(document.querySelectorAll('.gallery-item img'));
+    const popup = document.getElementById('galleryPopup');
+    const popupImg = document.getElementById('galleryPopupImg');
+    const popupCaption = document.getElementById('galleryPopupCaption');
+    const popupClose = document.getElementById('galleryPopupClose');
+    const popupPrev = document.getElementById('galleryPopupPrev');
+    const popupNext = document.getElementById('galleryPopupNext');
+    let currentIndex = 0;
+
+    function showPopup(index) {
+      const img = galleryImages[index];
+      popupImg.src = img.src;
+      popupImg.alt = img.alt;
+      popupCaption.textContent = img.alt;
+      popup.classList.add('active');
+      popup.focus();
+      currentIndex = index;
+      document.body.style.overflow = 'hidden';
+    }
+    function closePopup() {
+      popup.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+      showPopup(currentIndex);
+    }
+    function showNext() {
+      currentIndex = (currentIndex + 1) % galleryImages.length;
+      showPopup(currentIndex);
+    }
+    galleryImages.forEach((img, idx) => {
+      img.addEventListener('click', () => showPopup(idx));
+    });
+    popupClose.addEventListener('click', closePopup);
+    popupPrev.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
+    popupNext.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) closePopup();
+    });
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!popup.classList.contains('active')) return;
+      if (e.key === 'Escape') closePopup();
+      if (e.key === 'ArrowLeft') showPrev();
+      if (e.key === 'ArrowRight') showNext();
+    });
+  </script>
+</body>
+</html>

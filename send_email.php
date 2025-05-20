@@ -1,6 +1,11 @@
 <?php
 // filepath: c:\Users\User\Desktop\work\nursing\send_email.php
 
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Helper function to format POST data as HTML table
 function format_post_data($data) {
     $html = '<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">';
@@ -32,10 +37,12 @@ function build_mail_with_attachments($to, $subject, $htmlBody, $from, $replyTo, 
     $body .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
     $body .= $htmlBody . "\r\n";
 
-    // Attach files
+    // Attach files with validation
+    $allowedTypes = ['application/pdf', 'image/jpeg', 'image/png'];
+    $maxSize = 5 * 1024 * 1024; // 5MB
     foreach ($files as $file) {
-        if (!empty($file['tmp_name']) && is_uploaded_file($file['tmp_name'])) {
-            $filename = basename($file['name']);
+        if (!empty($file['tmp_name']) && is_uploaded_file($file['tmp_name']) && $file['error'] === UPLOAD_ERR_OK && $file['size'] <= $maxSize && in_array($file['type'], $allowedTypes)) {
+            $filename = preg_replace('/[^A-Za-z0-9\-\_\.]/', '', basename($file['name']));
             $filedata = file_get_contents($file['tmp_name']);
             $filetype = $file['type'] ?: "application/octet-stream";
             $body .= "--$boundary\r\n";
@@ -43,21 +50,36 @@ function build_mail_with_attachments($to, $subject, $htmlBody, $from, $replyTo, 
             $body .= "Content-Disposition: attachment; filename=\"$filename\"\r\n";
             $body .= "Content-Transfer-Encoding: base64\r\n\r\n";
             $body .= chunk_split(base64_encode($filedata)) . "\r\n";
+        } else {
+            error_log("Invalid file: " . json_encode($file));
         }
     }
     $body .= "--$boundary--";
 
-    return mail($to, $subject, $body, $headers);
+    $result = mail($to, $subject, $body, $headers);
+    if (!$result) {
+        error_log("Failed to send email to $to with subject: $subject");
+    }
+    return $result;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $formType = $_POST['form_type'] ?? '';
-    $to = 'info@asinas.edu.pk';
+    $to = 'noreply@asinas.edu.pk'; // Updated recipient email
     $studentEmail = $_POST['email'] ?? '';
     $from = 'noreply@asinas.edu.pk';
-    $replyTo = $studentEmail ?: $from;
+    $replyTo = filter_var($studentEmail, FILTER_VALIDATE_EMAIL) ? $studentEmail : $from;
 
     if ($formType === 'admission') {
+        // Validate required fields
+        if (empty($studentEmail) || !filter_var($studentEmail, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Invalid or missing email address.'
+            ]);
+            exit;
+        }
+
         $subject = 'Admission Form Submission';
         $htmlBody = '<html><body>';
         $htmlBody .= '<h2>Admission Form Submission</h2>';
@@ -67,10 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Collect all uploaded files
         $files = [];
         foreach ($_FILES as $file) {
-            // Handle multiple files (e.g., academic_docs[])
             if (is_array($file['name'])) {
                 for ($i = 0; $i < count($file['name']); $i++) {
-                    if (!empty($file['name'][$i])) {
+                    if (!empty($file['name'][$i]) && $file['error'][$i] === UPLOAD_ERR_OK) {
                         $files[] = [
                             'name' => $file['name'][$i],
                             'type' => $file['type'][$i],
@@ -81,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             } else {
-                if (!empty($file['name'])) {
+                if (!empty($file['name']) && $file['error'] === UPLOAD_ERR_OK) {
                     $files[] = $file;
                 }
             }
@@ -100,9 +121,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $studentMessage .= '<br><p>Regards,<br>Admissions Office<br>All Saints’ Institute</p>';
             $studentMessage .= '</body></html>';
             $studentHeaders = "From: noreply@asinas.edu.pk\r\n";
-            $studentHeaders .= "Reply-To: info@asinas.edu.pk\r\n";
+            $studentHeaders .= "Reply-To: noreply@asinas.edu.pk\r\n";
             $studentHeaders .= "Content-Type: text/html; charset=UTF-8\r\n";
             $studentMailSent = mail($studentEmail, $studentSubject, $studentMessage, $studentHeaders);
+            if (!$studentMailSent) {
+                error_log("Failed to send confirmation email to $studentEmail");
+            }
         }
 
         if ($adminMailSent) {
@@ -131,6 +155,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
         $adminMailSent = mail($to, $subject, $htmlBody, $headers);
+        if (!$adminMailSent) {
+            error_log("Failed to send contact form email to $to");
+        }
 
         // Confirmation to student
         $studentMailSent = false;
@@ -143,9 +170,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $studentMessage .= '<br><p>Regards,<br>Admissions Office<br>All Saints’ Institute</p>';
             $studentMessage .= '</body></html>';
             $studentHeaders = "From: noreply@asinas.edu.pk\r\n";
-            $studentHeaders .= "Reply-To: info@asinas.edu.pk\r\n";
+            $studentHeaders .= "Reply-To: noreply@asinas.edu.pk\r\n";
             $studentHeaders .= "Content-Type: text/html; charset=UTF-8\r\n";
             $studentMailSent = mail($studentEmail, $studentSubject, $studentMessage, $studentHeaders);
+            if (!$studentMailSent) {
+                error_log("Failed to send confirmation email to $studentEmail for contact form");
+            }
         }
 
         if ($adminMailSent) {

@@ -84,6 +84,11 @@
       background: linear-gradient(135deg, #ffffff, #e6f0fa);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* Center content horizontally */
+      justify-content: flex-start;
     }
 
     .card:hover {
@@ -92,6 +97,9 @@
 
     .card img {
       transition: transform 0.5s ease;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .card:hover img {
@@ -247,62 +255,43 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
-    /* Center images in recognized and affiliated tiles */
+    /* Utility for centering images and preventing cut-off */
+    .centered-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      overflow: visible;
+    }
+
+    .centered-img img {
+      max-width: 150px;
+      width: 100%;
+      height: auto;
+      display: inline-block;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    /* Modernize recognized/affiliated item images */
     .recognized-item img,
     .affiliated-item img {
+      max-width: 150px;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
       display: block;
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 1rem;
-      max-width: 120px;
-      height: auto;
-      object-fit: contain;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(30,58,138,0.10);
+      transition: transform 0.5s ease;
     }
 
-    /* Energetic Feature Tile Style */
-    .feature-tile {
-      background: linear-gradient(120deg, #fef7f5 60%, #e6f0fa 100%);
-      border: 3px solid var(--accent-red);
-      border-radius: 1.5rem;
-      box-shadow: 0 8px 30px rgba(30,58,138,0.09);
-      padding: 2.5rem 1.5rem 2rem 1.5rem;
-      text-align: center;
-      transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .feature-tile:hover {
-      transform: translateY(-8px) scale(1.04) rotate(-1deg);
-      box-shadow: 0 16px 48px rgba(255,94,98,0.18);
-      border-color: var(--highlight-yellow);
-      background: linear-gradient(120deg, #e6f0fa 60%, #fffbe6 100%);
-    }
-    .feature-tile .feature-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.2rem;
-    }
-    .feature-tile img {
-      margin: 0 auto 1rem auto;
-      max-width: 120px;
-      height: auto;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(30,58,138,0.10);
-    }
-    .feature-tile h3 {
-      color: var(--primary-blue);
-      font-family: "Lora", serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      margin-bottom: 0.7rem;
-    }
-    .feature-tile p {
-      color: #444;
-      font-size: 1rem;
-      margin-bottom: 0;
+    /* Remove object-fit: cover for recognized-item img to prevent cropping */
+    .recognized-item img {
+      /* width: 150px; */
+      /* height: 150px; */
+      /* object-fit: cover; */
     }
 
     .social-icon {
@@ -441,6 +430,7 @@
 
     /* Mobile View Optimizations */
     @media (max-width: 768px) {
+      .navbar-brand img{ max-width: 10em; margin-left: -3em;}
       .hero-bg video { display: none; }
       .hero-bg { background: linear-gradient(rgba(30, 58, 138, 0.7), rgba(255, 94, 98, 0.7)), url("https://img.freepik.com/free-photo/medical-theme-portrait-female-doctor-with-clipboard-against-group-doctors-meeting-mri-office-diagnostic-center-hospital_627829-6528.jpg?ga=GA1.1.588228496.1745879376&semt=ais_hybrid&w=740") center/cover no-repeat; min-height: 80vh; }
       .navbar-nav { text-align: center; padding: 1rem 0; }
