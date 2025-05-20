@@ -1,4 +1,4 @@
- :root {
+:root {
         --primary-blue: #1e3a8a;
         --accent-red: #ff5e62;
         --highlight-yellow: #facc15;
@@ -231,6 +231,43 @@
         opacity: 0;
         transform: translateY(20px);
       }
+
+      /* Remove white patch and refine floating label for selects */
+.form-floating > label {
+  background: transparent !important;
+}
+
+/* Remove white patch on floating label when select is focused or filled */
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select:focus ~ label,
+.form-floating > .form-select:not([value=""]) ~ label,
+.form-floating > textarea.form-control:focus ~ label,
+.form-floating > textarea.form-control:not(:placeholder-shown) ~ label {
+  background: transparent !important;
+  color: var(--primary-blue);
+}
+
+/* Refine select appearance for floating labels */
+.form-floating > .form-select {
+  background-color: #fff;
+  border-radius: 12px;
+  border: 2px solid #1e3a8a;
+  padding-top: 1.25rem;
+  padding-bottom: 0.25rem;
+  min-height: 56px;
+  color: #1e3a8a;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+.form-floating > .form-select:focus {
+  border-color: #ff5e62;
+  box-shadow: 0 0 12px rgba(255, 94, 98, 0.15);
+  outline: none;
+}
+.form-select:focus {
+  background-color: #fff !important;
+}
 
       @media (max-width: 768px) {
         .hero-bg {

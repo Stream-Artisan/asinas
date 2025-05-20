@@ -1,4 +1,4 @@
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
         // Initialize AOS
         AOS.init({ duration: 800, once: true });
 
@@ -55,41 +55,13 @@
               e.target.value === "Yes" ? "block" : "none";
           });
 
-        // Handle form submissions
-        const handleFormSubmission = async (form) => {
-          const formData = new FormData(form);
-          try {
-            const response = await fetch("send_email.php", {
-              method: "POST",
-              body: formData,
-            });
-            const result = await response.json();
-            if (result.success) {
-              alert(result.message);
-              form.reset();
-            } else {
-              alert(result.message);
-            }
-          } catch (error) {
-            alert("An error occurred. Please try again.");
-            console.error(error);
-          }
-        };
-
-        document
-          .getElementById("contactForm")
-          .addEventListener("submit", (e) => {
-            e.preventDefault();
-            handleFormSubmission(e.target);
-          });
-
-        // Highlight active nav link on scroll
-        const sections = document.querySelectorAll("section");
+        // Navbar active link on scroll
+        const sections = document.querySelectorAll("section[id]");
         const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
-        const updateActiveNavLink = () => {
+        function updateActiveNavLink() {
           let current = "";
           sections.forEach((section) => {
-            if (window.scrollY >= section.offsetTop - 100)
+            if (window.scrollY >= section.offsetTop - 120)
               current = section.getAttribute("id");
           });
           navLinks.forEach((link) => {
@@ -97,11 +69,45 @@
             if (link.getAttribute("href").includes(current))
               link.classList.add("active");
           });
-        };
+        }
         window.addEventListener("scroll", updateActiveNavLink);
-        window.addEventListener("load", () => {
-          navLinks.forEach((link) => link.classList.remove("active"));
-          updateActiveNavLink();
+        window.addEventListener("load", updateActiveNavLink);
+
+        // Centralized form validation for all forms
+        document.querySelectorAll("form").forEach((form) => {
+          form.addEventListener("submit", async function (e) {
+            if (form.hasAttribute("novalidate")) e.preventDefault();
+            let valid = true;
+            form.querySelectorAll("input, textarea, select").forEach((input) => {
+              if (!input.checkValidity()) {
+                input.classList.add("is-invalid");
+                valid = false;
+              } else {
+                input.classList.remove("is-invalid");
+              }
+            });
+            if (!valid) return;
+            if (form.action && form.action.includes("send_email.php")) {
+              e.preventDefault();
+              const formData = new FormData(form);
+              try {
+                const response = await fetch(form.action, {
+                  method: "POST",
+                  body: formData,
+                });
+                const result = await response.json();
+                alert(result.message);
+                if (result.success) form.reset();
+              } catch {
+                alert("An error occurred. Please try again.");
+              }
+            }
+          });
+          form.querySelectorAll("input, textarea, select").forEach((input) => {
+            input.addEventListener("input", () => {
+              if (input.checkValidity()) input.classList.remove("is-invalid");
+            });
+          });
         });
 
         // Image popup functionality

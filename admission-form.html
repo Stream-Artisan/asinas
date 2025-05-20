@@ -109,6 +109,23 @@
     .form-select:focus {
       background-color: #fff !important;
     }
+    .back-to-top.left-float {
+      left: 20px;
+      right: auto;
+    }
+    .whatsapp-float {
+      position: fixed;
+      width: 48px;
+      height: 48px;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      cursor: pointer;
+    }
+    .whatsapp-float img {
+      width: 100%;
+      height: 100%;
+    }
   </style>
 </head>
 <body>
@@ -555,10 +572,31 @@
       </div>
     </div>
   </footer>
-  <button class="back-to-top" aria-label="Back to top">
+  <button class="back-to-top left-float" aria-label="Back to top">
     <i class="bi bi-arrow-up"></i>
   </button>
-
+  <a href="https://wa.me/923395205670" class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
+    <img src="https://cdn-icons-png.flaticon.com/128/2504/2504957.png" alt="WhatsApp" style="width:48px;height:48px;">
+  </a>
+  <style>
+    .back-to-top.left-float {
+      left: 20px;
+      right: auto;
+    }
+    .whatsapp-float {
+      position: fixed;
+      width: 48px;
+      height: 48px;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      cursor: pointer;
+    }
+    .whatsapp-float img {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script src="scripts/admission.js">

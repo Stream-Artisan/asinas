@@ -247,25 +247,62 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
+    /* Center images in recognized and affiliated tiles */
     .recognized-item img,
     .affiliated-item img {
-      max-width: 100%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 1rem;
+      max-width: 120px;
       height: auto;
-      border-radius: 12px;
-      transition: transform 0.5s ease;
+      object-fit: contain;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(30,58,138,0.10);
     }
 
-    .recognized-item img {
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 12px;
-      transition: transform 0.5s ease;
+    /* Energetic Feature Tile Style */
+    .feature-tile {
+      background: linear-gradient(120deg, #fef7f5 60%, #e6f0fa 100%);
+      border: 3px solid var(--accent-red);
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 30px rgba(30,58,138,0.09);
+      padding: 2.5rem 1.5rem 2rem 1.5rem;
+      text-align: center;
+      transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
     }
-
-    .recognized-item:hover img,
-    .affiliated-item:hover img {
-      transform: scale(1.1);
+    .feature-tile:hover {
+      transform: translateY(-8px) scale(1.04) rotate(-1deg);
+      box-shadow: 0 16px 48px rgba(255,94,98,0.18);
+      border-color: var(--highlight-yellow);
+      background: linear-gradient(120deg, #e6f0fa 60%, #fffbe6 100%);
+    }
+    .feature-tile .feature-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+    .feature-tile img {
+      margin: 0 auto 1rem auto;
+      max-width: 120px;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(30,58,138,0.10);
+    }
+    .feature-tile h3 {
+      color: var(--primary-blue);
+      font-family: "Lora", serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.7rem;
+    }
+    .feature-tile p {
+      color: #444;
+      font-size: 1rem;
+      margin-bottom: 0;
     }
 
     .social-icon {
@@ -430,20 +467,8 @@
       h1, h2, h3 { font-size: calc(1rem + 2vw); }
       .display-3 { font-size: calc(1.5rem + 3vw); }
       .display-5 { font-size: calc(1.2rem + 2.5vw); }
-      .recognized-item, .affiliated-item {
-        padding: 0.75rem;
-        text-align: center;
-      }
-      .recognized-item img, .affiliated-item img,
-      .card img {
-        max-width: 120px;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 1rem;
-        height: auto;
-        object-fit: contain;
-      }
+      .recognized-item, .affiliated-item { padding: 0.75rem; }
+      .recognized-item img, .affiliated-item img { max-width: 120px; }
       .table-responsive { overflow-x: auto; }
       .table th, .table td { font-size: 0.8rem; padding: 0.3rem; }
       .table .form-control { font-size: 0.8rem; height: 32px; }
