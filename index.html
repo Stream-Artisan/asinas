@@ -341,7 +341,7 @@
                   alt="LUMHS Logo"
                   class="mb-3 lazy"
                   loading="lazy"
-                  style="max-width: 150px; height: auto"
+                  style="max-width: 100px; height: auto"
                 />
                 <h3 class="h5 fw-semibold mb-3">
                   Liaquat University of Medical & Health Sciences
@@ -442,51 +442,27 @@
             </div>
           </div>
           <div class="col-md-5">
-            <div class="card border-0 p-4 bg-white">
+            <div class="card border-0 p-4 bg-white shadow-sm">
               <h3 class="h4 fw-semibold text-dark mb-4">Send Us a Message</h3>
-              <form id="contactForm" action="send_email.php" method="POST">
+              <form id="contactForm" action="send_email.php" method="POST" novalidate>
                 <input type="hidden" name="form_type" value="contact" />
-                <div class="mb-3 position-relative">
-                  <label for="name" class="form-label position-absolute"
-                    >Your Name</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="name"
-                    name="name"
-                    placeholder="Your Name"
-                    required
-                  />
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                  <label for="name"><i class="bi bi-person-fill me-2"></i>Your Name</label>
+                  <div class="invalid-feedback">Please enter your name.</div>
                 </div>
-                <div class="mb-3 position-relative">
-                  <label for="email" class="form-label position-absolute"
-                    >Your Email</label
-                  >
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder=" "
-                    required
-                  />
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                  <label for="email"><i class="bi bi-envelope-fill me-2"></i>Your Email</label>
+                  <div class="invalid-feedback">Please enter a valid email address.</div>
                 </div>
-                <div class="mb-3 position-relative">
-                  <label for="message" class="form-label position-absolute"
-                    >Your Message</label
-                  >
-                  <textarea
-                    class="form-control"
-                    id="message"
-                    name="message"
-                    rows="4"
-                    placeholder=" "
-                    required
-                  ></textarea>
+                <div class="form-floating mb-3">
+                  <textarea class="form-control" id="message" name="message" placeholder="Your Message" style="height: 120px;" required></textarea>
+                  <label for="message"><i class="bi bi-chat-dots-fill me-2"></i>Your Message</label>
+                  <div class="invalid-feedback">Please enter your message.</div>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">
-                  Submit
+                <button type="submit" class="btn btn-primary w-100 py-2">
+                  <i class="bi bi-send-fill me-2"></i>Submit
                 </button>
               </form>
             </div>
@@ -600,5 +576,43 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script src="scripts/home.js"></script>
+    <script>
+// Enhanced form validation and AJAX for Contact Form
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    let valid = true;
+    contactForm.querySelectorAll('input, textarea').forEach(input => {
+      if (!input.checkValidity()) {
+        input.classList.add('is-invalid');
+        valid = false;
+      } else {
+        input.classList.remove('is-invalid');
+      }
+    });
+    if (!valid) return;
+    const formData = new FormData(contactForm);
+    try {
+      const response = await fetch('send_email.php', {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.json();
+      alert(result.message);
+      if (result.success) contactForm.reset();
+    } catch (error) {
+      alert('An error occurred. Please try again.');
+    }
+  });
+  contactForm.querySelectorAll('input, textarea').forEach(input => {
+    input.addEventListener('input', () => {
+      if (input.checkValidity()) {
+        input.classList.remove('is-invalid');
+      }
+    });
+  });
+}
+    </script>
   </body>
 </html>

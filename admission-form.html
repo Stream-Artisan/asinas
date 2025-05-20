@@ -33,6 +33,7 @@
         left: 0.75rem;
         top: 0.6rem;
         line-height: 1.2;
+        background: transparent !important; /* Remove white patch */
       }
       .form-floating > .form-control,
       .form-floating > .form-select {
@@ -62,7 +63,7 @@
       opacity: 0.9;
       font-size: 0.85rem;
       transform: scale(0.95) translateY(-1.3rem) translateX(0.1rem);
-      background: #fff;
+      background: transparent !important; /* Remove white patch */
       padding: 0 0.25rem;
       left: 0.5rem;
       top: 0.1rem;
@@ -76,7 +77,7 @@
       padding: 0 0.25rem;
       pointer-events: none;
       transition: all 0.2s;
-      background: transparent;
+      background: transparent !important; /* Remove white patch */
       width: auto;
       max-width: 95%;
       z-index: 2;
@@ -86,6 +87,27 @@
     .form-floating > label,
     .form-label, .form-check-label {
       color: #1e3a8a;
+    }
+    /* Refine select appearance for floating labels */
+    .form-floating > .form-select {
+      background-color: #fff;
+      border-radius: 12px;
+      border: 2px solid #1e3a8a;
+      padding-top: 1.25rem;
+      padding-bottom: 0.25rem;
+      min-height: 56px;
+      color: #1e3a8a;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    .form-floating > .form-select:focus {
+      border-color: #ff5e62;
+      box-shadow: 0 0 12px rgba(255, 94, 98, 0.15);
+      outline: none;
+    }
+    /* Remove default background for select on focus */
+    .form-select:focus {
+      background-color: #fff !important;
     }
   </style>
 </head>
