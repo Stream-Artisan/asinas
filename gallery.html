@@ -215,6 +215,58 @@
       background: #ff5e62;
       transform: scale(1.08);
     }
+    /* Additional Styles for Carousels on Gallery Page */
+    .carousel-inner img {
+      max-height: 320px;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+    .carousel-caption {
+      background: rgba(30,58,138,0.7);
+      border-radius: 12px;
+      padding: 0.5rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 768px) {
+      .carousel-inner img { max-height: 180px; }
+      .carousel-caption { font-size: 1rem; padding: 0.4rem 0.7rem; }
+    }
+    .card {
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(30,58,138,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(30,58,138,0.15);
+}
+.carousel-inner img {
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: 18px 18px 0 0;
+}
+.card-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin-top: 0.5rem;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #1e3a8a;
+  border-radius: 50%;
+  padding: 0.5rem;
+}
+.carousel-control-prev,
+.carousel-control-next {
+  width: 2.5rem;
+}
+@media (max-width: 768px) {
+  .carousel-inner img { max-height: 140px; }
+  .card-title { font-size: 1rem; }
+}
   </style>
 </head>
 <body>
@@ -251,43 +303,251 @@
       <p class="lead mb-4">Explore our campus, events, and student life.</p>
     </div>
   </header>
-  <main class="container">
-    <div class="gallery-grid" data-aos="fade-up">
-      <!-- Use random Unsplash images for demo -->
-      <div class="gallery-item">
-        <img src="images/front.jpeg" alt="Campus Front View"/>
-        <div class="gallery-caption">Campus Front View</div>
+  <main class="container py-5">
+    <div class="row g-4" data-aos="fade-up">
+      <div class="col-md-4">
+        <div class="card shadow border-0 h-100">
+          <div id="carousel1" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+              <div class="carousel-item active">
+                <img src="images/classroom.jpeg" class="d-block w-100" alt="Campus Front View">
+              </div>
+              <div class="carousel-item">
+                <img src="images/classroom1.jpeg" class="d-block w-100" alt="Modern Classrooms">
+              </div>
+               <div class="carousel-item">
+                <img src="images/classroom2.jpeg" class="d-block w-100" alt="Modern Classrooms">
+              </div>
+               <div class="carousel-item">
+                <img src="images/classroom3.jpeg" class="d-block w-100" alt="Modern Classrooms">
+              </div>
+               <div class="carousel-item">
+                <img src="images/classroom4.jpeg" class="d-block w-100" alt="Modern Classrooms">
+              </div>
+               <div class="carousel-item">
+                <img src="images/classroom5.jpeg" class="d-block w-100" alt="Modern Classrooms">
+              </div>
+               <div class="carousel-item">
+                <img src="images/classroom6.jpeg" class="d-block w-100" alt="Modern Classrooms">
+              </div>
+               <div class="carousel-item">
+                <img src="images/classroom7.jpeg" class="d-block w-100" alt="Modern Classrooms">
+              </div>
+               <div class="carousel-item">
+                <img src="images/classroom8.jpeg" class="d-block w-100" alt="Modern Classrooms">
+              </div>
+               <div class="carousel-item">
+                <img src="images/classroom9.jpeg" class="d-block w-100" alt="Modern Classrooms">
+              </div>
+               <div class="carousel-item">
+                <img src="images/classroom10.jpeg" class="d-block w-100" alt="Modern Classrooms">
+              </div>
+               <div class="carousel-item">
+                <img src="images/classroom11.jpeg" class="d-block w-100" alt="Modern Classrooms">
+              </div>
+               <div class="carousel-item">
+                <img src="images/classroom12.jpeg" class="d-block w-100" alt="Modern Classrooms">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel1" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel1" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-0">Classrooms</h5>
+          </div>
+        </div>
       </div>
-      <div class="gallery-item">
-        <img src="images/classroom.jpeg" alt="Modern Classrooms"/>
-        <div class="gallery-caption">Classrooms</div>
+      <div class="col-md-4">
+        <div class="card shadow border-0 h-100">
+          <div id="carousel2" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+              <div class="carousel-item active">
+                <img src="images/library.jpeg" class="d-block w-100" alt="Simulation Lab">
+              </div>
+              <div class="carousel-item">
+                <img src="images/library1.jpeg" class="d-block w-100" alt="Student Activities">
+              </div>
+              <div class="carousel-item">
+                <img src="images/library2.jpeg" class="d-block w-100" alt="Student Activities">
+              </div>
+              <div class="carousel-item">
+                <img src="images/library3.jpeg" class="d-block w-100" alt="Student Activities">
+              </div>
+              <div class="carousel-item">
+                <img src="images/library4.jpeg" class="d-block w-100" alt="Student Activities">
+              </div>
+              <div class="carousel-item">
+                <img src="images/library5.jpeg" class="d-block w-100" alt="Student Activities">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel2" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel2" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-0">Library</h5>
+          </div>
+        </div>
       </div>
-      <div class="gallery-item">
-        <img src="images/lab.jpeg" alt="Simulation Lab"/>
-        <div class="gallery-caption">Lab</div>
+      <div class="col-md-4">
+        <div class="card shadow border-0 h-100">
+          <div id="carousel3" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+              <div class="carousel-item active">
+                <img src="images/fundamental.jpeg" class="d-block w-100" alt="Graduation Ceremony">
+              </div>
+              <div class="carousel-item">
+                <img src="images/fundamental2.jpeg" class="d-block w-100" alt="Faculty Team">
+              </div>
+               <div class="carousel-item">
+                <img src="images/fundamental3.jpeg" class="d-block w-100" alt="Faculty Team">
+              </div>
+               <div class="carousel-item">
+                <img src="images/fundamental4.jpeg" class="d-block w-100" alt="Faculty Team">
+              </div>
+               <div class="carousel-item">
+                <img src="images/fundamental5.jpeg" class="d-block w-100" alt="Faculty Team">
+              </div>
+               <div class="carousel-item">
+                <img src="images/fundamental6.jpeg" class="d-block w-100" alt="Faculty Team">
+              </div>
+               <div class="carousel-item">
+                <img src="images/fundamental7.jpeg" class="d-block w-100" alt="Faculty Team">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel3" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel3" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-0">Fundamental Labs</h5>
+          </div>
+        </div>
       </div>
-      <div class="gallery-item">
-        <img src="images/fundamental.jpeg" alt="Student Activities"/>
-        <div class="gallery-caption">Fundamental Lab</div>
+      <div class="col-md-4">
+        <div class="card shadow border-0 h-100">
+          <div id="carousel4" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+              <div class="carousel-item active">
+                <img src="images/lab.jpeg" class="d-block w-100" alt="Library Facilities">
+              </div>
+              <div class="carousel-item">
+                <img src="images/lab1.jpeg" class="d-block w-100" alt="Nursing Lab">
+              </div>
+               <div class="carousel-item">
+                <img src="images/lab2.jpeg" class="d-block w-100" alt="Nursing Lab">
+              </div>
+               <div class="carousel-item">
+                <img src="images/lab3.jpeg" class="d-block w-100" alt="Nursing Lab">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel4" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel4" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-0">Practical Lab</h5>
+          </div>
+        </div>
       </div>
-     
-      <div class="gallery-item">
-        <img src="images/library.jpeg" alt="Library Facilities"/>
-        <div class="gallery-caption">Library Facilities</div>
+      <div class="col-md-4">
+        <div class="card shadow border-0 h-100">
+          <div id="carousel5" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+              <div class="carousel-item active">
+                <img src="images/front.jpeg" class="d-block w-100" alt="Cultural Event">
+              </div>
+              <div class="carousel-item">
+                <img src="images/front1.jpeg" class="d-block w-100" alt="Sports Day">
+              </div>
+                <div class="carousel-item">
+                <img src="images/front2.jpeg" class="d-block w-100" alt="Sports Day">
+              </div>
+                <div class="carousel-item">
+                <img src="images/front3.jpeg" class="d-block w-100" alt="Sports Day">
+              </div>
+                <div class="carousel-item">
+                <img src="images/front4.jpeg" class="d-block w-100" alt="Sports Day">
+              </div>
+                <div class="carousel-item">
+                <img src="images/front5.jpeg" class="d-block w-100" alt="Sports Day">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel5" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel5" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-0">Campus Frontview</h5>
+          </div>
+        </div>
       </div>
-      <div class="gallery-item">
-        <img src="images/nursing.jpeg" alt="Nursing Lab"/>
-        <div class="gallery-caption">Nursing Lab</div>
+      <div class="col-md-4">
+        <div class="card shadow border-0 h-100">
+          <div id="carousel6" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+              <div class="carousel-item active">
+                <img src="images/interior2.jpeg" class="d-block w-100" alt="Seminar Session">
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior3.jpeg" class="d-block w-100" alt="Community Outreach">
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior4.jpeg" class="d-block w-100" alt="Community Outreach">
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior5.jpeg" class="d-block w-100" alt="Community Outreach">
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior7.jpeg" class="d-block w-100" alt="Community Outreach">
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior8.jpeg" class="d-block w-100" alt="Community Outreach">
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior9.jpeg" class="d-block w-100" alt="Community Outreach">
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior10.jpeg" class="d-block w-100" alt="Community Outreach">
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior11.jpeg" class="d-block w-100" alt="Community Outreach">
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior12.jpeg" class="d-block w-100" alt="Community Outreach">
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior13.jpeg" class="d-block w-100" alt="Community Outreach">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel6" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel6" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-0">Campus Interior</h5>
+          </div>
+        </div>
       </div>
-      <div class="gallery-item">
-        <img src="images/computer.jpeg" alt="Cultural Event"/>
-        <div class="gallery-caption">Computer Lab</div>
-      </div>
-      <div class="gallery-item">
-        <img src="images/coordinator.jpeg" alt="Sports Day"/>
-        <div class="gallery-caption">Co-ordinator Room</div>
-      </div>
-    
     </div>
   </main>
   <!-- Popup Modal for Gallery Images -->
