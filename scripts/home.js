@@ -138,3 +138,66 @@ document.addEventListener("DOMContentLoaded", function () {
           popup.style.display = "none";
         }, 10000);
       });
+      //side carousel
+      const images = document.querySelectorAll('.carousel-image');
+  const prevBtn = document.querySelector('.carousel-btn.prev');
+  const nextBtn = document.querySelector('.carousel-btn.next');
+  const dots = document.querySelectorAll('.carousel-dot');
+  let current = 0;
+  let intervalId;
+
+  function showImage(idx) {
+    images.forEach((img, i) => img.style.display = i === idx ? 'block' : 'none');
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
+  }
+
+  function nextImage() {
+    current = (current + 1) % images.length;
+    showImage(current);
+  }
+
+  function prevImage() {
+    current = (current - 1 + images.length) % images.length;
+    showImage(current);
+  }
+
+  function startAutoSlide() {
+    intervalId = setInterval(nextImage, 3000); // Change image every 3 seconds
+  }
+
+  function stopAutoSlide() {
+    clearInterval(intervalId);
+  }
+
+  prevBtn.addEventListener('click', () => {
+    prevImage();
+    stopAutoSlide();
+    startAutoSlide();
+  });
+  nextBtn.addEventListener('click', () => {
+    nextImage();
+    stopAutoSlide();
+    startAutoSlide();
+  });
+  dots.forEach((dot, idx) => {
+    dot.addEventListener('click', () => {
+      current = idx;
+      showImage(current);
+      stopAutoSlide();
+      startAutoSlide();
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      prevImage();
+      stopAutoSlide();
+      startAutoSlide();
+    } else if (e.key === 'ArrowRight') {
+      nextImage();
+      stopAutoSlide();
+      startAutoSlide();
+    }
+  });
+  showImage(current);
+  startAutoSlide();
+;
