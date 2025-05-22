@@ -16,12 +16,12 @@
 
       .hero-bg {
         position: relative;
-        min-height: 70vh;
+        min-height: 50vh;
         display: flex;
         align-items: center;
         text-align: center;
         color: white;
-        background: url("https://img.freepik.com/free-photo/nurses-smiling-together_23-2150780364.jpg?uid=R183252386&ga=GA1.1.1342272663.1744060432&semt=ais_hybrid&w=740")
+        background: url("https://img.freepik.com/premium-photo/high-angle-view-open-book-table_1048944-11807448.jpg?ga=GA1.1.1346594137.1747953076&semt=ais_hybrid&w=740")
           center/cover no-repeat;
         background-attachment: fixed;
       }

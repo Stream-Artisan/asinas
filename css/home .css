@@ -7,7 +7,7 @@
 }
 body {
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, var(--light-bg), #fef7f5);
+  background: var(--light-bg);
   color: var(--primary-blue);
   overflow-x: hidden;
 }
@@ -20,6 +20,15 @@ body {
   text-align: center;
   color: white;
   overflow: hidden;
+  background: url('/images/front2.jpeg') no-repeat center/cover;
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .hero-bg {
+    background-position: center top;
+    min-height: 60vh;
+  }
 }
 
 .hero-bg video {
