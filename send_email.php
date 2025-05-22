@@ -192,6 +192,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    if ($formType === 'newsletter' || (empty($formType) && isset($_POST['email']) && count($_POST) === 1)) {
+        // Newsletter subscription
+        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Please enter a valid email address.'
+            ]);
+            exit;
+        }
+
+        // You can store the email in a file or database, or send a notification email.
+        // For demonstration, we'll just send an email to admin (optional).
+        $adminEmail = 'noreply@asinas.edu.pk';
+        $subject = 'New Newsletter Subscription';
+        $message = "A new user has subscribed to the newsletter:\n\nEmail: $email";
+        $headers = "From: noreply@asinas.edu.pk\r\n";
+
+        // @mail($adminEmail, $subject, $message, $headers); // Uncomment to send email
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Thank you for subscribing to our newsletter!'
+        ]);
+        exit;
+    }
+
     // Unknown form type
     echo json_encode([
         'success' => false,

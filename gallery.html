@@ -1,669 +1,1186 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gallery | All Saints Institute of Nursing and Allied Sciences</title>
-  <meta name="description" content="Photo gallery of All Saints Institute of Nursing and Allied Sciences, Karachi. Explore campus, events, and student life."/>
-  <link rel="stylesheet" href="css/home .css"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Lora:wght@400;700&display=swap" rel="stylesheet"/>
-  <style>
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    .gallery-item {
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(30,58,138,0.08);
-      background: #fff;
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-      position: relative;
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.3s;
-      background: #f6f6f6;
-    }
-    .gallery-item:hover {
-      transform: translateY(-6px) scale(1.03);
-      box-shadow: 0 8px 32px rgba(30,58,138,0.15);
-      z-index: 2;
-    }
-    .gallery-item:hover img {
-      transform: scale(1.05);
-    }
-    .gallery-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: linear-gradient(0deg,rgba(30,58,138,0.8) 60%,rgba(30,58,138,0.0));
-      color: #fff;
-      padding: 0.75rem 1rem 0.5rem 1rem;
-      font-size: 1rem;
-      font-family: 'Poppins',sans-serif;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      opacity: 0.95;
-      pointer-events: none;
-      user-select: none;
-    }
-    @media (max-width: 576px) {
-      .gallery-item img { height: 140px; }
-      .gallery-caption { font-size: 0.9rem; }
-    }
-    /* Popup Modal for Gallery Images */
-    .gallery-popup {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0; top: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(30,58,138,0.88);
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      animation: fadeIn 0.3s;
-    }
-    .gallery-popup.active {
-      display: flex;
-    }
-    .gallery-popup-img {
-      max-width: 92vw;
-      max-height: 70vh;
-      border-radius: 18px;
-      box-shadow: 0 8px 40px 8px rgba(30,58,138,0.25), 0 0 0 8px #fff;
-      background: #fff;
-      animation: popupZoom 0.4s;
-      margin-bottom: 1.5rem;
-    }
-    .gallery-popup-caption {
-      color: #fff;
-      background: rgba(30,58,138,0.85);
-      padding: 0.75rem 2rem;
-      border-radius: 12px;
-      font-size: 1.2rem;
-      font-family: 'Poppins',sans-serif;
-      font-weight: 500;
-      box-shadow: 0 2px 12px rgba(30,58,138,0.15);
-      text-align: center;
-      max-width: 80vw;
-      letter-spacing: 0.01em;
-      opacity: 0.97;
-    }
-    .gallery-popup-close {
-      position: absolute;
-      top: 32px;
-      right: 48px;
-      color: #fff;
-      font-size: 2.5rem;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 2100;
-      background: rgba(255,255,255,0.12);
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, color 0.2s, transform 0.2s;
-      box-shadow: 0 2px 8px rgba(30,58,138,0.15);
-    }
-    .gallery-popup-close:hover {
-      background: #ff5e62;
-      color: #fff;
-      transform: scale(1.15) rotate(90deg);
-    }
-    .gallery-popup-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #fff;
-      font-size: 2.5rem;
-      background: rgba(30,58,138,0.5);
-      border: none;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 2100;
-      transition: background 0.2s, color 0.2s, transform 0.2s;
-      user-select: none;
-    }
-    .gallery-popup-nav:hover {
-      background: #ff5e62;
-      color: #fff;
-      transform: scale(1.15);
-    }
-    .gallery-popup-prev { left: 32px; }
-    .gallery-popup-next { right: 32px; }
-    @media (max-width: 768px) {
-      .gallery-popup-img { max-width: 98vw; max-height: 50vh; }
-      .gallery-popup-caption { font-size: 1rem; padding: 0.5rem 1rem; }
-      .gallery-popup-close, .gallery-popup-nav { top: 16px; font-size: 2rem; width: 40px; height: 40px; }
-      .gallery-popup-prev { left: 8px; }
-      .gallery-popup-next { right: 8px; }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    @keyframes popupZoom {
-      from { transform: scale(0.85); }
-      to   { transform: scale(1); }
-    }
-    .whatsapp-float.left-float {
-      left: 20px;
-      right: auto;
-      position: fixed;
-      width: 48px;
-      height: 48px;
-      bottom: 20px;
-      z-index: 999;
-      cursor: pointer;
-      /* Ensure it's above the footer and always visible */
-    }
-    .whatsapp-float img {
-      width: 100%;
-      height: 100%;
-    }
-    .back-to-top {
-      right: 20px;
-      left: auto;
-      position: fixed;
-      bottom: 20px;
-      /* ...existing code... */
-    }
-    /* Floating Phone Icon */
-    .phone-float {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      z-index: 1100;
-      background: #1e3a8a;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 8px rgba(30,58,138,0.15);
-      transition: background 0.2s, transform 0.2s;
-    }
-    .phone-float img {
-      width: 70%;
-      height: 70%;
-      display: block;
-      margin: auto;
-      filter: invert(1);
-    }
-    .phone-float:hover {
-      background: #ff5e62;
-      transform: scale(1.08);
-    }
-    /* Additional Styles for Carousels on Gallery Page */
-    .carousel-inner img {
-      max-height: 320px;
-      object-fit: cover;
-      border-radius: 18px;
-    }
-    .carousel-caption {
-      background: rgba(30,58,138,0.7);
-      border-radius: 12px;
-      padding: 0.5rem 1rem;
-      margin-bottom: 1.5rem;
-    }
-    @media (max-width: 768px) {
-      .carousel-inner img { max-height: 180px; }
-      .carousel-caption { font-size: 1rem; padding: 0.4rem 0.7rem; }
-    }
-    .card {
-  border-radius: 18px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 4px 16px rgba(30,58,138,0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.card:hover {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 8px 32px rgba(30,58,138,0.15);
-}
-.carousel-inner img {
-  max-height: 260px;
-  object-fit: cover;
-  border-radius: 18px 18px 0 0;
-}
-.card-title {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  color: #1e3a8a;
-  margin-top: 0.5rem;
-}
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  background-color: #1e3a8a;
-  border-radius: 50%;
-  padding: 0.5rem;
-}
-.carousel-control-prev,
-.carousel-control-next {
-  width: 2.5rem;
-}
-@media (max-width: 768px) {
-  .carousel-inner img { max-height: 140px; }
-  .card-title { font-size: 1rem; }
-}
-  </style>
-</head>
-<body>
-  <!-- Phone icon floating top right -->
-  <a href="tel:03395205670" class="phone-float" title="Call us">
-    <img src="https://cdn-icons-png.flaticon.com/128/724/724664.png" alt="Phone" style="width:40px;height:40px;">
-  </a>
-  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top" data-aos="fade-down">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">
-        <img src="images/logo.png" width="180" alt="ASINAS Logo"/>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="index.html#about">About Us</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#admissions">Admissions</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#recognized">Recognized</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#affiliated">Affiliation</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-          <li class="nav-item"><a class="nav-link active" href="gallery.html">Gallery</a></li>
-          <li class="nav-item"><a class="nav-link btn-admission" href="admission-form.html">Apply Now</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <header class="hero-bg" style="min-height:40vh;">
-    <div class="hero-overlay"></div>
-    <div class="container text-center py-5" data-aos="fade-up">
-      <h1 class="display-4 fw-bold mb-3">Gallery</h1>
-      <p class="lead mb-4">Explore our campus, events, and student life.</p>
-    </div>
-  </header>
-  <main class="container py-5">
-    <div class="row g-4" data-aos="fade-up">
-      <div class="col-md-4">
-        <div class="card shadow border-0 h-100">
-          <div id="carousel1" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner rounded-4">
-              <div class="carousel-item active">
-                <img src="images/classroom.jpeg" class="d-block w-100" alt="Campus Front View">
-              </div>
-              <div class="carousel-item">
-                <img src="images/classroom1.jpeg" class="d-block w-100" alt="Modern Classrooms">
-              </div>
-               <div class="carousel-item">
-                <img src="images/classroom2.jpeg" class="d-block w-100" alt="Modern Classrooms">
-              </div>
-               <div class="carousel-item">
-                <img src="images/classroom3.jpeg" class="d-block w-100" alt="Modern Classrooms">
-              </div>
-               <div class="carousel-item">
-                <img src="images/classroom4.jpeg" class="d-block w-100" alt="Modern Classrooms">
-              </div>
-               <div class="carousel-item">
-                <img src="images/classroom5.jpeg" class="d-block w-100" alt="Modern Classrooms">
-              </div>
-               <div class="carousel-item">
-                <img src="images/classroom6.jpeg" class="d-block w-100" alt="Modern Classrooms">
-              </div>
-               <div class="carousel-item">
-                <img src="images/classroom7.jpeg" class="d-block w-100" alt="Modern Classrooms">
-              </div>
-               <div class="carousel-item">
-                <img src="images/classroom8.jpeg" class="d-block w-100" alt="Modern Classrooms">
-              </div>
-               <div class="carousel-item">
-                <img src="images/classroom9.jpeg" class="d-block w-100" alt="Modern Classrooms">
-              </div>
-               <div class="carousel-item">
-                <img src="images/classroom10.jpeg" class="d-block w-100" alt="Modern Classrooms">
-              </div>
-               <div class="carousel-item">
-                <img src="images/classroom11.jpeg" class="d-block w-100" alt="Modern Classrooms">
-              </div>
-               <div class="carousel-item">
-                <img src="images/classroom12.jpeg" class="d-block w-100" alt="Modern Classrooms">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel1" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel1" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </button>
-          </div>
-          <div class="card-body text-center">
-            <h5 class="card-title mb-0">Classrooms</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card shadow border-0 h-100">
-          <div id="carousel2" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner rounded-4">
-              <div class="carousel-item active">
-                <img src="images/library.jpeg" class="d-block w-100" alt="Simulation Lab">
-              </div>
-              <div class="carousel-item">
-                <img src="images/library1.jpeg" class="d-block w-100" alt="Student Activities">
-              </div>
-              <div class="carousel-item">
-                <img src="images/library2.jpeg" class="d-block w-100" alt="Student Activities">
-              </div>
-              <div class="carousel-item">
-                <img src="images/library3.jpeg" class="d-block w-100" alt="Student Activities">
-              </div>
-              <div class="carousel-item">
-                <img src="images/library4.jpeg" class="d-block w-100" alt="Student Activities">
-              </div>
-              <div class="carousel-item">
-                <img src="images/library5.jpeg" class="d-block w-100" alt="Student Activities">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel2" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel2" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </button>
-          </div>
-          <div class="card-body text-center">
-            <h5 class="card-title mb-0">Library</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card shadow border-0 h-100">
-          <div id="carousel3" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner rounded-4">
-              <div class="carousel-item active">
-                <img src="images/fundamental.jpeg" class="d-block w-100" alt="Graduation Ceremony">
-              </div>
-              <div class="carousel-item">
-                <img src="images/fundamental2.jpeg" class="d-block w-100" alt="Faculty Team">
-              </div>
-               <div class="carousel-item">
-                <img src="images/fundamental3.jpeg" class="d-block w-100" alt="Faculty Team">
-              </div>
-               <div class="carousel-item">
-                <img src="images/fundamental4.jpeg" class="d-block w-100" alt="Faculty Team">
-              </div>
-               <div class="carousel-item">
-                <img src="images/fundamental5.jpeg" class="d-block w-100" alt="Faculty Team">
-              </div>
-               <div class="carousel-item">
-                <img src="images/fundamental6.jpeg" class="d-block w-100" alt="Faculty Team">
-              </div>
-               <div class="carousel-item">
-                <img src="images/fundamental7.jpeg" class="d-block w-100" alt="Faculty Team">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel3" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel3" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </button>
-          </div>
-          <div class="card-body text-center">
-            <h5 class="card-title mb-0">Fundamental Labs</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card shadow border-0 h-100">
-          <div id="carousel4" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner rounded-4">
-              <div class="carousel-item active">
-                <img src="images/lab.jpeg" class="d-block w-100" alt="Library Facilities">
-              </div>
-              <div class="carousel-item">
-                <img src="images/lab1.jpeg" class="d-block w-100" alt="Nursing Lab">
-              </div>
-               <div class="carousel-item">
-                <img src="images/lab2.jpeg" class="d-block w-100" alt="Nursing Lab">
-              </div>
-               <div class="carousel-item">
-                <img src="images/lab3.jpeg" class="d-block w-100" alt="Nursing Lab">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel4" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel4" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </button>
-          </div>
-          <div class="card-body text-center">
-            <h5 class="card-title mb-0">Practical Lab</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card shadow border-0 h-100">
-          <div id="carousel5" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner rounded-4">
-              <div class="carousel-item active">
-                <img src="images/front.jpeg" class="d-block w-100" alt="Cultural Event">
-              </div>
-              <div class="carousel-item">
-                <img src="images/front1.jpeg" class="d-block w-100" alt="Sports Day">
-              </div>
-                <div class="carousel-item">
-                <img src="images/front2.jpeg" class="d-block w-100" alt="Sports Day">
-              </div>
-                <div class="carousel-item">
-                <img src="images/front3.jpeg" class="d-block w-100" alt="Sports Day">
-              </div>
-                <div class="carousel-item">
-                <img src="images/front4.jpeg" class="d-block w-100" alt="Sports Day">
-              </div>
-                <div class="carousel-item">
-                <img src="images/front5.jpeg" class="d-block w-100" alt="Sports Day">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel5" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel5" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </button>
-          </div>
-          <div class="card-body text-center">
-            <h5 class="card-title mb-0">Campus Frontview</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card shadow border-0 h-100">
-          <div id="carousel6" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner rounded-4">
-              <div class="carousel-item active">
-                <img src="images/interior2.jpeg" class="d-block w-100" alt="Seminar Session">
-              </div>
-              <div class="carousel-item">
-                <img src="images/interior3.jpeg" class="d-block w-100" alt="Community Outreach">
-              </div>
-              <div class="carousel-item">
-                <img src="images/interior4.jpeg" class="d-block w-100" alt="Community Outreach">
-              </div>
-              <div class="carousel-item">
-                <img src="images/interior5.jpeg" class="d-block w-100" alt="Community Outreach">
-              </div>
-              <div class="carousel-item">
-                <img src="images/interior7.jpeg" class="d-block w-100" alt="Community Outreach">
-              </div>
-              <div class="carousel-item">
-                <img src="images/interior8.jpeg" class="d-block w-100" alt="Community Outreach">
-              </div>
-              <div class="carousel-item">
-                <img src="images/interior9.jpeg" class="d-block w-100" alt="Community Outreach">
-              </div>
-              <div class="carousel-item">
-                <img src="images/interior10.jpeg" class="d-block w-100" alt="Community Outreach">
-              </div>
-              <div class="carousel-item">
-                <img src="images/interior11.jpeg" class="d-block w-100" alt="Community Outreach">
-              </div>
-              <div class="carousel-item">
-                <img src="images/interior12.jpeg" class="d-block w-100" alt="Community Outreach">
-              </div>
-              <div class="carousel-item">
-                <img src="images/inter" class="d-block w-100" alt="Community Outreach">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel6" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel6" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </button>
-          </div>
-          <div class="card-body text-center">
-            <h5 class="card-title mb-0">Campus Interior</h5>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-  <!-- Popup Modal for Gallery Images -->
-  <div id="galleryPopup" class="gallery-popup" tabindex="-1" aria-modal="true" role="dialog">
-    <button class="gallery-popup-nav gallery-popup-prev" id="galleryPopupPrev" aria-label="Previous image" tabindex="0"><i class="bi bi-chevron-left"></i></button>
-    <span class="gallery-popup-close" id="galleryPopupClose" aria-label="Close">&times;</span>
-    <img class="gallery-popup-img" id="galleryPopupImg" src="" alt="">
-    <button class="gallery-popup-nav gallery-popup-next" id="galleryPopupNext" aria-label="Next image" tabindex="0"><i class="bi bi-chevron-right"></i></button>
-    <div class="gallery-popup-caption" id="galleryPopupCaption"></div>
-  </div>
-  <footer class="footer-bg py-5 text-white mt-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 mb-4" data-aos="fade-up">
-          <img src="images/logo.png" alt="" width="220"/>
-          <p class="text-muted-t">Shaping the future of healthcare through excellence in nursing education.</p>
-        </div>
-        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-          <h3 class="h5 fw-semibold mb-3">Quick Links</h3>
-          <ul class="list-unstyled">
-            <li class="mb-2"><a href="index.html#about" class="text-muted-t text-decoration-none">About Us</a></li>
-            <li class="mb-2"><a href="index.html#admissions" class="text-muted-t text-decoration-none">Admissions</a></li>
-            <li class="mb-2"><a href="index.html#recognized" class="text-muted-t text-decoration-none">Recognized</a></li>
-            <li class="mb-2"><a href="index.html#affiliated" class="text-muted-t text-decoration-none">Affiliated</a></li>
-            <li class="mb-2"><a href="contact.html" class="text-muted-t text-decoration-none">Contact</a></li>
-            <li class="mb-2"><a href="gallery.html" class="text-muted-t text-decoration-none">Gallery</a></li>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery | All Saints Institute of Nursing and Allied Sciences</title>
+    <meta
+      name="description"
+      content="Photo gallery of All Saints Institute of Nursing and Allied Sciences, Karachi. Explore campus, events, and student life."
+    />
+    <link rel="stylesheet" href="css/home .css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Lora:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/home .css">
+    <style>
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+      .gallery-item {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(30, 58, 138, 0.08);
+        background: #fff;
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+        position: relative;
+      }
+      .gallery-item img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s;
+        background: #f6f6f6;
+      }
+      .gallery-item:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(30, 58, 138, 0.15);
+        z-index: 2;
+      }
+      .gallery-item:hover img {
+        transform: scale(1.05);
+      }
+      .gallery-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(
+          0deg,
+          rgba(30, 58, 138, 0.8) 60%,
+          rgba(30, 58, 138, 0)
+        );
+        color: #fff;
+        padding: 0.75rem 1rem 0.5rem 1rem;
+        font-size: 1rem;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        opacity: 0.95;
+        pointer-events: none;
+        user-select: none;
+      }
+      @media (max-width: 576px) {
+        .gallery-item img {
+          height: 140px;
+        }
+        .gallery-caption {
+          font-size: 0.9rem;
+        }
+      }
+      /* Popup Modal for Gallery Images */
+      .gallery-popup {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(30, 58, 138, 0.88);
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        animation: fadeIn 0.3s;
+      }
+      .gallery-popup.active {
+        display: flex;
+      }
+      .gallery-popup-img {
+        max-width: 92vw;
+        max-height: 70vh;
+        border-radius: 18px;
+        box-shadow: 0 8px 40px 8px rgba(30, 58, 138, 0.25), 0 0 0 8px #fff;
+        background: #fff;
+        animation: popupZoom 0.4s;
+        margin-bottom: 1.5rem;
+      }
+      .gallery-popup-caption {
+        color: #fff;
+        background: rgba(30, 58, 138, 0.85);
+        padding: 0.75rem 2rem;
+        border-radius: 12px;
+        font-size: 1.2rem;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        box-shadow: 0 2px 12px rgba(30, 58, 138, 0.15);
+        text-align: center;
+        max-width: 80vw;
+        letter-spacing: 0.01em;
+        opacity: 0.97;
+      }
+      .gallery-popup-close {
+        position: absolute;
+        top: 32px;
+        right: 48px;
+        color: #fff;
+        font-size: 2.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 2100;
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s, color 0.2s, transform 0.2s;
+        box-shadow: 0 2px 8px rgba(30, 58, 138, 0.15);
+      }
+      .gallery-popup-close:hover {
+        background: #ff5e62;
+        color: #fff;
+        transform: scale(1.15) rotate(90deg);
+      }
+      .gallery-popup-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #fff;
+        font-size: 2.5rem;
+        background: rgba(30, 58, 138, 0.5);
+        border: none;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 2100;
+        transition: background 0.2s, color 0.2s, transform 0.2s;
+        user-select: none;
+      }
+      .gallery-popup-nav:hover {
+        background: #ff5e62;
+        color: #fff;
+        transform: scale(1.15);
+      }
+      .gallery-popup-prev {
+        left: 32px;
+      }
+      .gallery-popup-next {
+        right: 32px;
+      }
+      @media (max-width: 768px) {
+        .gallery-popup-img {
+          max-width: 98vw;
+          max-height: 50vh;
+        }
+        .gallery-popup-caption {
+          font-size: 1rem;
+          padding: 0.5rem 1rem;
+        }
+        .gallery-popup-close,
+        .gallery-popup-nav {
+          top: 16px;
+          font-size: 2rem;
+          width: 40px;
+          height: 40px;
+        }
+        .gallery-popup-prev {
+          left: 8px;
+        }
+        .gallery-popup-next {
+          right: 8px;
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes popupZoom {
+        from {
+          transform: scale(0.85);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+      .whatsapp-float.left-float {
+        left: 20px;
+        right: auto;
+        position: fixed;
+        width: 48px;
+        height: 48px;
+        bottom: 20px;
+        z-index: 999;
+        cursor: pointer;
+        /* Ensure it's above the footer and always visible */
+      }
+      .whatsapp-float img {
+        width: 100%;
+        height: 100%;
+      }
+      .back-to-top {
+        right: 20px;
+        left: auto;
+        position: fixed;
+        bottom: 20px;
+        /* ...existing code... */
+      }
+      /* Floating Phone Icon */
+      .phone-float {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        z-index: 1100;
+        background: #1e3a8a;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(30, 58, 138, 0.15);
+        transition: background 0.2s, transform 0.2s;
+      }
+      .phone-float img {
+        width: 70%;
+        height: 70%;
+        display: block;
+        margin: auto;
+        filter: invert(1);
+      }
+      .phone-float:hover {
+        background: #ff5e62;
+        transform: scale(1.08);
+      }
+      /* Additional Styles for Carousels on Gallery Page */
+      .carousel-inner img {
+        max-height: 320px;
+        object-fit: cover;
+        border-radius: 18px;
+      }
+      .carousel-caption {
+        background: rgba(30, 58, 138, 0.7);
+        border-radius: 12px;
+        padding: 0.5rem 1rem;
+        margin-bottom: 1.5rem;
+      }
+      @media (max-width: 768px) {
+        .carousel-inner img {
+          max-height: 180px;
+        }
+        .carousel-caption {
+          font-size: 1rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .card {
+        border-radius: 18px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 4px 16px rgba(30, 58, 138, 0.08);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .card:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(30, 58, 138, 0.15);
+      }
+      .carousel-inner img {
+        max-height: 260px;
+        object-fit: cover;
+        border-radius: 18px 18px 0 0;
+      }
+      .card-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        color: #1e3a8a;
+        margin-top: 0.5rem;
+      }
+      .carousel-control-prev-icon,
+      .carousel-control-next-icon {
+        background-color: #1e3a8a;
+        border-radius: 50%;
+        padding: 0.5rem;
+      }
+      .carousel-control-prev,
+      .carousel-control-next {
+        width: 2.5rem;
+      }
+      @media (max-width: 768px) {
+        .carousel-inner img {
+          max-height: 140px;
+        }
+        .card-title {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Phone icon floating top right -->
+    <a href="tel:03395205670" class="phone-float" title="Call us">
+      <img
+        src="https://cdn-icons-png.flaticon.com/128/724/724664.png"
+        alt="Phone"
+        style="width: 40px; height: 40px"
+      />
+    </a>
+    <nav
+      class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top"
+      data-aos="fade-down"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img src="images/logo.png" width="180" alt="ASINAS Logo" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#about">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#admissions">Admissions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#recognized">Recognized</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#affiliated">Affiliation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="gallery.html">Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn-admission" href="admission-form.html"
+                >Apply Now</a
+              >
+            </li>
           </ul>
         </div>
-        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-          <h4 class="h5 fw-semibold mb-3">Contact Info</h4>
-          <p class="text-muted-t">P.R.E.C.H.S, Pakistan Railways Employee Co-operative Housing Society Karachi. 75300</p>
-          <p class="text-muted-t">Phone: 0339-5205670 / 0300-2187825</p>
-          <p class="text-muted-t">
-            Email:
-            <a href="mailto:info@asinas.edu.pk" class="text-muted-t text-decoration-none">info@asinas.edu.pk</a>
-          </p>
-          <div class="mt-2">
-            <a href="https://www.facebook.com/www.asinas.edu.pk/" class="text-muted-t me-3 social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-            <a href="https://instagram.com" class="text-muted-t social-icon" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-            <a href="https://linkedin.com" class="text-muted-t social-icon" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </nav>
+    <!-- <div class="top-bar">
+      <marquee
+        behavior="scroll"
+        direction="left"
+        scrollamount="6"
+        style="font-weight: 600"
+      >
+        <span style="margin-right: 2em"
+          >Admissions Open for 2024-25! &nbsp;|&nbsp;</span
+        >
+        <span style="margin-right: 2em"
+          >Scholarships available for top performers. &nbsp;|&nbsp;</span
+        >
+        <span style="margin-right: 2em"
+          >Contact us for campus tours and counseling.</span
+        >
+      </marquee>
+    </div> -->
+    <header class="hero-bg" style="min-height: 40vh">
+      <div class="hero-overlay"></div>
+      <div class="container text-center py-5" data-aos="fade-up">
+        <h1 class="display-4 fw-bold mb-3">Gallery</h1>
+        <p class="lead mb-4">Explore our campus, events, and student life.</p>
+      </div>
+    </header>
+    <main class="container py-5">
+      <div class="row g-4" data-aos="fade-up">
+        <div class="col-md-4">
+          <div class="card shadow border-0 h-100">
+            <div id="carousel1" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner rounded-4">
+                <div class="carousel-item active">
+                  <img
+                    src="images/classroom.jpeg"
+                    class="d-block w-100"
+                    alt="Campus Front View"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/classroom1.jpeg"
+                    class="d-block w-100"
+                    alt="Modern Classrooms"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/classroom2.jpeg"
+                    class="d-block w-100"
+                    alt="Modern Classrooms"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/classroom3.jpeg"
+                    class="d-block w-100"
+                    alt="Modern Classrooms"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/classroom4.jpeg"
+                    class="d-block w-100"
+                    alt="Modern Classrooms"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/classroom5.jpeg"
+                    class="d-block w-100"
+                    alt="Modern Classrooms"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/classroom6.jpeg"
+                    class="d-block w-100"
+                    alt="Modern Classrooms"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/classroom7.jpeg"
+                    class="d-block w-100"
+                    alt="Modern Classrooms"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/classroom8.jpeg"
+                    class="d-block w-100"
+                    alt="Modern Classrooms"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/classroom9.jpeg"
+                    class="d-block w-100"
+                    alt="Modern Classrooms"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/classroom10.jpeg"
+                    class="d-block w-100"
+                    alt="Modern Classrooms"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/classroom11.jpeg"
+                    class="d-block w-100"
+                    alt="Modern Classrooms"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/classroom12.jpeg"
+                    class="d-block w-100"
+                    alt="Modern Classrooms"
+                  />
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel1"
+                data-bs-slide="prev"
+              >
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel1"
+                data-bs-slide="next"
+              >
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <div class="card-body text-center">
+              <h5 class="card-title mb-0">Classrooms</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow border-0 h-100">
+            <div id="carousel2" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner rounded-4">
+                <div class="carousel-item active">
+                  <img
+                    src="images/library.jpeg"
+                    class="d-block w-100"
+                    alt="Simulation Lab"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/library1.jpeg"
+                    class="d-block w-100"
+                    alt="Student Activities"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/library2.jpeg"
+                    class="d-block w-100"
+                    alt="Student Activities"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/library3.jpeg"
+                    class="d-block w-100"
+                    alt="Student Activities"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/library4.jpeg"
+                    class="d-block w-100"
+                    alt="Student Activities"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/library5.jpeg"
+                    class="d-block w-100"
+                    alt="Student Activities"
+                  />
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel2"
+                data-bs-slide="prev"
+              >
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel2"
+                data-bs-slide="next"
+              >
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <div class="card-body text-center">
+              <h5 class="card-title mb-0">Library</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow border-0 h-100">
+            <div id="carousel3" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner rounded-4">
+                <div class="carousel-item active">
+                  <img
+                    src="images/fundamental.jpeg"
+                    class="d-block w-100"
+                    alt="Graduation Ceremony"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/fundamental2.jpeg"
+                    class="d-block w-100"
+                    alt="Faculty Team"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/fundamental3.jpeg"
+                    class="d-block w-100"
+                    alt="Faculty Team"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/fundamental4.jpeg"
+                    class="d-block w-100"
+                    alt="Faculty Team"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/fundamental5.jpeg"
+                    class="d-block w-100"
+                    alt="Faculty Team"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/fundamental6.jpeg"
+                    class="d-block w-100"
+                    alt="Faculty Team"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/fundamental7.jpeg"
+                    class="d-block w-100"
+                    alt="Faculty Team"
+                  />
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel3"
+                data-bs-slide="prev"
+              >
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel3"
+                data-bs-slide="next"
+              >
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <div class="card-body text-center">
+              <h5 class="card-title mb-0">Fundamental Labs</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow border-0 h-100">
+            <div id="carousel4" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner rounded-4">
+                <div class="carousel-item active">
+                  <img
+                    src="images/lab.jpeg"
+                    class="d-block w-100"
+                    alt="Library Facilities"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/lab1.jpeg"
+                    class="d-block w-100"
+                    alt="Nursing Lab"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/lab2.jpeg"
+                    class="d-block w-100"
+                    alt="Nursing Lab"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/lab3.jpeg"
+                    class="d-block w-100"
+                    alt="Nursing Lab"
+                  />
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel4"
+                data-bs-slide="prev"
+              >
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel4"
+                data-bs-slide="next"
+              >
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <div class="card-body text-center">
+              <h5 class="card-title mb-0">Practical Lab</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow border-0 h-100">
+            <div id="carousel5" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner rounded-4">
+                <div class="carousel-item active">
+                  <img
+                    src="images/front.jpeg"
+                    class="d-block w-100"
+                    alt="Cultural Event"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/front1.jpeg"
+                    class="d-block w-100"
+                    alt="Sports Day"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/front2.jpeg"
+                    class="d-block w-100"
+                    alt="Sports Day"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/front3.jpeg"
+                    class="d-block w-100"
+                    alt="Sports Day"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/front4.jpeg"
+                    class="d-block w-100"
+                    alt="Sports Day"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/front5.jpeg"
+                    class="d-block w-100"
+                    alt="Sports Day"
+                  />
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel5"
+                data-bs-slide="prev"
+              >
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel5"
+                data-bs-slide="next"
+              >
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <div class="card-body text-center">
+              <h5 class="card-title mb-0">Campus Frontview</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow border-0 h-100">
+            <div id="carousel6" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner rounded-4">
+                <div class="carousel-item active">
+                  <img
+                    src="images/interior2.jpeg"
+                    class="d-block w-100"
+                    alt="Seminar Session"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/interior3.jpeg"
+                    class="d-block w-100"
+                    alt="Community Outreach"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/interior4.jpeg"
+                    class="d-block w-100"
+                    alt="Community Outreach"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/interior5.jpeg"
+                    class="d-block w-100"
+                    alt="Community Outreach"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/interior7.jpeg"
+                    class="d-block w-100"
+                    alt="Community Outreach"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/interior8.jpeg"
+                    class="d-block w-100"
+                    alt="Community Outreach"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/interior9.jpeg"
+                    class="d-block w-100"
+                    alt="Community Outreach"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/interior10.jpeg"
+                    class="d-block w-100"
+                    alt="Community Outreach"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/interior11.jpeg"
+                    class="d-block w-100"
+                    alt="Community Outreach"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/interior12.jpeg"
+                    class="d-block w-100"
+                    alt="Community Outreach"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="images/inter"
+                    class="d-block w-100"
+                    alt="Community Outreach"
+                  />
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel6"
+                data-bs-slide="prev"
+              >
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel6"
+                data-bs-slide="next"
+              >
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <div class="card-body text-center">
+              <h5 class="card-title mb-0">Campus Interior</h5>
+            </div>
           </div>
         </div>
       </div>
-      <div class="text-center text-muted-t mt-4" data-aos="fade-up" data-aos-delay="300">
-        <p>© 2025 All Saints Institute of Nursing and Allied Sciences. All rights reserved.</p>
-      </div>
+    </main>
+    <!-- Newsletter Section Start -->
+    <form
+      class="newsletter-form"
+      id="newsletterForm"
+      action="send_email.php"
+      method="post"
+      autocomplete="off"
+    >
+      <input type="hidden" name="form_type" value="newsletter" />
+      <input
+        type="email"
+        class="newsletter-input"
+        name="email"
+        placeholder="Enter your email address"
+        required
+      />
+      <button type="submit" class="newsletter-btn">Subscribe</button>
+    </form>
+    <div id="newsletterMessage" style="margin-top: 1rem"></div>
+    <!-- Newsletter Section End -->
+    <!-- Popup Modal for Gallery Images -->
+    <div
+      id="galleryPopup"
+      class="gallery-popup"
+      tabindex="-1"
+      aria-modal="true"
+      role="dialog"
+    >
+      <button
+        class="gallery-popup-nav gallery-popup-prev"
+        id="galleryPopupPrev"
+        aria-label="Previous image"
+        tabindex="0"
+      >
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <span
+        class="gallery-popup-close"
+        id="galleryPopupClose"
+        aria-label="Close"
+        >&times;</span
+      >
+      <img class="gallery-popup-img" id="galleryPopupImg" src="" alt="" />
+      <button
+        class="gallery-popup-nav gallery-popup-next"
+        id="galleryPopupNext"
+        aria-label="Next image"
+        tabindex="0"
+      >
+        <i class="bi bi-chevron-right"></i>
+      </button>
+      <div class="gallery-popup-caption" id="galleryPopupCaption"></div>
     </div>
-  </footer>
-  <!-- WhatsApp icon floating bottom left -->
-  <a href="https://wa.me/923395205670" class="whatsapp-float left-float" target="_blank" title="Chat with us on WhatsApp">
-    <img src="https://cdn-icons-png.flaticon.com/128/2504/2504957.png" alt="WhatsApp" style="width:48px;height:48px;">
-  </a>
-  <button class="back-to-top" aria-label="Back to top">
-    <i class="bi bi-arrow-up"></i>
-  </button>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script>
-    AOS.init({ duration: 1000, once: true });
-    // Back to Top Button
-    const backToTop = document.querySelector('.back-to-top');
-    window.addEventListener('scroll', () => {
-      backToTop.classList.toggle('visible', window.scrollY > 300);
-    });
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    <footer class="footer-bg py-5 text-white mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4" data-aos="fade-up">
+            <img src="images/logo.png" alt="" width="220" />
+            <p class="text-muted-t">
+              Shaping the future of healthcare through excellence in nursing
+              education.
+            </p>
+          </div>
+          <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="h5 fw-semibold mb-3">Quick Links</h3>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a
+                  href="index.html#about"
+                  class="text-muted-t text-decoration-none"
+                  >About Us</a
+                >
+              </li>
+              <li class="mb-2">
+                <a
+                  href="index.html#admissions"
+                  class="text-muted-t text-decoration-none"
+                  >Admissions</a
+                >
+              </li>
+              <li class="mb-2">
+                <a
+                  href="index.html#recognized"
+                  class="text-muted-t text-decoration-none"
+                  >Recognized</a
+                >
+              </li>
+              <li class="mb-2">
+                <a
+                  href="index.html#affiliated"
+                  class="text-muted-t text-decoration-none"
+                  >Affiliated</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="contact.html" class="text-muted-t text-decoration-none"
+                  >Contact</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="gallery.html" class="text-muted-t text-decoration-none"
+                  >Gallery</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+            <h4 class="h5 fw-semibold mb-3">Contact Info</h4>
+            <p class="text-muted-t">
+              P.R.E.C.H.S, Pakistan Railways Employee Co-operative Housing
+              Society Karachi. 75300
+            </p>
+            <p class="text-muted-t">Phone: 0339-5205670 / 0300-2187825</p>
+            <p class="text-muted-t">
+              Email:
+              <a
+                href="mailto:info@asinas.edu.pk"
+                class="text-muted-t text-decoration-none"
+                >info@asinas.edu.pk</a
+              >
+            </p>
+            <div class="mt-2">
+              <a
+                href="https://www.facebook.com/www.asinas.edu.pk/"
+                class="text-muted-t me-3 social-icon"
+                aria-label="Facebook"
+                ><i class="bi bi-facebook"></i
+              ></a>
+              <a
+                href="https://instagram.com"
+                class="text-muted-t social-icon"
+                aria-label="Instagram"
+                ><i class="bi bi-instagram"></i
+              ></a>
+              <a
+                href="https://linkedin.com"
+                class="text-muted-t social-icon"
+                aria-label="LinkedIn"
+                ><i class="bi bi-linkedin"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="text-center text-muted-t mt-4"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
+          <p>
+            © 2025 All Saints Institute of Nursing and Allied Sciences. All
+            rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- WhatsApp icon floating bottom left -->
+    <a
+      href="https://wa.me/923395205670"
+      class="whatsapp-float left-float"
+      target="_blank"
+      title="Chat with us on WhatsApp"
+    >
+      <img
+        src="https://cdn-icons-png.flaticon.com/128/2504/2504957.png"
+        alt="WhatsApp"
+        style="width: 48px; height: 48px"
+      />
+    </a>
+    <button class="back-to-top" aria-label="Back to top">
+      <i class="bi bi-arrow-up"></i>
+    </button>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      document
+        .getElementById("newsletterForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          var form = this;
+          var formData = new FormData(form);
+          var msgDiv = document.getElementById("newsletterMessage");
+          msgDiv.textContent = "Submitting...";
+          fetch(form.action, {
+            method: "POST",
+            body: formData,
+          })
+            .then((r) => r.json())
+            .then((data) => {
+              msgDiv.textContent = data.message;
+              if (data.success) {
+                form.reset();
+                msgDiv.style.color = "green";
+              } else {
+                msgDiv.style.color = "red";
+              }
+            })
+            .catch(() => {
+              msgDiv.textContent = "An error occurred. Please try again later.";
+              msgDiv.style.color = "red";
+            });
+        });
 
-    // Gallery Image Popup (Lightbox) with navigation
-    const galleryImages = Array.from(document.querySelectorAll('.gallery-item img'));
-    const popup = document.getElementById('galleryPopup');
-    const popupImg = document.getElementById('galleryPopupImg');
-    const popupCaption = document.getElementById('galleryPopupCaption');
-    const popupClose = document.getElementById('galleryPopupClose');
-    const popupPrev = document.getElementById('galleryPopupPrev');
-    const popupNext = document.getElementById('galleryPopupNext');
-    let currentIndex = 0;
+      AOS.init({ duration: 1000, once: true });
+      // Back to Top Button
+      const backToTop = document.querySelector(".back-to-top");
+      window.addEventListener("scroll", () => {
+        backToTop.classList.toggle("visible", window.scrollY > 300);
+      });
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
 
-    function showPopup(index) {
-      const img = galleryImages[index];
-      popupImg.src = img.src;
-      popupImg.alt = img.alt;
-      popupCaption.textContent = img.alt;
-      popup.classList.add('active');
-      popup.focus();
-      currentIndex = index;
-      document.body.style.overflow = 'hidden';
-    }
-    function closePopup() {
-      popup.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-    function showPrev() {
-      currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-      showPopup(currentIndex);
-    }
-    function showNext() {
-      currentIndex = (currentIndex + 1) % galleryImages.length;
-      showPopup(currentIndex);
-    }
-    galleryImages.forEach((img, idx) => {
-      img.addEventListener('click', () => showPopup(idx));
-    });
-    popupClose.addEventListener('click', closePopup);
-    popupPrev.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
-    popupNext.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
-    popup.addEventListener('click', (e) => {
-      if (e.target === popup) closePopup();
-    });
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (!popup.classList.contains('active')) return;
-      if (e.key === 'Escape') closePopup();
-      if (e.key === 'ArrowLeft') showPrev();
-      if (e.key === 'ArrowRight') showNext();
-    });
-  </script>
-</body>
+      // Gallery Image Popup (Lightbox) with navigation
+      const galleryImages = Array.from(
+        document.querySelectorAll(".gallery-item img")
+      );
+      const popup = document.getElementById("galleryPopup");
+      const popupImg = document.getElementById("galleryPopupImg");
+      const popupCaption = document.getElementById("galleryPopupCaption");
+      const popupClose = document.getElementById("galleryPopupClose");
+      const popupPrev = document.getElementById("galleryPopupPrev");
+      const popupNext = document.getElementById("galleryPopupNext");
+      let currentIndex = 0;
+
+      function showPopup(index) {
+        const img = galleryImages[index];
+        popupImg.src = img.src;
+        popupImg.alt = img.alt;
+        popupCaption.textContent = img.alt;
+        popup.classList.add("active");
+        popup.focus();
+        currentIndex = index;
+        document.body.style.overflow = "hidden";
+      }
+      function closePopup() {
+        popup.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+      function showPrev() {
+        currentIndex =
+          (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+        showPopup(currentIndex);
+      }
+      function showNext() {
+        currentIndex = (currentIndex + 1) % galleryImages.length;
+        showPopup(currentIndex);
+      }
+      galleryImages.forEach((img, idx) => {
+        img.addEventListener("click", () => showPopup(idx));
+      });
+      popupClose.addEventListener("click", closePopup);
+      popupPrev.addEventListener("click", (e) => {
+        e.stopPropagation();
+        showPrev();
+      });
+      popupNext.addEventListener("click", (e) => {
+        e.stopPropagation();
+        showNext();
+      });
+      popup.addEventListener("click", (e) => {
+        if (e.target === popup) closePopup();
+      });
+      // Keyboard navigation
+      document.addEventListener("keydown", (e) => {
+        if (!popup.classList.contains("active")) return;
+        if (e.key === "Escape") closePopup();
+        if (e.key === "ArrowLeft") showPrev();
+        if (e.key === "ArrowRight") showNext();
+      });
+    </script>
+  </body>
 </html>

@@ -128,10 +128,10 @@ document.addEventListener("DOMContentLoaded", function () {
           if (e.target === popup) popup.style.display = "none";
         });
 
-        // Reopen popup when clicking the logo
-        popupTrigger.addEventListener("click", () => {
-          popup.style.display = "flex";
-        });
+        // Remove or comment out the following block to prevent popup on logo click
+        // popupTrigger.addEventListener("click", () => {
+        //   popup.style.display = "flex";
+        // });
 
         // Auto-close after 10 seconds
         setTimeout(() => {

@@ -127,12 +127,14 @@
 
       .navbar {
         background: linear-gradient(
-          90deg,
-          rgba(30, 58, 138, 0.95),
-          rgba(255, 94, 98, 0.95)
+          140deg,
+          var(--primary-blue) 0%,
+          var(--primary-blue) 60%,
+          var(--accent-red) 100%
         );
         backdrop-filter: blur(10px);
         border-bottom: 2px solid var(--highlight-yellow);
+        box-shadow: 0 4px 24px 0 rgba(30, 58, 138, 0.1);
       }
 
       .navbar-brand img {
