@@ -213,7 +213,7 @@ body {
 .nav-link:hover::after,
 .nav-link.active::after {
   width: 100%;
-  background: #fff; /* Show white underline on hover/active */
+  background:transparent; /* Show white underline on hover/active */
 }
 
 .form-control {
@@ -358,10 +358,10 @@ body {
 
 /* Remove object-fit: cover for recognized-item img to prevent cropping */
 /* .recognized-item img {
-  /* width: 150px; */
-  /* height: 150px; */
-  /* object-fit: cover; */
-/* }  */
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}  */
 
 .social-icon {
   font-size: 1.8rem;
@@ -542,7 +542,7 @@ body {
   border: none;
   margin-top: 0.5rem;
   min-width: 180px;
-  box-shadow: 0 8px 24px rgba(30, 58, 138, 0.12);
+  /* box-shadow: 0 8px 24px rgba(30, 58, 138, 0.12); */
   padding: 0.5rem 0;
   z-index: 1001;
 }
@@ -565,7 +565,7 @@ body {
   vertical-align: 0.15em;
 }
 
-/* Show dropdown on hover for desktop */
+/* Consistent formatting for media queries and selectors */
 @media (min-width: 992px) {
   .navbar-nav .dropdown:hover .dropdown-menu {
     display: block;
@@ -694,7 +694,7 @@ body {
 /* Newsletter Section Styles */
 .newsletter-section {
   background: linear-gradient(90deg, #e6f0fa 60%, #fef7f5 100%);
-  padding: 3rem 0 2.5rem 0;
+  padding: 3rem 3rem 2.5rem 0;
   margin-top: 2rem;
 }
 .newsletter-container {
