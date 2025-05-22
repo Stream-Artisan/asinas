@@ -698,7 +698,7 @@ body {
   margin-top: 2rem;
 }
 .newsletter-container {
-  max-width: 540px;
+  max-width: 380px;
   margin: 0 auto;
   text-align: center;
 }
@@ -725,7 +725,7 @@ body {
   outline: none;
   transition: border-color 0.3s;
   background: #fff;
-  min-width: 0;
+  max-width: 300px;
 }
 .newsletter-input:focus {
   border-color: #ff5e62;
