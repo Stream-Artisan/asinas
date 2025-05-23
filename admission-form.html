@@ -487,10 +487,12 @@
   <section class="newsletter-section" data-aos="fade-up">
     <div class="container newsletter-container">
       <h3 class="newsletter-title">Subscribe to Our Newsletter</h3>
-      <form class="newsletter-form" action="#" method="post" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
-        <input type="email" class="newsletter-input" placeholder="Enter your email address" required />
+      <form class="newsletter-form" id="newsletterForm" action="send_email.php" method="post" autocomplete="off">
+        <input type="hidden" name="form_type" value="newsletter" />
+        <input type="email" class="newsletter-input" name="email" placeholder="Enter your email address" required />
         <button type="submit" class="newsletter-btn">Subscribe</button>
       </form>
+      <div id="newsletterMessage" style="margin-top: 1rem"></div>
     </div>
   </section>
   <!-- Newsletter Section End -->
@@ -667,9 +669,7 @@
   </style>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="scripts/admission.js">
-   
-  </script>
+  <script src="scripts/admission.js"></script>
   <script>
     // Enhanced form validation and AJAX for Admission Form
     const admissionForm = document.getElementById('admissionForm');
@@ -705,6 +705,36 @@
             input.classList.remove('is-invalid');
           }
         });
+      });
+    }
+
+    // Newsletter AJAX (connects to send_email.php and shows confirmation)
+    const newsletterForm = document.getElementById("newsletterForm");
+    if (newsletterForm) {
+      newsletterForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var form = this;
+        var formData = new FormData(form);
+        var msgDiv = document.getElementById("newsletterMessage");
+        msgDiv.textContent = "Submitting...";
+        fetch(form.action, {
+          method: "POST",
+          body: formData,
+        })
+          .then((r) => r.json())
+          .then((data) => {
+            msgDiv.textContent = data.message;
+            if (data.success) {
+              form.reset();
+              msgDiv.style.color = "green";
+            } else {
+              msgDiv.style.color = "red";
+            }
+          })
+          .catch(() => {
+            msgDiv.textContent = "An error occurred. Please try again later.";
+            msgDiv.style.color = "red";
+          });
       });
     }
   </script>

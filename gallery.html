@@ -42,41 +42,39 @@
 
       .gallery-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 1.5rem;
-        margin-top: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-top: 2.5rem;
         padding: 0 1rem;
       }
 
-      .gallery-item {
+      .gallery-carousel {
         border-radius: var(--border-radius);
         overflow: hidden;
         box-shadow: var(--shadow-light);
         background: var(--bg-white);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: transform 0.2s, box-shadow 0.2s;
         cursor: pointer;
         position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: stretch;
       }
 
-      .gallery-item:hover,
-      .gallery-item:focus {
+      .gallery-carousel:hover,
+      .gallery-carousel:focus {
         transform: translateY(-6px) scale(1.03);
         box-shadow: var(--shadow-hover);
         z-index: 2;
       }
 
-      .gallery-item img {
+      .gallery-carousel .carousel-inner img {
         width: 100%;
-        height: 220px;
+        height: 260px;
         object-fit: cover;
         display: block;
-        transition: transform 0.3s ease;
         background: var(--bg-light);
-      }
-
-      .gallery-item:hover img,
-      .gallery-item:focus img {
-        transform: scale(1.05);
       }
 
       .gallery-caption {
@@ -96,13 +94,22 @@
         user-select: none;
       }
 
-      @media (max-width: 576px) {
-        .gallery-item img {
+      @media (max-width: 768px) {
+        .gallery-grid {
+          gap: 1rem;
+        }
+        .gallery-carousel .carousel-inner img {
           height: 140px;
         }
         .gallery-caption {
-          font-size: 0.9rem;
+          font-size: 0.92rem;
           padding: 0.5rem 0.75rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .gallery-caption {
+          font-size: 0.87rem;
         }
       }
 
@@ -324,79 +331,227 @@
         transform: scale(1.08);
       }
 
-      .carousel-inner img {
-        max-height: 320px;
-        object-fit: cover;
+      /* Remove card & carousel styles for optimization */
+      /* .card, .carousel, .carousel-caption, .carousel-control-prev, .carousel-control-next, .carousel-inner, .carousel-item, .card-title { ...remove or comment out... } */
+      /* ...existing code after .carousel-control-next... */
+
+      /* Keep rest of your styles */
+      .gallery-popup {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(30, 58, 138, 0.9);
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .gallery-popup.active {
+        display: flex;
+      }
+
+      .gallery-popup-img {
+        max-width: 92vw;
+        max-height: 70vh;
         border-radius: var(--border-radius);
-      }
-
-      .carousel-caption {
-        background: rgba(30, 58, 138, 0.7);
-        border-radius: 12px;
-        padding: 0.5rem 1rem;
-        margin-bottom: 1.5rem;
-        color: var(--accent-gold);
-        font-family: var(--font-poppins);
-        font-weight: 500;
-      }
-
-      @media (max-width: 768px) {
-        .carousel-inner img {
-          max-height: 180px;
-        }
-        .carousel-caption {
-          font-size: 0.9rem;
-          padding: 0.4rem 0.7rem;
-        }
-      }
-
-      .card {
-        border-radius: var(--border-radius);
-        overflow: hidden;
+        box-shadow: 0 8px 40px rgba(30, 58, 138, 0.25),
+          0 0 0 6px var(--accent-gold);
         background: var(--bg-white);
-        box-shadow: var(--shadow-light);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        animation: popupZoom 0.4s ease;
+        margin-bottom: 1.5rem;
       }
 
-      .card:hover,
-      .card:focus {
-        transform: translateY(-6px) scale(1.03);
-        box-shadow: var(--shadow-hover);
-      }
-
-      .card img {
-        max-height: 260px;
-        object-fit: cover;
-        border-radius: var(--border-radius) var(--border-radius) 0 0;
-      }
-
-      .card-title {
+      .gallery-popup-caption {
+        color: var(--accent-gold);
+        background: rgba(30, 58, 138, 0.85);
+        padding: 0.75rem 2rem;
+        border-radius: 12px;
         font-family: var(--font-poppins);
-        font-weight: 600;
-        color: var(--primary-blue);
-        margin: 0.5rem 1rem;
+        font-size: 1.2rem;
+        font-weight: 500;
+        box-shadow: var(--shadow-light);
+        text-align: center;
+        max-width: 80vw;
+        letter-spacing: 0.01em;
       }
 
-      .carousel-control-prev-icon,
-      .carousel-control-next-icon {
-        background-color: var(--primary-blue);
+      .gallery-popup-close {
+        position: absolute;
+        top: 32px;
+        right: 48px;
+        color: var(--accent-gold);
+        font-size: 2.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 2100;
+        background: rgba(255, 255, 255, 0.12);
         border-radius: 50%;
-        padding: 0.5rem;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
       }
 
-      .carousel-control-prev,
-      .carousel-control-next {
-        width: 2.5rem;
-        background: none;
+      .gallery-popup-close:hover,
+      .gallery-popup-close:focus {
+        background: var(--hover-gold);
+        color: var(--bg-white);
+        transform: scale(1.15) rotate(90deg);
+      }
+
+      .gallery-popup-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--accent-gold);
+        font-size: 2.5rem;
+        background: rgba(30, 58, 138, 0.5);
+        border: none;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 2100;
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      }
+
+      .gallery-popup-nav:hover,
+      .gallery-popup-nav:focus {
+        background: var(--hover-gold);
+        color: var(--bg-white);
+        transform: scale(1.15);
+      }
+
+      .gallery-popup-prev {
+        left: 32px;
+      }
+
+      .gallery-popup-next {
+        right: 32px;
       }
 
       @media (max-width: 768px) {
-        .card img {
-          max-height: 140px;
+        .gallery-popup-img {
+          max-width: 98vw;
+          max-height: 50vh;
         }
-        .card-title {
-          font-size: 0.9rem;
+        .gallery-popup-caption {
+          font-size: 1rem;
+          padding: 0.5rem 1rem;
         }
+        .gallery-popup-close,
+        .gallery-popup-nav {
+          top: 16px;
+          font-size: 2rem;
+          width: 40px;
+          height: 40px;
+        }
+        .gallery-popup-prev {
+          left: 8px;
+        }
+        .gallery-popup-next {
+          right: 8px;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes popupZoom {
+        from {
+          transform: scale(0.85);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      .whatsapp-float.left-float {
+        position: fixed;
+        left: 20px;
+        bottom: 20px;
+        width: 48px;
+        height: 48px;
+        z-index: 999;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .whatsapp-float img {
+        width: 100%;
+        height: 100%;
+      }
+
+      .whatsapp-float:hover,
+      .whatsapp-float:focus {
+        transform: scale(1.1);
+      }
+
+      .back-to-top {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        width: 48px;
+        height: 48px;
+        background: var(--primary-blue);
+        color: var(--accent-gold);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 999;
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+
+      .back-to-top:hover,
+      .back-to-top:focus {
+        background: var(--hover-blue);
+        transform: scale(1.1);
+      }
+
+      .phone-float {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        z-index: 1100;
+        background: var(--primary-blue);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-light);
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+
+      .phone-float img {
+        width: 70%;
+        height: 70%;
+        filter: invert(1);
+      }
+
+      .phone-float:hover,
+      .phone-float:focus {
+        background: var(--hover-gold);
+        transform: scale(1.08);
       }
     </style>
   </head>
@@ -486,497 +641,227 @@
       </div>
     </header>
     <main class="container py-5">
-      <div class="row g-4" data-aos="fade-up">
-        <div class="col-md-4">
-          <div class="card shadow border-0 h-100">
-            <div id="carousel1" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner rounded-4">
-                <div class="carousel-item active">
-                  <img
-                    src="images/classroom.jpeg"
-                    class="d-block w-100"
-                    alt="Campus Front View"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/classroom1.jpeg"
-                    class="d-block w-100"
-                    alt="Modern Classrooms"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/classroom2.jpeg"
-                    class="d-block w-100"
-                    alt="Modern Classrooms"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/classroom3.jpeg"
-                    class="d-block w-100"
-                    alt="Modern Classrooms"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/classroom4.jpeg"
-                    class="d-block w-100"
-                    alt="Modern Classrooms"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/classroom5.jpeg"
-                    class="d-block w-100"
-                    alt="Modern Classrooms"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/classroom6.jpeg"
-                    class="d-block w-100"
-                    alt="Modern Classrooms"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/classroom7.jpeg"
-                    class="d-block w-100"
-                    alt="Modern Classrooms"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/classroom8.jpeg"
-                    class="d-block w-100"
-                    alt="Modern Classrooms"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/classroom9.jpeg"
-                    class="d-block w-100"
-                    alt="Modern Classrooms"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/classroom10.jpeg"
-                    class="d-block w-100"
-                    alt="Modern Classrooms"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/classroom11.jpeg"
-                    class="d-block w-100"
-                    alt="Modern Classrooms"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/classroom12.jpeg"
-                    class="d-block w-100"
-                    alt="Modern Classrooms"
-                  />
-                </div>
+      <div class="gallery-grid" data-aos="fade-up">
+        <!-- Classrooms Carousel -->
+        <div class="gallery-carousel">
+          <div id="carouselClassrooms" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+              <div class="carousel-item active">
+                <img src="images/classroom.jpeg" alt="Classrooms: Well-organized and supportive environment for learning" />
               </div>
-              <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carousel1"
-                data-bs-slide="prev"
-              >
-                <span class="carousel-control-prev-icon"></span>
-              </button>
-              <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carousel1"
-                data-bs-slide="next"
-              >
-                <span class="carousel-control-next-icon"></span>
-              </button>
+              <div class="carousel-item">
+                <img src="images/classroom1.jpeg" alt="Modern Classrooms" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/classroom2.jpeg" alt="Modern Classrooms" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/classroom3.jpeg" alt="Modern Classrooms" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/classroom4.jpeg" alt="Modern Classrooms" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/classroom5.jpeg" alt="Modern Classrooms" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/classroom6.jpeg" alt="Modern Classrooms" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/classroom7.jpeg" alt="Modern Classrooms" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/classroom8.jpeg" alt="Modern Classrooms" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/classroom9.jpeg" alt="Modern Classrooms" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/classroom10.jpeg" alt="Modern Classrooms" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/classroom11.jpeg" alt="Modern Classrooms" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/classroom12.jpeg" alt="Modern Classrooms" />
+              </div>
             </div>
-            <div class="card-body text-center">
-              <h5 class="card-title mb-0">Classrooms</h5>
-              <p>Our classroom are well-organized and have supportive environment where learning thrives</p>
-            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselClassrooms" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselClassrooms" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+            <div class="gallery-caption">Classrooms: Well-organized and supportive environment for learning</div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card shadow border-0 h-100">
-            <div id="carousel2" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner rounded-4">
-                <div class="carousel-item active">
-                  <img
-                    src="images/library.jpeg"
-                    class="d-block w-100"
-                    alt="Simulation Lab"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/library1.jpeg"
-                    class="d-block w-100"
-                    alt="Student Activities"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/library2.jpeg"
-                    class="d-block w-100"
-                    alt="Student Activities"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/library3.jpeg"
-                    class="d-block w-100"
-                    alt="Student Activities"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/library4.jpeg"
-                    class="d-block w-100"
-                    alt="Student Activities"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/library5.jpeg"
-                    class="d-block w-100"
-                    alt="Student Activities"
-                  />
-                </div>
+        <!-- Library Carousel -->
+        <div class="gallery-carousel">
+          <div id="carouselLibrary" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+              <div class="carousel-item active">
+                <img src="images/library.jpeg" alt="Library: Extensive resources for study and research" />
               </div>
-              <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carousel2"
-                data-bs-slide="prev"
-              >
-                <span class="carousel-control-prev-icon"></span>
-              </button>
-              <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carousel2"
-                data-bs-slide="next"
-              >
-                <span class="carousel-control-next-icon"></span>
-              </button>
+              <div class="carousel-item">
+                <img src="images/library1.jpeg" alt="Library" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/library2.jpeg" alt="Library" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/library3.jpeg" alt="Library" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/library4.jpeg" alt="Library" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/library5.jpeg" alt="Library" />
+              </div>
             </div>
-            <div class="card-body text-center">
-              <h5 class="card-title mb-0">Library</h5>
-            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselLibrary" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselLibrary" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+            <div class="gallery-caption">Library: Extensive resources for study and research</div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card shadow border-0 h-100">
-            <div id="carousel3" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner rounded-4">
-                <div class="carousel-item active">
-                  <img
-                    src="images/fundamental.jpeg"
-                    class="d-block w-100"
-                    alt="Graduation Ceremony"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/fundamental2.jpeg"
-                    class="d-block w-100"
-                    alt="Faculty Team"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/fundamental3.jpeg"
-                    class="d-block w-100"
-                    alt="Faculty Team"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/fundamental4.jpeg"
-                    class="d-block w-100"
-                    alt="Faculty Team"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/fundamental5.jpeg"
-                    class="d-block w-100"
-                    alt="Faculty Team"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/fundamental6.jpeg"
-                    class="d-block w-100"
-                    alt="Faculty Team"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/fundamental7.jpeg"
-                    class="d-block w-100"
-                    alt="Faculty Team"
-                  />
-                </div>
+        <!-- Fundamental Labs Carousel -->
+        <div class="gallery-carousel">
+          <div id="carouselFundamental" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+              <div class="carousel-item active">
+                <img src="images/fundamental.jpeg" alt="Fundamental Labs: Hands-on nursing skills practice" />
               </div>
-              <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carousel3"
-                data-bs-slide="prev"
-              >
-                <span class="carousel-control-prev-icon"></span>
-              </button>
-              <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carousel3"
-                data-bs-slide="next"
-              >
-                <span class="carousel-control-next-icon"></span>
-              </button>
+              <div class="carousel-item">
+                <img src="images/fundamental2.jpeg" alt="Fundamental Labs" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/fundamental3.jpeg" alt="Fundamental Labs" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/fundamental4.jpeg" alt="Fundamental Labs" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/fundamental5.jpeg" alt="Fundamental Labs" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/fundamental6.jpeg" alt="Fundamental Labs" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/fundamental7.jpeg" alt="Fundamental Labs" />
+              </div>
             </div>
-            <div class="card-body text-center">
-              <h5 class="card-title mb-0">Fundamental Labs</h5>
-            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselFundamental" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselFundamental" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+            <div class="gallery-caption">Fundamental Labs: Hands-on nursing skills practice</div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card shadow border-0 h-100">
-            <div id="carousel4" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner rounded-4">
-                <div class="carousel-item active">
-                  <img
-                    src="images/lab.jpeg"
-                    class="d-block w-100"
-                    alt="Library Facilities"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/lab1.jpeg"
-                    class="d-block w-100"
-                    alt="Nursing Lab"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/lab2.jpeg"
-                    class="d-block w-100"
-                    alt="Nursing Lab"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/lab3.jpeg"
-                    class="d-block w-100"
-                    alt="Nursing Lab"
-                  />
-                </div>
+        <!-- Practical Lab Carousel -->
+        <div class="gallery-carousel">
+          <div id="carouselLab" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+              <div class="carousel-item active">
+                <img src="images/lab.jpeg" alt="Practical Lab: Real-world clinical training" />
               </div>
-              <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carousel4"
-                data-bs-slide="prev"
-              >
-                <span class="carousel-control-prev-icon"></span>
-              </button>
-              <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carousel4"
-                data-bs-slide="next"
-              >
-                <span class="carousel-control-next-icon"></span>
-              </button>
+              <div class="carousel-item">
+                <img src="images/lab1.jpeg" alt="Practical Lab" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/lab2.jpeg" alt="Practical Lab" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/lab3.jpeg" alt="Practical Lab" />
+              </div>
             </div>
-            <div class="card-body text-center">
-              <h5 class="card-title mb-0">Practical Lab</h5>
-            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselLab" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselLab" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+            <div class="gallery-caption">Practical Lab: Real-world clinical training</div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card shadow border-0 h-100">
-            <div id="carousel5" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner rounded-4">
-                <div class="carousel-item active">
-                  <img
-                    src="images/front.jpeg"
-                    class="d-block w-100"
-                    alt="Cultural Event"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/front1.jpeg"
-                    class="d-block w-100"
-                    alt="Sports Day"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/front2.jpeg"
-                    class="d-block w-100"
-                    alt="Sports Day"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/front3.jpeg"
-                    class="d-block w-100"
-                    alt="Sports Day"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/front4.jpeg"
-                    class="d-block w-100"
-                    alt="Sports Day"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/front5.jpeg"
-                    class="d-block w-100"
-                    alt="Sports Day"
-                  />
-                </div>
+        <!-- Campus Frontview Carousel -->
+        <div class="gallery-carousel">
+          <div id="carouselFront" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+              <div class="carousel-item active">
+                <img src="images/front.jpeg" alt="Campus Frontview: Welcoming entrance of the campus" />
               </div>
-              <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carousel5"
-                data-bs-slide="prev"
-              >
-                <span class="carousel-control-prev-icon"></span>
-              </button>
-              <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carousel5"
-                data-bs-slide="next"
-              >
-                <span class="carousel-control-next-icon"></span>
-              </button>
+              <div class="carousel-item">
+                <img src="images/front1.jpeg" alt="Campus Frontview" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/front2.jpeg" alt="Campus Frontview" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/front3.jpeg" alt="Campus Frontview" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/front4.jpeg" alt="Campus Frontview" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/front5.jpeg" alt="Campus Frontview" />
+              </div>
             </div>
-            <div class="card-body text-center">
-              <h5 class="card-title mb-0">Campus Frontview</h5>
-            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselFront" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselFront" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+            <div class="gallery-caption">Campus Frontview: Welcoming entrance of the campus</div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card shadow border-0 h-100">
-            <div id="carousel6" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner rounded-4">
-                <div class="carousel-item active">
-                  <img
-                    src="images/interior2.jpeg"
-                    class="d-block w-100"
-                    alt="Seminar Session"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/interior3.jpeg"
-                    class="d-block w-100"
-                    alt="Community Outreach"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/interior4.jpeg"
-                    class="d-block w-100"
-                    alt="Community Outreach"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/interior5.jpeg"
-                    class="d-block w-100"
-                    alt="Community Outreach"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/interior7.jpeg"
-                    class="d-block w-100"
-                    alt="Community Outreach"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/interior8.jpeg"
-                    class="d-block w-100"
-                    alt="Community Outreach"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/interior9.jpeg"
-                    class="d-block w-100"
-                    alt="Community Outreach"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/interior10.jpeg"
-                    class="d-block w-100"
-                    alt="Community Outreach"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/interior11.jpeg"
-                    class="d-block w-100"
-                    alt="Community Outreach"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/interior12.jpeg"
-                    class="d-block w-100"
-                    alt="Community Outreach"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="images/inter"
-                    class="d-block w-100"
-                    alt="Community Outreach"
-                  />
-                </div>
+        <!-- Campus Interior Carousel -->
+        <div class="gallery-carousel">
+          <div id="carouselInterior" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4">
+              <div class="carousel-item active">
+                <img src="images/interior2.jpeg" alt="Campus Interior: Modern and comfortable spaces" />
               </div>
-              <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carousel6"
-                data-bs-slide="prev"
-              >
-                <span class="carousel-control-prev-icon"></span>
-              </button>
-              <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carousel6"
-                data-bs-slide="next"
-              >
-                <span class="carousel-control-next-icon"></span>
-              </button>
+              <div class="carousel-item">
+                <img src="images/interior3.jpeg" alt="Campus Interior" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior4.jpeg" alt="Campus Interior" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior5.jpeg" alt="Campus Interior" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior7.jpeg" alt="Campus Interior" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior8.jpeg" alt="Campus Interior" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior9.jpeg" alt="Campus Interior" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior10.jpeg" alt="Campus Interior" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior11.jpeg" alt="Campus Interior" />
+              </div>
+              <div class="carousel-item">
+                <img src="images/interior12.jpeg" alt="Campus Interior" />
+              </div>
             </div>
-            <div class="card-body text-center">
-              <h5 class="card-title mb-0">Campus Interior</h5>
-            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselInterior" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselInterior" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+            <div class="gallery-caption">Campus Interior: Modern and comfortable spaces</div>
           </div>
         </div>
       </div>
@@ -1194,6 +1079,7 @@
       });
 
       // Gallery Image Popup (Lightbox) with navigation
+      // Update: now works with .gallery-item img
       const galleryImages = Array.from(
         document.querySelectorAll(".gallery-item img")
       );
