@@ -1,6 +1,6 @@
 :root {
   --primary-blue: #1e3a8a;
-  --accent-red: #ff5e62;
+  --accent-red: #1e3a8a;
   /* --highlight-yellow: #facc15; */
   --light-bg: #e6f0fa;
   --white-bg: #ffffff;
@@ -20,7 +20,7 @@ body {
   text-align: center;
   color: white;
   overflow: hidden;
-  background: url('/images/front2.jpeg') no-repeat center/cover;
+  background: url("/images/front2.jpeg") no-repeat center/cover;
   margin-top: 0;
 }
 
@@ -42,7 +42,11 @@ body {
 }
 
 .hero-overlay {
-  background: linear-gradient(rgba(30, 58, 138, 0.7),rgba(30, 58, 138, 0.7), rgba(255, 94, 98, 0.7));
+  background: linear-gradient(
+    rgba(30, 58, 138, 0.7),
+    rgba(30, 58, 138, 0.7),
+    #1e3a8a
+  );
   position: absolute;
   top: 0;
   left: 0;
@@ -73,7 +77,11 @@ body {
   box-shadow: 0 8px 25px rgba(255, 94, 98, 0.6);
 }
 .top-bar {
-  background: linear-gradient(90deg, #1e3a8a 0%, #ff5e62 100%);
+  background: linear-gradient(
+    rgba(30, 58, 138, 0.7),
+    rgba(30, 58, 138, 0.7),
+    #1e3a8a
+  );
   color: #fff;
   padding: 0.5rem 0;
   border-radius: 0 0 18px 18px;
@@ -128,7 +136,11 @@ body {
 
 .section-divider {
   height: 5px;
-  background: linear-gradient(90deg, #1e3a8a, #facc15);
+  background: linear-gradient(
+    rgba(30, 58, 138, 0.7),
+    rgba(30, 58, 138, 0.7),
+    #1e3a8a
+  );
   margin: 2.5rem auto;
   width: 120px;
   border-radius: 3px;
@@ -181,7 +193,7 @@ body {
     140deg,
     rgba(30, 58, 138, 1) 0%,
     rgba(30, 58, 138, 0.95) 50%,
-    rgba(255, 94, 98, 0.95) 100%
+    rgba(30, 58, 138, 2) 100%
   );
   padding-top: 30px;
   backdrop-filter: blur(10px);
@@ -222,7 +234,7 @@ body {
 .nav-link:hover::after,
 .nav-link.active::after {
   width: 100%;
-  background:transparent; /* Show white underline on hover/active */
+  background: transparent; /* Show white underline on hover/active */
 }
 
 .form-control {
@@ -302,8 +314,12 @@ body {
 }
 
 .footer-bg {
-  background: linear-gradient(135deg, var(--primary-blue), var(--accent-red));
-  padding: 4rem 2rem;
+ background: linear-gradient(
+    140deg,
+    rgba(30, 58, 138, 1) 0%,
+    rgba(30, 58, 138, 0.95) 50%,
+    rgba(30, 58, 138, 2) 100%
+  );  padding: 4rem 2rem;
   color: white;
   position: relative;
 }
@@ -491,7 +507,7 @@ body {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 .table th {
-  background: linear-gradient(45deg, #1e3a8a, #ff5e62);
+  background: linear-gradient(45deg, #1e3a8a, #f03d40);
   color: white;
   font-weight: 600;
   padding: 0.75rem;
@@ -591,9 +607,13 @@ body {
     display: none;
   }
   .hero-bg {
-    background: linear-gradient(rgba(30, 58, 138, 0.7), rgba(255, 94, 98, 0.7)),
+    background: linear-gradient(
+        rgba(30, 58, 138, 0.7),
+        rgba(30, 58, 138, 0.7),
+        #1e3a8a
+      ),
       url("https://img.freepik.com/free-photo/medical-theme-portrait-female-doctor-with-clipboard-against-group-doctors-meeting-mri-office-diagnostic-center-hospital_627829-6528.jpg?ga=GA1.1.588228496.1745879376&semt=ais_hybrid&w=740")
-        center/cover no-repeat;
+      center/cover no-repeat;
     min-height: 80vh;
   }
   .navbar-nav {
@@ -637,7 +657,10 @@ body {
 }
 
 @media (max-width: 576px) {
-  
+  body {
+    text-align: center;
+  }
+
   .navbar-dark .nav-link {
     font-size: 1rem;
   }
@@ -656,8 +679,11 @@ body {
   .card img {
     max-width: 150px;
   }
+  .btn-gradient {
+    margin-top: 2rem;
+  }
   .btn-primary {
-    padding: 0.6rem 1.25rem;
+    padding: 0.6rem 1.25rem 0.8rem 0.8rem;
     font-size: 0.85rem;
   }
   h1,
@@ -704,6 +730,9 @@ body {
 .newsletter-section {
   background: linear-gradient(90deg, #e6f0fa 60%, #fef7f5 100%);
   padding: 3rem 3rem 2.5rem 0;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
   margin-top: 2rem;
 }
 .newsletter-container {
@@ -749,7 +778,7 @@ body {
   font-size: 0.98rem;
   transition: background 0.3s, transform 0.2s;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(30,58,138,0.08);
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.08);
 }
 .newsletter-btn:hover {
   background: linear-gradient(45deg, #ff5e62, #1e3a8a);
@@ -758,14 +787,23 @@ body {
 @media (max-width: 576px) {
   .newsletter-container {
     max-width: 98vw;
-    padding: 0 0.5rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: 4rem 5rem; */
   }
+
   .newsletter-form {
+    display: flex;
     flex-direction: column;
-    gap: 0.6rem;
-  }
-  .newsletter-btn, .newsletter-input {
     width: 100%;
+    align-items: center;
+  }
+
+  .newsletter-btn,
+  .newsletter-input {
+    width: 40%;
     font-size: 0.98rem;
   }
 }

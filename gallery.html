@@ -25,68 +25,87 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Lora:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/home .css">
+    <link rel="stylesheet" href="css/home .css" />
     <style>
+      :root {
+        --primary-blue: #1e3a8a;
+        --accent-gold: #d4af37;
+        --hover-blue: #3b82f6;
+        --hover-gold: #b8972e;
+        --bg-light: #f8fafc;
+        --bg-white: #ffffff;
+        --shadow-light: 0 4px 16px rgba(30, 58, 138, 0.08);
+        --shadow-hover: 0 8px 32px rgba(30, 58, 138, 0.15);
+        --border-radius: 16px;
+        --font-poppins: "Poppins", sans-serif;
+      }
+
       .gallery-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         gap: 1.5rem;
         margin-top: 2rem;
+        padding: 0 1rem;
       }
+
       .gallery-item {
-        border-radius: 16px;
+        border-radius: var(--border-radius);
         overflow: hidden;
-        box-shadow: 0 4px 16px rgba(30, 58, 138, 0.08);
-        background: #fff;
-        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: var(--shadow-light);
+        background: var(--bg-white);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
         cursor: pointer;
         position: relative;
       }
+
+      .gallery-item:hover,
+      .gallery-item:focus {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: var(--shadow-hover);
+        z-index: 2;
+      }
+
       .gallery-item img {
         width: 100%;
         height: 220px;
         object-fit: cover;
         display: block;
-        transition: transform 0.3s;
-        background: #f6f6f6;
+        transition: transform 0.3s ease;
+        background: var(--bg-light);
       }
-      .gallery-item:hover {
-        transform: translateY(-6px) scale(1.03);
-        box-shadow: 0 8px 32px rgba(30, 58, 138, 0.15);
-        z-index: 2;
-      }
-      .gallery-item:hover img {
+
+      .gallery-item:hover img,
+      .gallery-item:focus img {
         transform: scale(1.05);
       }
+
       .gallery-caption {
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
-        background: linear-gradient(
-          0deg,
-          rgba(30, 58, 138, 0.8) 60%,
-          rgba(30, 58, 138, 0)
-        );
-        color: #fff;
-        padding: 0.75rem 1rem 0.5rem 1rem;
+        background: linear-gradient(0deg, var(--primary-blue) 60%, transparent);
+        color: var(--accent-gold);
+        padding: 0.75rem 1rem 0.5rem;
+        font-family: var(--font-poppins);
         font-size: 1rem;
-        font-family: "Poppins", sans-serif;
         font-weight: 500;
         letter-spacing: 0.01em;
         opacity: 0.95;
         pointer-events: none;
         user-select: none;
       }
+
       @media (max-width: 576px) {
         .gallery-item img {
           height: 140px;
         }
         .gallery-caption {
           font-size: 0.9rem;
+          padding: 0.5rem 0.75rem;
         }
       }
-      /* Popup Modal for Gallery Images */
+
       .gallery-popup {
         display: none;
         position: fixed;
@@ -95,43 +114,47 @@
         top: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(30, 58, 138, 0.88);
+        background: rgba(30, 58, 138, 0.9);
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        animation: fadeIn 0.3s;
+        animation: fadeIn 0.3s ease;
       }
+
       .gallery-popup.active {
         display: flex;
       }
+
       .gallery-popup-img {
         max-width: 92vw;
         max-height: 70vh;
-        border-radius: 18px;
-        box-shadow: 0 8px 40px 8px rgba(30, 58, 138, 0.25), 0 0 0 8px #fff;
-        background: #fff;
-        animation: popupZoom 0.4s;
+        border-radius: var(--border-radius);
+        box-shadow: 0 8px 40px rgba(30, 58, 138, 0.25),
+          0 0 0 6px var(--accent-gold);
+        background: var(--bg-white);
+        animation: popupZoom 0.4s ease;
         margin-bottom: 1.5rem;
       }
+
       .gallery-popup-caption {
-        color: #fff;
+        color: var(--accent-gold);
         background: rgba(30, 58, 138, 0.85);
         padding: 0.75rem 2rem;
         border-radius: 12px;
+        font-family: var(--font-poppins);
         font-size: 1.2rem;
-        font-family: "Poppins", sans-serif;
         font-weight: 500;
-        box-shadow: 0 2px 12px rgba(30, 58, 138, 0.15);
+        box-shadow: var(--shadow-light);
         text-align: center;
         max-width: 80vw;
         letter-spacing: 0.01em;
-        opacity: 0.97;
       }
+
       .gallery-popup-close {
         position: absolute;
         top: 32px;
         right: 48px;
-        color: #fff;
+        color: var(--accent-gold);
         font-size: 2.5rem;
         font-weight: bold;
         cursor: pointer;
@@ -143,19 +166,21 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background 0.2s, color 0.2s, transform 0.2s;
-        box-shadow: 0 2px 8px rgba(30, 58, 138, 0.15);
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
       }
-      .gallery-popup-close:hover {
-        background: #ff5e62;
-        color: #fff;
+
+      .gallery-popup-close:hover,
+      .gallery-popup-close:focus {
+        background: var(--hover-gold);
+        color: var(--bg-white);
         transform: scale(1.15) rotate(90deg);
       }
+
       .gallery-popup-nav {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        color: #fff;
+        color: var(--accent-gold);
         font-size: 2.5rem;
         background: rgba(30, 58, 138, 0.5);
         border: none;
@@ -167,20 +192,24 @@
         justify-content: center;
         cursor: pointer;
         z-index: 2100;
-        transition: background 0.2s, color 0.2s, transform 0.2s;
-        user-select: none;
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
       }
-      .gallery-popup-nav:hover {
-        background: #ff5e62;
-        color: #fff;
+
+      .gallery-popup-nav:hover,
+      .gallery-popup-nav:focus {
+        background: var(--hover-gold);
+        color: var(--bg-white);
         transform: scale(1.15);
       }
+
       .gallery-popup-prev {
         left: 32px;
       }
+
       .gallery-popup-next {
         right: 32px;
       }
+
       @media (max-width: 768px) {
         .gallery-popup-img {
           max-width: 98vw;
@@ -204,6 +233,7 @@
           right: 8px;
         }
       }
+
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -212,6 +242,7 @@
           opacity: 1;
         }
       }
+
       @keyframes popupZoom {
         from {
           transform: scale(0.85);
@@ -220,29 +251,51 @@
           transform: scale(1);
         }
       }
+
       .whatsapp-float.left-float {
-        left: 20px;
-        right: auto;
         position: fixed;
+        left: 20px;
+        bottom: 20px;
         width: 48px;
         height: 48px;
-        bottom: 20px;
         z-index: 999;
         cursor: pointer;
-        /* Ensure it's above the footer and always visible */
+        transition: transform 0.2s ease;
       }
+
       .whatsapp-float img {
         width: 100%;
         height: 100%;
       }
-      .back-to-top {
-        right: 20px;
-        left: auto;
-        position: fixed;
-        bottom: 20px;
-        /* ...existing code... */
+
+      .whatsapp-float:hover,
+      .whatsapp-float:focus {
+        transform: scale(1.1);
       }
-      /* Floating Phone Icon */
+
+      .back-to-top {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        width: 48px;
+        height: 48px;
+        background: var(--primary-blue);
+        color: var(--accent-gold);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 999;
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+
+      .back-to-top:hover,
+      .back-to-top:focus {
+        background: var(--hover-blue);
+        transform: scale(1.1);
+      }
+
       .phone-float {
         position: fixed;
         top: 20px;
@@ -250,84 +303,99 @@
         width: 40px;
         height: 40px;
         z-index: 1100;
-        background: #1e3a8a;
+        background: var(--primary-blue);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 8px rgba(30, 58, 138, 0.15);
-        transition: background 0.2s, transform 0.2s;
+        box-shadow: var(--shadow-light);
+        transition: background 0.2s ease, transform 0.2s ease;
       }
+
       .phone-float img {
         width: 70%;
         height: 70%;
-        display: block;
-        margin: auto;
         filter: invert(1);
       }
-      .phone-float:hover {
-        background: #ff5e62;
+
+      .phone-float:hover,
+      .phone-float:focus {
+        background: var(--hover-gold);
         transform: scale(1.08);
       }
-      /* Additional Styles for Carousels on Gallery Page */
+
       .carousel-inner img {
         max-height: 320px;
         object-fit: cover;
-        border-radius: 18px;
+        border-radius: var(--border-radius);
       }
+
       .carousel-caption {
         background: rgba(30, 58, 138, 0.7);
         border-radius: 12px;
         padding: 0.5rem 1rem;
         margin-bottom: 1.5rem;
+        color: var(--accent-gold);
+        font-family: var(--font-poppins);
+        font-weight: 500;
       }
+
       @media (max-width: 768px) {
         .carousel-inner img {
           max-height: 180px;
         }
         .carousel-caption {
-          font-size: 1rem;
+          font-size: 0.9rem;
           padding: 0.4rem 0.7rem;
         }
       }
+
       .card {
-        border-radius: 18px;
+        border-radius: var(--border-radius);
         overflow: hidden;
-        background: #fff;
-        box-shadow: 0 4px 16px rgba(30, 58, 138, 0.08);
-        transition: transform 0.2s, box-shadow 0.2s;
+        background: var(--bg-white);
+        box-shadow: var(--shadow-light);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
-      .card:hover {
+
+      .card:hover,
+      .card:focus {
         transform: translateY(-6px) scale(1.03);
-        box-shadow: 0 8px 32px rgba(30, 58, 138, 0.15);
+        box-shadow: var(--shadow-hover);
       }
-      .carousel-inner img {
+
+      .card img {
         max-height: 260px;
         object-fit: cover;
-        border-radius: 18px 18px 0 0;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
       }
+
       .card-title {
-        font-family: "Poppins", sans-serif;
+        font-family: var(--font-poppins);
         font-weight: 600;
-        color: #1e3a8a;
-        margin-top: 0.5rem;
+        color: var(--primary-blue);
+        margin: 0.5rem 1rem;
       }
+
       .carousel-control-prev-icon,
       .carousel-control-next-icon {
-        background-color: #1e3a8a;
+        background-color: var(--primary-blue);
         border-radius: 50%;
         padding: 0.5rem;
       }
+
       .carousel-control-prev,
       .carousel-control-next {
         width: 2.5rem;
+        background: none;
       }
+
       @media (max-width: 768px) {
-        .carousel-inner img {
+        .card img {
           max-height: 140px;
         }
         .card-title {
-          font-size: 1rem;
+          font-size: 0.9rem;
         }
       }
     </style>
@@ -534,6 +602,7 @@
             </div>
             <div class="card-body text-center">
               <h5 class="card-title mb-0">Classrooms</h5>
+              <p>Our classroom are well-organized and have supportive environment where learning thrives</p>
             </div>
           </div>
         </div>

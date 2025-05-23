@@ -210,7 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = "A new user has subscribed to the newsletter:\n\nEmail: $email";
         $headers = "From: noreply@asinas.edu.pk\r\n";
 
-        // @mail($adminEmail, $subject, $message, $headers); // Uncomment to send email
+        @mail($adminEmail, $subject, $message, $headers); // Uncomment to send email
 
         echo json_encode([
             'success' => true,
