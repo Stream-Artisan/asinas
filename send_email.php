@@ -1,10 +1,13 @@
 <?php
-// filepath: c:\Users\User\Desktop\work\nursing\send_email.php
-
 // Enable error reporting for debugging
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+// Helper function to sanitize input
+function sanitize_input($data) {
+    return htmlspecialchars(strip_tags(trim($data)));
+}
 
 // Helper function to format POST data as HTML table
 function format_post_data($data) {
@@ -16,7 +19,7 @@ function format_post_data($data) {
         if (is_array($value)) {
             $html .= '<td>' . htmlspecialchars(json_encode($value)) . '</td>';
         } else {
-            $html .= '<td>' . htmlspecialchars($value) . '</td>';
+            $html .= '<td>' . htmlspecialchars(sanitize_input($value)) . '</td>';
         }
         $html .= '</tr>';
     }
@@ -63,10 +66,12 @@ function build_mail_with_attachments($to, $subject, $htmlBody, $from, $replyTo, 
     return $result;
 }
 
+header('Content-Type: application/json');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $formType = $_POST['form_type'] ?? '';
-    $to = 'noreply@asinas.edu.pk'; // Updated recipient email
-    $studentEmail = $_POST['email'] ?? '';
+    $formType = isset($_POST['form_type']) ? sanitize_input($_POST['form_type']) : '';
+    $to = 'noreply@asinas.edu.pk';
+    $studentEmail = isset($_POST['email']) ? sanitize_input($_POST['email']) : '';
     $from = 'noreply@asinas.edu.pk';
     $replyTo = filter_var($studentEmail, FILTER_VALIDATE_EMAIL) ? $studentEmail : $from;
 
@@ -129,22 +134,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        if ($adminMailSent) {
-            echo json_encode([
-                'success' => true,
-                'message' => 'Form submitted successfully. Confirmation email sent to student: ' . ($studentMailSent ? 'Yes' : 'No')
-            ]);
-        } else {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Failed to send admin email. Please try again later.'
-            ]);
-        }
+        echo json_encode([
+            'success' => $adminMailSent,
+            'message' => $adminMailSent ? 'Form submitted successfully. Confirmation email sent to student: ' . ($studentMailSent ? 'Yes' : 'No') : 'Failed to send admin email. Please try again later.'
+        ]);
         exit;
     }
 
-    // Contact form
     if ($formType === 'contact') {
+        // Validate required fields
+        if (empty($studentEmail) || !filter_var($studentEmail, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Invalid or missing email address.'
+            ]);
+            exit;
+        }
+        $name = isset($_POST['name']) ? sanitize_input($_POST['name']) : '';
+        $number = isset($_POST['number']) ? sanitize_input($_POST['number']) : '';
+        $message = isset($_POST['message']) ? sanitize_input($_POST['message']) : '';
+
+        if (empty($name) || empty($number) || empty($message)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'All fields are required.'
+            ]);
+            exit;
+        }
+
+        // Validate phone number format (e.g., +923001234567)
+        if (!preg_match('/^\+92[0-9]{10}$/', $number)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Invalid phone number format. Use +92 followed by 10 digits.'
+            ]);
+            exit;
+        }
+
         $subject = 'Contact Form Submission';
         $htmlBody = '<html><body>';
         $htmlBody .= '<h2>Contact Form Submission</h2>';
@@ -164,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (filter_var($studentEmail, FILTER_VALIDATE_EMAIL)) {
             $studentSubject = 'Thank You for Contacting All Saints’ Institute';
             $studentMessage = '<html><body>';
-            $studentMessage .= '<p>Dear Student,</p>';
+            $studentMessage .= '<p>Dear ' . htmlspecialchars($name) . ',</p>';
             $studentMessage .= '<p>Thank you for reaching out to <strong>All Saints’ Institute of Nursing & Allied Sciences</strong>.</p>';
             $studentMessage .= '<p>We have received your message and will get back to you soon.</p>';
             $studentMessage .= '<br><p>Regards,<br>Admissions Office<br>All Saints’ Institute</p>';
@@ -178,24 +204,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        if ($adminMailSent) {
-            echo json_encode([
-                'success' => true,
-                'message' => 'Message sent successfully. Confirmation email sent to student: ' . ($studentMailSent ? 'Yes' : 'No')
-            ]);
-        } else {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Failed to send admin email. Please try again later.'
-            ]);
-        }
+        echo json_encode([
+            'success' => $adminMailSent,
+            'message' => $adminMailSent ? 'Message sent successfully. Confirmation email sent to student: ' . ($studentMailSent ? 'Yes' : 'No') : 'Failed to send admin email. Please try again later.'
+        ]);
         exit;
     }
 
-    if ($formType === 'newsletter' || (empty($formType) && isset($_POST['email']) && count($_POST) === 1)) {
+    if ($formType === 'newsletter' || (empty($formType) && isset($_POST['email']) && count($_POST) === 2)) {
         // Newsletter subscription
-        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $email = isset($_POST['email']) ? sanitize_input($_POST['email']) : '';
+        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo json_encode([
                 'success' => false,
                 'message' => 'Please enter a valid email address.'
@@ -203,17 +222,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // You can store the email in a file or database, or send a notification email.
-        // For demonstration, we'll just send an email to admin (optional).
+        // Store email in a file (replace with database in production)
+        $newsletterFile = 'newsletter_subscribers.txt';
+        $emailEntry = $email . ',' . date('Y-m-d H:i:s') . "\n";
+        file_put_contents($newsletterFile, $emailEntry, FILE_APPEND | LOCK_EX);
+
+        // Send notification to admin
+        $subject = 'New Newsletter Subscription';
+        $htmlBody = '<html><body>';
+        $htmlBody .= '<h2>New Newsletter Subscription</h2>';
+        $htmlBody .= '<p>Email: ' . htmlspecialchars($email) . '</p>';
+        $htmlBody .= '<p>Subscribed on: ' . date('Y-m-d H:i:s') . '</p>';
+        $htmlBody .= '</body></html>';
+        $headers = "From: $from\r\n";
+        $headers .= "Reply-To: $from\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $adminMailSent = mail($to, $subject, $htmlBody, $headers);
+        if (!$adminMailSent) {
+            error_log("Failed to send newsletter notification to $to");
+        }
+
+        // Confirmation to subscriber
+        $subscriberMailSent = false;
+        $subscriberSubject = 'Welcome to All Saints’ Institute Newsletter';
+        $subscriberMessage = '<html><body>';
+        $subscriberMessage .= '<p>Dear Subscriber,</p>';
+        $subscriberMessage .= '<p>Thank you for subscribing to the <strong>All Saints’ Institute of Nursing & Allied Sciences</strong> newsletter.</p>';
+        $subscriberMessage .= '<p>You will receive updates on our programs, admissions, and more.</p>';
+        $subscriberMessage .= '<br><p>Regards,<br>All Saints’ Institute</p>';
+        $subscriberMessage .= '</body></html>';
+        $subscriberHeaders = "From: noreply@asinas.edu.pk\r\n";
+        $subscriberHeaders .= "Reply-To: noreply@asinas.edu.pk\r\n";
+        $subscriberHeaders .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $subscriberMailSent = mail($email, $subscriberSubject, $subscriberMessage, $subscriberHeaders);
+        if (!$subscriberMailSent) {
+            error_log("Failed to send confirmation email to $email for newsletter");
+        }
 
         echo json_encode([
-            'success' => true,
-            'message' => 'Thank you for subscribing to our newsletter!'
+            'success' => $adminMailSent && $subscriberMailSent,
+            'message' => $adminMailSent && $subscriberMailSent ? 'Thank you for subscribing to our newsletter!' : 'Subscription recorded, but failed to send confirmation email.'
         ]);
         exit;
     }
 
-    // Unknown form type
     echo json_encode([
         'success' => false,
         'message' => 'Unknown form type.'
