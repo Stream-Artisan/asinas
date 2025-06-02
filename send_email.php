@@ -4,9 +4,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Start session for CSRF protection
-session_start();
-
 // Configuration constants
 define('ADMIN_EMAIL', 'noreply@asinas.edu.pk');
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
@@ -22,7 +19,7 @@ function sanitize_input($data) {
 function format_post_data($data) {
     $html = '<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">';
     foreach ($data as $key => $value) {
-        if ($key === 'form_type' || $key === 'csrf_token') continue;
+        if ($key === 'form_type') continue;
         $html .= '<tr>';
         $html .= '<td style="background-color: #f2f2f2; font-weight: bold;">' . ucwords(str_replace('_', ' ', $key)) . '</td>';
         $html .= '<td>' . (is_array($value) ? htmlspecialchars(json_encode($value)) : sanitize_input($value)) . '</td>';
@@ -94,22 +91,11 @@ function send_email($to, $subject, $htmlBody, $from, $replyTo, $files = []) {
     return $result;
 }
 
-// Generate CSRF token if not set
-if (!isset($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
-    exit;
-}
-
-// Validate CSRF token
-if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-    echo json_encode(['success' => false, 'message' => 'Invalid CSRF token.']);
     exit;
 }
 
@@ -259,7 +245,7 @@ if ($formType === 'newsletter') {
         exit;
     }
 
-    // Check for duplicate subscription (replace with database in production)
+    // Check for duplicate subscription
     if (file_exists(NEWSLETTER_FILE)) {
         $existing = file_get_contents(NEWSLETTER_FILE);
         if (strpos($existing, $email . ',') !== false) {
