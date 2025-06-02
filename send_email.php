@@ -22,7 +22,33 @@ function format_post_data($data) {
         if ($key === 'form_type') continue;
         $html .= '<tr>';
         $html .= '<td style="background-color: #f2f2f2; font-weight: bold;">' . ucwords(str_replace('_', ' ', $key)) . '</td>';
-        $html .= '<td>' . (is_array($value) ? htmlspecialchars(json_encode($value)) : sanitize_input($value)) . '</td>';
+        $html .= '<td>';
+        
+        if (is_array($value)) {
+            // Handle array data (like education) by creating a nested table
+            $html .= '<table border="1" cellpadding="3" cellspacing="0" style="border-collapse: collapse; width: 100%;">';
+            foreach ($value as $index => $entry) {
+                $html .= '<tr>';
+                $html .= '<td style="background-color: #e6e6e6;">Entry ' . ($index + 1) . '</td>';
+                $html .= '<td>';
+                $html .= '<table border="0" cellpadding="2" style="width: 100%;">';
+                foreach ($entry as $subKey => $subValue) {
+                    $html .= '<tr>';
+                    $html .= '<td style="font-weight: bold;">' . ucwords(str_replace('_', ' ', $subKey)) . ':</td>';
+                    $html .= '<td>' . htmlspecialchars($subValue) . '</td>';
+                    $html .= '</tr>';
+                }
+                $html .= '</table>';
+                $html .= '</td>';
+                $html .= '</tr>';
+            }
+            $html .= '</table>';
+        } else {
+            // Handle non-array data as before
+            $html .= sanitize_input($value);
+        }
+        
+        $html .= '</td>';
         $html .= '</tr>';
     }
     $html .= '</table>';
@@ -163,9 +189,10 @@ if ($formType === 'admission') {
         }
     }
 
+    // Send email to admin (only once)
     $adminMailSent = send_email($to, $subject, $htmlBody, $from, $replyTo, $files);
 
-    // Confirmation to student
+    // Send confirmation email to student
     $studentMailSent = false;
     if (filter_var($studentEmail, FILTER_VALIDATE_EMAIL)) {
         $studentSubject = 'Thank You for Your Submission - All Saints’ Institute';
@@ -213,9 +240,10 @@ if ($formType === 'contact') {
     $htmlBody .= format_post_data($_POST);
     $htmlBody .= '</body></html>';
 
+    // Send email to admin (only once)
     $adminMailSent = send_email($to, $subject, $htmlBody, $from, $replyTo);
 
-    // Confirmation to student
+    // Send confirmation email to student
     $studentMailSent = false;
     if (filter_var($studentEmail, FILTER_VALIDATE_EMAIL)) {
         $studentSubject = 'Thank You for Contacting All Saints’ Institute';
@@ -258,7 +286,7 @@ if ($formType === 'newsletter') {
     $emailEntry = $email . ',' . date('Y-m-d H:i:s') . "\n";
     file_put_contents(NEWSLETTER_FILE, $emailEntry, FILE_APPEND | LOCK_EX);
 
-    // Send notification to admin
+    // Send notification to admin (only once)
     $subject = 'New Newsletter Subscription';
     $htmlBody = '<html><body>';
     $htmlBody .= '<h2>New Newsletter Subscription</h2>';
@@ -268,7 +296,7 @@ if ($formType === 'newsletter') {
 
     $adminMailSent = send_email($to, $subject, $htmlBody, $from, $from);
 
-    // Confirmation to subscriber
+    // Send confirmation email to subscriber
     $subscriberMailSent = false;
     $subscriberSubject = 'Welcome to All Saints’ Institute Newsletter';
     $subscriberMessage = '<html><body>';
