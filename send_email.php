@@ -5,7 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Configuration constants
-define('ADMIN_EMAIL', 'noreply@asinas.edu.pk');
+define('ADMIN_EMAIL', 'admin@example.com');
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
 define('ALLOWED_FILE_TYPES', ['application/pdf', 'image/jpeg', 'image/png']);
 define('NEWSLETTER_FILE', 'newsletter_subscribers.txt');
